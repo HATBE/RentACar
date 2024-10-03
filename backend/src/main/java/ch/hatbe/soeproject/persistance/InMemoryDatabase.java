@@ -30,9 +30,9 @@ public class InMemoryDatabase implements Database {
     @Override
     public ArrayList<Car> getCars() {
         ArrayList<Car> bookings = new ArrayList<>();
-        bookings.add(new Car(1, "test1"));
+        /*bookings.add(new Car(1, "test1"));
         bookings.add(new Car(2, "test2"));
-        bookings.add(new Car(3, "test3"));
+        bookings.add(new Car(3, "test3"));*/
 
         return bookings;
     }

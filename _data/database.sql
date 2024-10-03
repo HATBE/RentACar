@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Okt 2024 um 22:05
+-- Erstellungszeit: 03. Okt 2024 um 22:55
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -47,13 +47,20 @@ CREATE TABLE `cars` (
   `Cid` int(11) NOT NULL,
   `Cmake` varchar(255) NOT NULL,
   `Cmodel` varchar(255) NOT NULL,
-  `CbuildYear` year(4) NOT NULL,
-  `Ccategory` int(11) NOT NULL,
+  `CbuildYear` int(4) NOT NULL,
+  `Ccategory` varchar(255) NOT NULL,
   `Chorsepower` int(11) NOT NULL,
   `Cseatscount` int(11) NOT NULL,
   `CpricePerDay` float NOT NULL,
-  `CgearType` enum('manual','automatic') NOT NULL
+  `CgearType` enum('AUTOMATIC','MANUAL') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `cars`
+--
+
+INSERT INTO `cars` (`Cid`, `Cmake`, `Cmodel`, `CbuildYear`, `Ccategory`, `Chorsepower`, `Cseatscount`, `CpricePerDay`, `CgearType`) VALUES
+(1, 'Nissan', 'Skyline R34 GT-R', 1998, 'JDM', 280, 4, 500, 'MANUAL');
 
 -- --------------------------------------------------------
 
@@ -108,7 +115,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT für Tabelle `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
