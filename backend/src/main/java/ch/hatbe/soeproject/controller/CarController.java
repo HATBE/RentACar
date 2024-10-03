@@ -21,9 +21,6 @@ public class CarController {
             @RequestParam(value = "fromDate", required = false, defaultValue = "0") int fromDate,
             @RequestParam(value = "toDate", required = false, defaultValue = "" + Integer.MAX_VALUE) int toDate
     ) {
-
-
-
         List<Car> cars = this.carService.getCars(fromDate, toDate);
 
         if (cars.size() <= 0) {
