@@ -16,7 +16,7 @@ public class CarServiceImpl implements CarService {
         this.carRepository = carRepository;
     }
 
-    public List<Car> getCars() {
-        return carRepository.findByMakeAndBuildYear("Nissan", 1998);
+    public List<Car> getCars(int from, int to) {
+        return carRepository.findByBuildYearRange(from, to);
     }
 }

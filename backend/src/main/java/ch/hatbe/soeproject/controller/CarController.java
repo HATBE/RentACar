@@ -17,8 +17,14 @@ public class CarController {
     }
 
     @GetMapping(value = { "", "/" })
-    public ResponseEntity<?> getCars() {
-        List<Car> cars = this.carService.getCars();
+    public ResponseEntity<?> getCars(
+            @RequestParam(value = "fromDate", required = false, defaultValue = "0") int fromDate,
+            @RequestParam(value = "toDate", required = false, defaultValue = "" + Integer.MAX_VALUE) int toDate
+    ) {
+
+
+
+        List<Car> cars = this.carService.getCars(fromDate, toDate);
 
         if (cars.size() <= 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CAR_NOT_FOUND"));
