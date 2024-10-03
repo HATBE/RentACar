@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Okt 2024 um 22:55
+-- Erstellungszeit: 03. Okt 2024 um 23:12
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -60,7 +60,32 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`Cid`, `Cmake`, `Cmodel`, `CbuildYear`, `Ccategory`, `Chorsepower`, `Cseatscount`, `CpricePerDay`, `CgearType`) VALUES
-(1, 'Nissan', 'Skyline R34 GT-R', 1998, 'JDM', 280, 4, 500, 'MANUAL');
+(1, 'Nissan', 'Skyline R34 GT-R', 1998, 'JDM', 280, 4, 500, 'MANUAL'),
+(2, 'Toyota', 'Supra MK4', 1993, 'JDM', 320, 4, 450, 'MANUAL'),
+(3, 'Mazda', 'RX-7 FD', 1992, 'JDM', 276, 4, 400, 'MANUAL'),
+(4, 'Honda', 'NSX NA1', 1990, 'JDM', 270, 2, 600, 'MANUAL'),
+(5, 'Subaru', 'Impreza WRX STi', 1999, 'JDM', 280, 5, 350, 'MANUAL'),
+(6, 'Mitsubishi', 'Lancer Evolution VI', 1999, 'JDM', 280, 5, 375, 'MANUAL'),
+(7, 'Toyota', 'Camry', 2020, 'Sedan', 203, 5, 80, 'AUTOMATIC'),
+(8, 'Honda', 'Civic', 2019, 'Sedan', 158, 5, 75, 'AUTOMATIC'),
+(9, 'Ford', 'Focus', 2018, 'Hatchback', 160, 5, 70, 'AUTOMATIC'),
+(10, 'Chevrolet', 'Malibu', 2021, 'Sedan', 160, 5, 85, 'AUTOMATIC'),
+(11, 'Volkswagen', 'Golf', 2020, 'Hatchback', 147, 5, 80, 'AUTOMATIC'),
+(12, 'Hyundai', 'Elantra', 2021, 'Sedan', 147, 5, 70, 'AUTOMATIC'),
+(13, 'Kia', 'Sportage', 2022, 'SUV', 187, 5, 100, 'AUTOMATIC'),
+(14, 'Nissan', 'Altima', 2021, 'Sedan', 188, 5, 90, 'AUTOMATIC'),
+(15, 'Mazda', 'CX-5', 2021, 'SUV', 187, 5, 95, 'AUTOMATIC'),
+(16, 'Subaru', 'Forester', 2020, 'SUV', 182, 5, 100, 'AUTOMATIC'),
+(17, 'Lamborghini', 'Aventador SVJ', 2021, 'Supercar', 759, 2, 2000, 'AUTOMATIC'),
+(18, 'Ferrari', '488 Pista', 2020, 'Supercar', 710, 2, 1800, 'AUTOMATIC'),
+(19, 'McLaren', '720S', 2021, 'Supercar', 710, 2, 1900, 'AUTOMATIC'),
+(20, 'Porsche', '911 Turbo S', 2021, 'Supercar', 640, 2, 1500, 'AUTOMATIC'),
+(21, 'Bugatti', 'Chiron', 2020, 'Supercar', 1500, 2, 5000, 'AUTOMATIC'),
+(22, 'Dacia', 'Sandero', 2021, 'Compact', 90, 5, 40, 'MANUAL'),
+(23, 'Renault', 'Clio', 2020, 'Compact', 100, 5, 50, 'MANUAL'),
+(24, 'Skoda', 'Fabia', 2019, 'Compact', 95, 5, 45, 'MANUAL'),
+(25, 'Hyundai', 'i20', 2020, 'Compact', 100, 5, 50, 'MANUAL'),
+(26, 'Kia', 'Rio', 2021, 'Compact', 100, 5, 50, 'MANUAL');
 
 -- --------------------------------------------------------
 
@@ -115,7 +140,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT für Tabelle `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
