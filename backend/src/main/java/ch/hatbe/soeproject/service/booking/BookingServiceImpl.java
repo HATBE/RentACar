@@ -1,6 +1,5 @@
 package ch.hatbe.soeproject.service.booking;
 
-import ch.hatbe.soeproject.entities.Car;
 import ch.hatbe.soeproject.persistance.Database;
 import org.springframework.stereotype.Service;
 

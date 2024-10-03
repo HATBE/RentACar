@@ -1,6 +1,6 @@
 package ch.hatbe.soeproject.persistance;
 
-import ch.hatbe.soeproject.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.Car;
 
 import java.util.ArrayList;
 

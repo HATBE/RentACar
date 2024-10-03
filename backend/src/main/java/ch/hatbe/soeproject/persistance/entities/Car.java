@@ -1,4 +1,4 @@
-package ch.hatbe.soeproject.entities;
+package ch.hatbe.soeproject.persistance.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

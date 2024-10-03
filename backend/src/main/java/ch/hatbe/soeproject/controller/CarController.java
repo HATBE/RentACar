@@ -1,6 +1,6 @@
 package ch.hatbe.soeproject.controller;
 
-import ch.hatbe.soeproject.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.service.car.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
