@@ -1,4 +1,4 @@
-package ch.hatbe.soeproject.persistance.repositories.cars;
+package ch.hatbe.soeproject.persistance.repositories;
 
 import ch.hatbe.soeproject.persistance.entities.Car;
 import org.springframework.data.jpa.repository.JpaRepository;

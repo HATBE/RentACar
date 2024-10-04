@@ -18,7 +18,7 @@ public class Car {
     @Column(name = "Cmodel", nullable = false)
     private String model;
 
-    @Column(name = "CbuildYear", nullable = false) // Map to correct column name
+    @Column(name = "CbuildYear", nullable = false)
     private int buildYear;
 
     @Column(name = "Ccategory", nullable = false)
@@ -34,6 +34,6 @@ public class Car {
     private float pricePerDay;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "CgearType", nullable = false) // Map to correct column name
+    @Column(name = "CgearType", nullable = false)
     private GearType gearType;
 }
