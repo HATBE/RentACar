@@ -1,10 +1,16 @@
-import HeaderNavLinkButton from "./HeaderNavLinkButton.tsx";
+import HeaderNavLinkButton from './HeaderNavLinkButton.tsx';
+import { Link } from 'react-router-dom';
+
+import './header.css';
 
 export default function Header() {
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
         <div className="container">
+          <Link className="navbar-brand link-light text-decoration-none" to="/">
+            <h1 className="h3 text-light fw-bold">Carmania</h1>
+          </Link>
           <div className="d-flex justify-content-end">
             <button
               className="navbar-toggler"
@@ -19,10 +25,8 @@ export default function Header() {
             </button>
           </div>
           <div className="collapse navbar-collapse" id="navbarHeader">
-            <h1 className="h3 text-light fw-bold">Carmania</h1>
             <ul className="ms-3 navbar-nav me-auto">
-              <HeaderNavLinkButton link={"/"} text={"Home"} />
-              <HeaderNavLinkButton link={"/cars/1"} text={"Car"} />
+              <HeaderNavLinkButton link={'/admin'} text={'ADMIN'} />
             </ul>
           </div>
         </div>

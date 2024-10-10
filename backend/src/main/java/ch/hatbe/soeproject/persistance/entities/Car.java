@@ -39,6 +39,10 @@ public class Car {
     @Column(name = "CgearType", nullable = false)
     private GearType gearType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "CfuelType", nullable = false)
+    private FuelType fuelType;
+
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings;
 }

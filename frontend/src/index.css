@@ -1,3 +1,26 @@
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin: 0;
 }
+
+.thumpnail {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16/9 !important;
+}
+
+.hover-primary:hover * {
+    color: var(--bs-primary) !important;
+    transition-duration: .2s;
+}
+
+.car-item:hover .h5 {
+    color: var(--bs-primary) !important;
+    transition-duration: .2s;
+}
+
+.cyan-text-gradient {
+    background: linear-gradient(to right, #00ffff, #00ccff, #0099ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
