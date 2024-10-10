@@ -1,14 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Layout from "./components/Layout.tsx";
+import LandingPage from "./pages/LandingPage.tsx";
+import CarPage from "./pages/CarPage.tsx";
+import NotFoundPage from "./pages/errors/NotFoundPage.tsx";
 
-function App() {
-  return (
-    <>
-     init
-    </>
-  )
+export default function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<LandingPage />} />
+                    <Route path="/car/:id" element={<CarPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Route>
+            </Routes>
+        </Router>
+    )
 }
-
-export default App
