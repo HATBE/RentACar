@@ -1,7 +1,6 @@
 package ch.hatbe.soeproject.persistance.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;
