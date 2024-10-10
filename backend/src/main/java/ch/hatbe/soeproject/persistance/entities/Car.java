@@ -3,6 +3,8 @@ package ch.hatbe.soeproject.persistance.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "cars")
@@ -36,4 +38,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     @Column(name = "CgearType", nullable = false)
     private GearType gearType;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings;
 }

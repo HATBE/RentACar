@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Okt 2024 um 23:12
+-- Erstellungszeit: 10. Okt 2024 um 15:01
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bookings` (
-  `Rid` int(11) NOT NULL,
+  `Bid` int(11) NOT NULL,
   `Uid` int(11) NOT NULL,
   `Cid` int(11) NOT NULL,
-  `RstartDate` datetime NOT NULL,
-  `RendDate` datetime NOT NULL,
-  `RcreationDate` int(11) NOT NULL,
-  `RcalculatedPrice` float NOT NULL
+  `BstartDate` datetime NOT NULL,
+  `BendDate` datetime NOT NULL,
+  `BcreationDate` int(11) NOT NULL,
+  `BcalculatedPrice` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -110,7 +110,7 @@ CREATE TABLE `users` (
 -- Indizes für die Tabelle `bookings`
 --
 ALTER TABLE `bookings`
-  ADD PRIMARY KEY (`Rid`),
+  ADD PRIMARY KEY (`Bid`),
   ADD KEY `bookings_cars` (`Cid`),
   ADD KEY `bookings_users` (`Uid`);
 
@@ -134,7 +134,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `Rid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `cars`
