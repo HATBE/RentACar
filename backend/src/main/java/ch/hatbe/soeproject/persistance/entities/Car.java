@@ -2,11 +2,12 @@ package ch.hatbe.soeproject.persistance.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
 @Table(name = "cars")
 public class Car {
     @Id
