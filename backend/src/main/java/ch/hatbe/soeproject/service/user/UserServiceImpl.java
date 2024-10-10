@@ -1,19 +1,21 @@
 package ch.hatbe.soeproject.service.user;
 
-import ch.hatbe.soeproject.persistance.Database;
+import ch.hatbe.soeproject.persistance.entities.User;
+import ch.hatbe.soeproject.persistance.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final Database database;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(Database database) {
-        this.database = database;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public ArrayList<String> getUsers() {
-        return database.getUsers();
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }
