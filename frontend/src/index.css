@@ -19,8 +19,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     transition-duration: .2s;
 }
 
+.car-item .card {
+    transition: all;
+    transition-duration: .2s;
+}
+
+.car-item:hover .card {
+    transform: scale(105%);
+    z-index: 10000;
+}
+
+@media screen and (max-width: 768px) {
+    .car-item:hover .card {
+        transform: none;
+    }
+}
+
 .cyan-text-gradient {
-    background: linear-gradient(to right, #00ffff, #00ccff, #0099ff);
+    background: linear-gradient(to right, #00c4ff, #00a6ff, #006fff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
