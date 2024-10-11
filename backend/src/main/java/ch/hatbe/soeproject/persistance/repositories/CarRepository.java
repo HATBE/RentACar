@@ -1,6 +1,7 @@
 package ch.hatbe.soeproject.persistance.repositories;
 
 import ch.hatbe.soeproject.persistance.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             "AND (:seatsMin IS NULL OR c.seatsCount >= :seatsMin) " +
             "AND (:seatsMax IS NULL OR c.seatsCount <= :seatsMax) " +
             "AND (:gearType IS NULL OR c.gearType = :gearType) " +
+            "AND (:fuelType IS NULL OR c.fuelType = :fuelType) " +
             "ORDER BY " +
             "CASE WHEN :priceSort = 'ASC' THEN c.pricePerDay END ASC, " +
             "CASE WHEN :priceSort = 'DESC' THEN c.pricePerDay END DESC, " +
@@ -36,6 +38,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("seatsMin") Integer seatsMin,
             @Param("seatsMax") Integer seatsMax,
             @Param("gearType") GearType gearType,
+            @Param("fuelType") FuelType fuelType,
             @Param("priceSort") String priceSort,
             @Param("horsepowerSort") String horsepowerSort,
             @Param("buildYearSort") String buildYearSort

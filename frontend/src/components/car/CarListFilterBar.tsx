@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface FilterBarProps {
@@ -20,6 +20,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [seatsMin, setSeatsMin] = useState<string | null>(defaultValues.get('seatsMin'));
   const [seatsMax, setSeatsMax] = useState<string | null>(defaultValues.get('seatsMax'));
   const [gearType, setGearType] = useState<string | null>(defaultValues.get('gearType'));
+  const [fuelType, setFuelType] = useState<string | null>(defaultValues.get('fuelType'));
   const [priceSort, setPriceSort] = useState<string | null>(defaultValues.get('priceSort'));
   const [horsepowerSort, setHorsepowerSort] = useState<string | null>(
     defaultValues.get('horsepowerSort')
@@ -27,6 +28,32 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [buildYearSort, setBuildYearSort] = useState<string | null>(
     defaultValues.get('buildYearSort')
   );
+
+  // State to hold fetched options
+  const [gearTypes, setGearTypes] = useState<string[]>([]);
+  const [fuelTypes, setFuelTypes] = useState<string[]>([]);
+
+  // Error state for API call
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/v1/cars/options')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch car options');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setGearTypes(data.gearTypes || []);
+        setFuelTypes(data.fuelTypes || []);
+        setFetchError(null); // Clear any previous error
+      })
+      .catch((error) => {
+        console.error('Error fetching car options:', error);
+        setFetchError('Failed to load car options. Please try again later.');
+      });
+  }, []);
 
   const updateQueryString = () => {
     const params = new URLSearchParams();
@@ -40,6 +67,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
     if (seatsMin) params.set('seatsMin', seatsMin);
     if (seatsMax) params.set('seatsMax', seatsMax);
     if (gearType) params.set('gearType', gearType);
+    if (fuelType) params.set('fuelType', fuelType);
     if (priceSort) params.set('priceSort', priceSort);
     if (horsepowerSort) params.set('horsepowerSort', horsepowerSort);
     if (buildYearSort) params.set('buildYearSort', buildYearSort);
@@ -50,6 +78,9 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   return (
     <div className="row g-3 mb-3">
       <h4>Filter Cars</h4>
+
+      {fetchError && <div className="alert alert-danger">{fetchError}</div>}
+
       <div className="col-12 col-md-4 col-xl-2">
         <label>Build Year From: </label>
         <input
@@ -144,8 +175,27 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
           onChange={(e) => setGearType(e.target.value || null)}
         >
           <option value="">any</option>
-          <option value="MANUAL">Manual</option>
-          <option value="AUTOMATIC">Automatic</option>
+          {gearTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="col-12 col-md-4 col-xl-2">
+        <label>Fuel Type: </label>
+        <select
+          className="form-control"
+          value={fuelType || ''}
+          onChange={(e) => setFuelType(e.target.value || null)}
+        >
+          <option value="">any</option>
+          {fuelTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
         </select>
       </div>
       <div className="col-12 col-md-4 col-xl-2">

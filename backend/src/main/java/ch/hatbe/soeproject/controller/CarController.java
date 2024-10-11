@@ -1,6 +1,7 @@
 package ch.hatbe.soeproject.controller;
 
 import ch.hatbe.soeproject.persistance.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
 import ch.hatbe.soeproject.service.car.CarService;
 import ch.hatbe.soeproject.validation.Validate;
@@ -8,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +33,7 @@ public class CarController {
             @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
             @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
             @RequestParam(value = "gearType", required = false) GearType gearType,
+            @RequestParam(value = "fuelType", required = false) FuelType fuelType,  // New parameter
             @RequestParam(value = "priceSort", required = false) String priceSort,
             @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
             @RequestParam(value = "buildYearSort", required = false) String buildYearSort
@@ -38,7 +42,7 @@ public class CarController {
         horsepowerSort = Validate.validateSortDirection(horsepowerSort);
         buildYearSort = Validate.validateSortDirection(buildYearSort);
 
-        List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax,seatsMin, seatsMax, gearType, priceSort, horsepowerSort, buildYearSort);
+        List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to service
 
         if (cars.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CARS_NOT_FOUND"));
@@ -71,5 +75,17 @@ public class CarController {
     @DeleteMapping("/{carid}")
     public ResponseEntity<String> deleteCar(@PathVariable int carid) {
         return ResponseEntity.ok("delete car" + carid);
+    }
+
+    @GetMapping("/options")
+    public ResponseEntity<?> getCarOptions() {
+        GearType[] gearTypes = GearType.values();
+        FuelType[] fuelTypes = FuelType.values();
+
+        Map<String, Object> options = new HashMap<>();
+        options.put("gearTypes", gearTypes);
+        options.put("fuelTypes", fuelTypes);
+
+        return ResponseEntity.ok(options);
     }
 }
