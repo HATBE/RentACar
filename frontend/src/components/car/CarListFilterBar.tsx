@@ -170,7 +170,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       <div className="col-12 col-md-4 col-xl-2">
         <label>Gear Type: </label>
         <select
-          className="form-control"
+          className="form-select"
           value={gearType || ''}
           onChange={(e) => setGearType(e.target.value || null)}
         >
@@ -186,7 +186,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       <div className="col-12 col-md-4 col-xl-2">
         <label>Fuel Type: </label>
         <select
-          className="form-control"
+          className="form-select"
           value={fuelType || ''}
           onChange={(e) => setFuelType(e.target.value || null)}
         >
@@ -201,7 +201,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       <div className="col-12 col-md-4 col-xl-2">
         <label>Price Sort: </label>
         <select
-          className="form-control"
+          className="form-select"
           value={priceSort || ''}
           onChange={(e) => setPriceSort(e.target.value || null)}
         >
@@ -213,7 +213,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       <div className="col-12 col-md-4 col-xl-2">
         <label>Horsepower Sort: </label>
         <select
-          className="form-control"
+          className="form-select"
           value={horsepowerSort || ''}
           onChange={(e) => setHorsepowerSort(e.target.value || null)}
         >
@@ -225,7 +225,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       <div className="col-12 col-md-4 col-xl-2">
         <label>Build Year Sort: </label>
         <select
-          className="form-control"
+          className="form-select"
           value={buildYearSort || ''}
           onChange={(e) => setBuildYearSort(e.target.value || null)}
         >
