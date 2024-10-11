@@ -9,34 +9,37 @@ export default function CarListItem({ car }: CarListItemProps) {
   return (
     <div className="col-12 col-md-4 col-xl-3">
       <Link className="car-item link-dark text-decoration-none" to={`/cars/${car.id}`}>
-        <div className="card border-0 shadow-lg overflow-hidden">
-          <div className="card-body p-0">
-            <img className="user-select-none thumpnail" src="/assets/img/car.jpg" alt="" />
+        <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
+          <div className="card-body h-100 p-0">
+            <img className="user-select-none thumpnail h-100" src="/assets/img/car.jpg" alt="" />
             <div className="p-3">
-              <div className="text-center h5 fw-bold">
+              <div
+                style={{ height: '50px' }}
+                className="text-center h5 fw-bold d-flex align-items-center justify-content-center"
+              >
                 {car.make} {car.model} {car.buildYear}
               </div>
               <div className="row g-2 mt-2">
                 <div className="col-6">
-                  <div className="bg-dark rounded text-light px-2 py-1">
+                  <div className="bg-light rounded text-dark px-2 py-1">
                     <i className="bi bi-speedometer me-2"></i>
                     <span>{car.horsepower} PS</span>
                   </div>
                 </div>
                 <div className="col-6 ">
-                  <div className="bg-dark rounded text-light px-2 py-1">
+                  <div className="bg-light rounded text-dark px-2 py-1">
                     <i className="bi bi-person-fill me-2"></i>
                     <span>{car.seatsCount}</span>
                   </div>
                 </div>
                 <div className="col-6 ">
-                  <div className="bg-dark rounded text-light px-2 py-1">
+                  <div className="bg-light rounded text-dark px-2 py-1">
                     <i className="bi bi-arrow-down-up me-2"></i>
                     <span>{car.gearType}</span>
                   </div>
                 </div>
                 <div className="col-6">
-                  <div className="bg-dark rounded text-light px-2 py-1">
+                  <div className="bg-light rounded text-dark px-2 py-1">
                     <i className="bi bi-fuel-pump me-2"></i>
                     <span>{car.fuelType}</span>
                   </div>
