@@ -1,7 +1,9 @@
 package ch.hatbe.soeproject.controller;
 
 import ch.hatbe.soeproject.persistance.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.GearType;
 import ch.hatbe.soeproject.service.car.CarService;
+import ch.hatbe.soeproject.validation.Validate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,26 @@ public class CarController {
 
     @GetMapping(value = { "", "/" })
     public ResponseEntity<?> getCars(
-        @RequestParam(value = "fromDate", required = false, defaultValue = "0") int fromDate,
-        @RequestParam(value = "toDate", required = false, defaultValue = "" + Integer.MAX_VALUE) int toDate
+            @RequestParam(value = "buildYearFrom", required = false) Integer buildYearFrom,
+            @RequestParam(value = "buildYearTo", required = false) Integer buildYearTo,
+            @RequestParam(value = "make", required = false) String make,
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "priceMin", required = false) Float priceMin,
+            @RequestParam(value = "priceMax", required = false) Float priceMax,
+            @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
+            @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
+            @RequestParam(value = "gearType", required = false) GearType gearType,
+            @RequestParam(value = "priceSort", required = false) String priceSort,
+            @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
+            @RequestParam(value = "buildYearSort", required = false) String buildYearSort
     ) {
-        List<Car> cars = this.carService.getCars(fromDate, toDate);
+        priceSort = Validate.validateSortDirection(priceSort);
+        horsepowerSort = Validate.validateSortDirection(horsepowerSort);
+        buildYearSort = Validate.validateSortDirection(buildYearSort);
 
-        if (cars.size() <= 0) {
+        List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax,seatsMin, seatsMax, gearType, priceSort, horsepowerSort, buildYearSort);
+
+        if (cars.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CARS_NOT_FOUND"));
         }
 
