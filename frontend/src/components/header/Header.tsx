@@ -9,7 +9,9 @@ export default function Header() {
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
         <div className="container">
           <Link className="navbar-brand link-light text-decoration-none" to="/">
-            <h1 className="h3 text-light fw-bold">Carmania</h1>
+            <h1 className="h3 text-light fw-bold">
+              Rent<i className="cyan-text-gradient">A</i>Car.ch
+            </h1>
           </Link>
           <div className="d-flex justify-content-end">
             <button

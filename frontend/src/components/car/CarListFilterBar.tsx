@@ -55,6 +55,9 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         <input
           placeholder="any"
           className="form-control"
+          min="1900"
+          max="2099"
+          step="1"
           type="number"
           value={buildYearFrom || ''}
           onChange={(e) => setBuildYearFrom(e.target.value || null)}
@@ -65,6 +68,9 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         <input
           placeholder="any"
           className="form-control"
+          min="1900"
+          max="2099"
+          step="1"
           type="number"
           value={buildYearTo || ''}
           onChange={(e) => setBuildYearTo(e.target.value || null)}
@@ -185,7 +191,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
             updateQueryString();
           }}
         >
-          Apply Filters
+          Search
         </button>
       </div>
     </div>
