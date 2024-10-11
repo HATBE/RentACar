@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CarRepository extends JpaRepository<Car, Long> {
+public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query("SELECT c FROM Car c WHERE c.buildYear BETWEEN :buildYearFrom AND :buildYearTo")
     List<Car> findByBuildYearRange(@Param("buildYearFrom") int buildYearFrom, @Param("buildYearTo") int buildYearTo);
 }

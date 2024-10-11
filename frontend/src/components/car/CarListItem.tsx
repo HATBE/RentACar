@@ -8,7 +8,7 @@ type CarListItemProps = {
 export default function CarListItem({ car }: CarListItemProps) {
   return (
     <div className="col-12 col-md-4 col-xl-3">
-      <Link className="car-item link-dark text-decoration-none" to="/cars/1">
+      <Link className="car-item link-dark text-decoration-none" to={`/cars/${car.id}`}>
         <div className="card border-0 shadow-lg overflow-hidden">
           <div className="card-body p-0">
             <img className="user-select-none thumpnail" src="/assets/img/car.jpg" alt="" />

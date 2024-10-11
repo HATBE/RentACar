@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cars")
@@ -24,15 +25,21 @@ public class CarController {
         List<Car> cars = this.carService.getCars(fromDate, toDate);
 
         if (cars.size() <= 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CAR_NOT_FOUND"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CARS_NOT_FOUND"));
         }
 
         return ResponseEntity.ok(cars);
     }
 
     @GetMapping("/{carid}")
-    public ResponseEntity<String> getCar(@PathVariable int carid) {
-        return ResponseEntity.ok("car: " + carid);
+    public ResponseEntity<?> getCar(@PathVariable int carid) {
+        Optional<Car> car = this.carService.getCarById(carid);
+
+        if (car.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Car not found", "CAR_NOT_FOUND"));
+        }
+
+        return ResponseEntity.ok(car.get());
     }
 
     @PostMapping("/")

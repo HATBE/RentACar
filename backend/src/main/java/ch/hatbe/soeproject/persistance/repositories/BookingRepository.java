@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BookingRepository extends JpaRepository<Booking, Long> {
+public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Override
     List<Booking> findAll();
 }
