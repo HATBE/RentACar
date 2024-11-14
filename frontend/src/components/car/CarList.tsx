@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner.tsx';
 import { useLocation } from 'react-router-dom';
 import CarListFilterBar from './CarListFilterBar.tsx';
-import { Car } from '../../ types/Car.ts';
 import ErrorBanner from '../ErrorBanner.tsx';
+import { Car } from '../../types/Car.ts';
 
 export default function CarList() {
   const [cars, setCars] = useState<Car[]>([]);
@@ -27,6 +27,7 @@ export default function CarList() {
       }
 
       const data: Car[] = await response.json();
+
       setCars(data);
       setLoading(false);
     } catch (err) {

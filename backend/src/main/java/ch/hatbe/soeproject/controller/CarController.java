@@ -24,19 +24,19 @@ public class CarController {
 
     @GetMapping(value = { "", "/" })
     public ResponseEntity<?> getCars(
-            @RequestParam(value = "buildYearFrom", required = false) Integer buildYearFrom,
-            @RequestParam(value = "buildYearTo", required = false) Integer buildYearTo,
-            @RequestParam(value = "make", required = false) String make,
-            @RequestParam(value = "category", required = false) String category,
-            @RequestParam(value = "priceMin", required = false) Float priceMin,
-            @RequestParam(value = "priceMax", required = false) Float priceMax,
-            @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
-            @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
-            @RequestParam(value = "gearType", required = false) GearType gearType,
-            @RequestParam(value = "fuelType", required = false) FuelType fuelType,  // New parameter
-            @RequestParam(value = "priceSort", required = false) String priceSort,
-            @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
-            @RequestParam(value = "buildYearSort", required = false) String buildYearSort
+        @RequestParam(value = "buildYearFrom", required = false) Integer buildYearFrom,
+        @RequestParam(value = "buildYearTo", required = false) Integer buildYearTo,
+        @RequestParam(value = "make", required = false) String make,
+        @RequestParam(value = "category", required = false) String category,
+        @RequestParam(value = "priceMin", required = false) Float priceMin,
+        @RequestParam(value = "priceMax", required = false) Float priceMax,
+        @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
+        @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
+        @RequestParam(value = "gearType", required = false) GearType gearType,
+        @RequestParam(value = "fuelType", required = false) FuelType fuelType,
+        @RequestParam(value = "priceSort", required = false) String priceSort,
+        @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
+        @RequestParam(value = "buildYearSort", required = false) String buildYearSort
     ) {
         priceSort = Validate.validateSortDirection(priceSort);
         horsepowerSort = Validate.validateSortDirection(horsepowerSort);

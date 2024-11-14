@@ -33,8 +33,9 @@ public class CarServiceImpl implements CarService {
             String horsepowerSort,
             String buildYearSort) {
 
-        return carRepository.findAllByMultipleFilters(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to repository
+        return carRepository.findAll(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to repository
     }
+
     public Optional<Car> getCarById(int carId) {
         return carRepository.findById(carId);
     }

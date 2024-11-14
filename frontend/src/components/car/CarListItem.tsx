@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Car } from '../../ types/Car.ts';
+import { Car } from '../../types/Car.ts';
 
 type CarListItemProps = {
   car: Car;
