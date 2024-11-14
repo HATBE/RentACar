@@ -23,7 +23,7 @@ export default function CarListItem({ car }: CarListItemProps) {
                 <div className="col-6">
                   <div className="bg-light rounded text-dark px-2 py-1">
                     <i className="bi bi-speedometer me-2"></i>
-                    <span>{car.horsepower} PS</span>
+                    <span>{car.horsepower} HP</span>
                   </div>
                 </div>
                 <div className="col-6 ">
@@ -46,7 +46,7 @@ export default function CarListItem({ car }: CarListItemProps) {
                 </div>
               </div>
               <div className="mt-4 mb-2 h4 fw-bold cyan-text-gradient text-center">
-                CHF {car.pricePerDay} / Tag
+                CHF {car.pricePerDay} / Day
               </div>
             </div>
           </div>
