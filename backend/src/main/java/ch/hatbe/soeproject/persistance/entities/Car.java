@@ -42,7 +42,4 @@ public class Car {
     @Enumerated(EnumType.STRING)
     @Column(name = "CfuelType", nullable = false)
     private FuelType fuelType;
-
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Booking> bookings;
 }
