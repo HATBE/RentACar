@@ -6,7 +6,9 @@ import ch.hatbe.soeproject.persistance.entities.GearType;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,14 @@ public class CarServiceImpl implements CarService {
         return carRepository.findById(carId);
     }
 
+    public Map<String, Object> getCarOptions() {
+        GearType[] gearTypes = GearType.values();
+        FuelType[] fuelTypes = FuelType.values();
 
+        Map<String, Object> options = new HashMap<>();
+        options.put("gearTypes", gearTypes);
+        options.put("fuelTypes", fuelTypes);
+
+        return options;
+    }
 }

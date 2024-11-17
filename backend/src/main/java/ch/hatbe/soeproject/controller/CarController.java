@@ -79,13 +79,6 @@ public class CarController {
 
     @GetMapping("/options")
     public ResponseEntity<?> getCarOptions() {
-        GearType[] gearTypes = GearType.values();
-        FuelType[] fuelTypes = FuelType.values();
-
-        Map<String, Object> options = new HashMap<>();
-        options.put("gearTypes", gearTypes);
-        options.put("fuelTypes", fuelTypes);
-
-        return ResponseEntity.ok(options);
+        return ResponseEntity.ok(this.carService.getCarOptions());
     }
 }
