@@ -46,6 +46,7 @@ public class CarServiceImpl implements CarService {
         GearType[] gearTypes = GearType.values();
         FuelType[] fuelTypes = FuelType.values();
 
+
         Map<String, Object> options = new HashMap<>();
         options.put("gearTypes", gearTypes);
         options.put("fuelTypes", fuelTypes);

@@ -1,5 +1,6 @@
 package ch.hatbe.soeproject.persistance.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -23,9 +24,6 @@ public class Car {
     @Column(name = "CbuildYear", nullable = false)
     private int buildYear;
 
-    @Column(name = "Ccategory", nullable = false)
-    private String category;
-
     @Column(name = "Chorsepower", nullable = false)
     private int horsepower;
 
@@ -42,4 +40,8 @@ public class Car {
     @Enumerated(EnumType.STRING)
     @Column(name = "CfuelType", nullable = false)
     private FuelType fuelType;
+
+    @ManyToOne()
+    @JoinColumn(name = "CCid", nullable = false)
+    private CarCategory category;
 }

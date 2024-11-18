@@ -11,10 +11,11 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query("SELECT c FROM Car c " +
+            "JOIN c.category cat " +
             "WHERE (:buildYearFrom IS NULL OR c.buildYear >= :buildYearFrom) " +
             "AND (:buildYearTo IS NULL OR c.buildYear <= :buildYearTo) " +
             "AND (:make IS NULL OR c.make = :make) " +
-            "AND (:category IS NULL OR c.category = :category) " +
+            "AND (:categoryName IS NULL OR cat.name = :categoryName) " +
             "AND (:priceMin IS NULL OR c.pricePerDay >= :priceMin) " +
             "AND (:priceMax IS NULL OR c.pricePerDay <= :priceMax) " +
             "AND (:seatsMin IS NULL OR c.seatsCount >= :seatsMin) " +
@@ -32,7 +33,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("buildYearFrom") Integer buildYearFrom,
             @Param("buildYearTo") Integer buildYearTo,
             @Param("make") String make,
-            @Param("category") String category,
+            @Param("categoryName") String categoryName,
             @Param("priceMin") Float priceMin,
             @Param("priceMax") Float priceMax,
             @Param("seatsMin") Integer seatsMin,
@@ -43,4 +44,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("horsepowerSort") String horsepowerSort,
             @Param("buildYearSort") String buildYearSort
     );
+
+
 }

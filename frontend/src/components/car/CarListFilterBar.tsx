@@ -32,6 +32,8 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   // State to hold fetched options
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+
 
   // Error state for API call
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -47,11 +49,28 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       .then((data) => {
         setGearTypes(data.gearTypes || []);
         setFuelTypes(data.fuelTypes || []);
-        setFetchError(null); // Clear any previous error
+        setFetchError(null);
       })
       .catch((error) => {
         console.error('Error fetching car options:', error);
         setFetchError('Failed to load car options. Please try again later.');
+      });
+
+    fetch('http://localhost:8080/api/v1/carcategories')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const categoryNames = data.map((category: { name: string }) => category.name);
+        setCategories(categoryNames);
+        setFetchError(null);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+        setFetchError('Failed to load car categories. Please try again later.');
       });
   }, []);
 
@@ -119,13 +138,18 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
       </div>
       <div className="col-12 col-md-4 col-xl-2">
         <label>Category: </label>
-        <input
-          placeholder="any"
-          className="form-control"
-          type="text"
+        <select
+          className="form-select"
           value={category || ''}
           onChange={(e) => setCategory(e.target.value || null)}
-        />
+        >
+          <option value="">any</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="col-12 col-md-4 col-xl-2">
         <label>Price Min: </label>
