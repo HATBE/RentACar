@@ -53,4 +53,17 @@ public class CarServiceImpl implements CarService {
 
         return options;
     }
+
+    public boolean deleteCarById(int carId) {
+        // check if car exists
+        Optional<Car> car = carRepository.findById(carId);
+
+        if (car.isEmpty()) {
+            return false;
+        }
+
+        carRepository.deleteById(carId);
+
+        return true;
+    }
 }

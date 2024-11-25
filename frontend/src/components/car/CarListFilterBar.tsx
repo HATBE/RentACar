@@ -56,6 +56,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         setFetchError('Failed to load car options. Please try again later.');
       });
 
+
     fetch('http://localhost:8080/api/v1/carcategories')
       .then((response) => {
         if (!response.ok) {

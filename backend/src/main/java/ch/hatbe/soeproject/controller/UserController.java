@@ -1,19 +1,20 @@
 package ch.hatbe.soeproject.controller;
 
 import ch.hatbe.soeproject.service.user.UserService;
-import ch.hatbe.soeproject.service.user.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// TODO:
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = { "", "/" })
+    @GetMapping(value = {"", "/"})
     public ResponseEntity<String> getUsers() {
         return ResponseEntity.ok("users");
     }

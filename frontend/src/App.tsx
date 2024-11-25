@@ -12,7 +12,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export default function App() {
   return (
     <Router>
-      <Routes>
+      <Routes>:id
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="/cars/:carid" element={<CarPage />} />

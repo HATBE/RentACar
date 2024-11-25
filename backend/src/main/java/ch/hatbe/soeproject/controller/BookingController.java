@@ -1,44 +1,69 @@
 package ch.hatbe.soeproject.controller;
 
+import ch.hatbe.soeproject.controller.response.ErrorResponse;
+import ch.hatbe.soeproject.persistance.entities.Booking;
 import ch.hatbe.soeproject.service.booking.BookingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/bookings")
 public class BookingController {
     private final BookingService bookingService;
+
     public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
-    @GetMapping(value = { "", "/" })
-    public ResponseEntity<String> getBookings() {
-        return ResponseEntity.ok("bookings");
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<?> getBooking(@PathVariable int bookingId) {
+        Optional<Booking> booking = bookingService.getBookingById(bookingId);
+
+        if (booking.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Booking found", "BOOKING_NOT_FOUND"));
+        }
+
+        return ResponseEntity.ok(booking);
     }
 
-    @GetMapping("/cars/{carid}")
-    public ResponseEntity<String> getCarBookings(@PathVariable int carid) {
-        return ResponseEntity.ok("car bookings: " + carid);
+    @GetMapping("/cars/{carId}")
+    public ResponseEntity<?> getCarBookings(@PathVariable int carId) {
+        List<Booking> bookings = bookingService.getBookingsByCarId(carId);
+
+        if (bookings.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
+        }
+
+        return ResponseEntity.ok(bookings);
     }
 
-    @GetMapping("/users/{userid}")
-    public ResponseEntity<String> getUserBookings(@PathVariable int userid) {
-        return ResponseEntity.ok("user bookings: " + userid);
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<?> getUserBookings(@PathVariable int userId) {
+        List<Booking> bookings = bookingService.getBookingsByUserId(userId);
+
+        if (bookings.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
+        }
+
+        return ResponseEntity.ok(bookings);
     }
 
-    @GetMapping("/{bookingid}")
-    public ResponseEntity<String> getBooking(@PathVariable int bookingid) {
-        return ResponseEntity.ok("booking: " + bookingid);
-    }
-
+    // TODO:
     @PostMapping("/")
     public ResponseEntity<String> postBooking() {
         return ResponseEntity.ok("post booking");
     }
 
-    @DeleteMapping("/{bookingid}")
-    public ResponseEntity<String> deleteUser(@PathVariable int bookingid) {
-        return ResponseEntity.ok("delete booking" + bookingid);
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<?> deleteUser(@PathVariable int bookingId) {
+        if (!bookingService.deleteBookingById(bookingId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Booking not found", "BOOKING_NOT_FOUND"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ErrorResponse("Booking successfully deleted", "BOOKING_DELETED"));
     }
 }

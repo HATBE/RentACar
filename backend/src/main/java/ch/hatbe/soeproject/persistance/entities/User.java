@@ -3,8 +3,6 @@ package ch.hatbe.soeproject.persistance.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Table(name = "users")
@@ -28,7 +26,4 @@ public class User {
 
     @Column(name = "UpasswordHash", nullable = false)
     private String passwordHash;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Booking> bookings;
 }

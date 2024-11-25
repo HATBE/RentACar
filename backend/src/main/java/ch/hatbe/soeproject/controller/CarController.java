@@ -1,5 +1,6 @@
 package ch.hatbe.soeproject.controller;
 
+import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
@@ -9,34 +10,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cars")
 public class CarController {
     private final CarService carService;
+
     public CarController(CarService carService) {
         this.carService = carService;
     }
 
-    @GetMapping(value = { "", "/" })
+    @GetMapping(value = {"", "/"})
     public ResponseEntity<?> getCars(
-        @RequestParam(value = "buildYearFrom", required = false) Integer buildYearFrom,
-        @RequestParam(value = "buildYearTo", required = false) Integer buildYearTo,
-        @RequestParam(value = "make", required = false) String make,
-        @RequestParam(value = "category", required = false) String category,
-        @RequestParam(value = "priceMin", required = false) Float priceMin,
-        @RequestParam(value = "priceMax", required = false) Float priceMax,
-        @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
-        @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
-        @RequestParam(value = "gearType", required = false) GearType gearType,
-        @RequestParam(value = "fuelType", required = false) FuelType fuelType,
-        @RequestParam(value = "priceSort", required = false) String priceSort,
-        @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
-        @RequestParam(value = "buildYearSort", required = false) String buildYearSort
+            @RequestParam(value = "buildYearFrom", required = false) Integer buildYearFrom,
+            @RequestParam(value = "buildYearTo", required = false) Integer buildYearTo,
+            @RequestParam(value = "make", required = false) String make,
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "priceMin", required = false) Float priceMin,
+            @RequestParam(value = "priceMax", required = false) Float priceMax,
+            @RequestParam(value = "seatsMin", required = false) Integer seatsMin,
+            @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
+            @RequestParam(value = "gearType", required = false) GearType gearType,
+            @RequestParam(value = "fuelType", required = false) FuelType fuelType,
+            @RequestParam(value = "priceSort", required = false) String priceSort,
+            @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
+            @RequestParam(value = "buildYearSort", required = false) String buildYearSort
     ) {
         priceSort = Validate.validateSortDirection(priceSort);
         horsepowerSort = Validate.validateSortDirection(horsepowerSort);
@@ -59,22 +59,28 @@ public class CarController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Car not found", "CAR_NOT_FOUND"));
         }
 
-        return ResponseEntity.ok(car.get());
+        return ResponseEntity.ok(car);
     }
 
+    // TODO:
     @PostMapping("/")
     public ResponseEntity<String> postCar() {
         return ResponseEntity.ok("post car");
     }
 
+    // TODO:
     @PatchMapping("/{carid}")
     public ResponseEntity<String> patchCar(@PathVariable int carid) {
         return ResponseEntity.ok("patch car" + carid);
     }
 
     @DeleteMapping("/{carid}")
-    public ResponseEntity<String> deleteCar(@PathVariable int carid) {
-        return ResponseEntity.ok("delete car" + carid);
+    public ResponseEntity<?> deleteCar(@PathVariable int carid) {
+        if (!this.carService.deleteCarById(carid)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Car not found", "CAR_NOT_FOUND"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ErrorResponse("Car successfully deleted", "CAR_DELETED"));
     }
 
     @GetMapping("/options")

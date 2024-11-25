@@ -1,4 +1,4 @@
-package ch.hatbe.soeproject.controller;
+package ch.hatbe.soeproject.controller.response;
 
 import lombok.Getter;
 import lombok.Setter;

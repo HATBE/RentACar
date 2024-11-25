@@ -47,7 +47,7 @@ export default function CarPage() {
           <div className="col-12 col-md-6">
             <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body p-0">
-                <img src="/assets/img/car.jpg" className="thumpnail" />
+                <img src="/assets/img/jdm.jpg" className="thumpnail" />
               </div>
             </div>
           </div>

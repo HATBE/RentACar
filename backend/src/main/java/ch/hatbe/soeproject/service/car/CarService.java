@@ -10,6 +10,10 @@ import java.util.Optional;
 
 public interface CarService {
     List<Car> getCars(Integer buildYearFrom, Integer buildYearTo, String make, String category, Float priceMin, Float priceMax, Integer seatsMin, Integer seatsMax, GearType gearType, FuelType fuelType, String priceSort, String horsepowerSort, String buildYearSort);
+
     Optional<Car> getCarById(int carid);
+
     Map<String, Object> getCarOptions();
+
+    boolean deleteCarById(int carId);
 }
