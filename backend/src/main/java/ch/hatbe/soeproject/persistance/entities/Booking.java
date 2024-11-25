@@ -3,6 +3,7 @@ package ch.hatbe.soeproject.persistance.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,10 +24,10 @@ public class Booking {
     private Car car;
 
     @Column(name = "BstartDate", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "BendDate", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Column(name = "BcreationDate", nullable = false)
     private LocalDateTime creationDate;

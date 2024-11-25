@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 18. Nov 2024 um 09:34
+-- Erstellungszeit: 25. Nov 2024 um 21:20
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -31,11 +31,18 @@ CREATE TABLE `bookings` (
   `Bid` int(11) NOT NULL,
   `Uid` int(11) NOT NULL,
   `Cid` int(11) NOT NULL,
-  `BstartDate` datetime NOT NULL,
-  `BendDate` datetime NOT NULL,
-  `BcreationDate` datetime NOT NULL,
+  `BstartDate` date NOT NULL,
+  `BendDate` date NOT NULL,
+  `BcreationDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `BcalculatedPrice` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `bookings`
+--
+
+INSERT INTO `bookings` (`Bid`, `Uid`, `Cid`, `BstartDate`, `BendDate`, `BcreationDate`, `BcalculatedPrice`) VALUES
+(3, 1, 1, '2024-11-26', '2024-11-27', '2024-11-25 20:19:39', 100);
 
 -- --------------------------------------------------------
 
@@ -145,6 +152,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Daten für Tabelle `users`
+--
+
+INSERT INTO `users` (`Uid`, `Ufirstname`, `Ulastname`, `Uemail`, `Uphone`, `UpasswordHash`) VALUES
+(1, 'demo', 'demo', 'demo@demo.demo', '0', '1');
+
+--
 -- Indizes der exportierten Tabellen
 --
 
@@ -183,7 +197,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT für Tabelle `carcategories`
@@ -201,7 +215,7 @@ ALTER TABLE `cars`
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints der exportierten Tabellen
