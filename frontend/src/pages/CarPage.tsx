@@ -34,7 +34,7 @@ export default function CarPage() {
   };
 
   const fetchBookings = async () => {
-    fetch(`http://localhost:8080/api/v1/bookings/car/${carid}`)
+    fetch(`http://localhost:8080/api/v1/bookings/car/${carid}?future=true`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch bookings');
@@ -44,11 +44,6 @@ export default function CarPage() {
       .then((data) => {
         const bookings: Booking[] = data;
         setBookings(bookings);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError((error as Error).message);
-        setLoading(false);
       });
   };
 
@@ -122,13 +117,13 @@ export default function CarPage() {
                 </div>
               </div>
             </div>
-            {bookings.length >= 0 && (
-              <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
-                <div className="card-body">
-                  <BookingCalendar bookings={bookings} />
-                </div>
+
+            <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
+              <div className="card-body">
+                {bookings.length > 0 && <BookingCalendar bookings={bookings} />}
+                {bookings.length === 0 && <span>This car has no bookings yet</span>}
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}

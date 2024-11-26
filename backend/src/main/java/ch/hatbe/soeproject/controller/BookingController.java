@@ -31,8 +31,10 @@ public class BookingController {
     }
 
     @GetMapping("/car/{carId}")
-    public ResponseEntity<?> getCarBookings(@PathVariable int carId) {
-        List<Booking> bookings = bookingService.getBookingsByCarId(carId);
+    public ResponseEntity<?> getCarBookings(@PathVariable int carId, @RequestParam(value = "future", required = false) Boolean future) {
+        future = (future != null) ? future : false;
+
+        List<Booking> bookings = bookingService.getBookingsByCarId(carId, future);
 
         if (bookings.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
@@ -42,8 +44,10 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserBookings(@PathVariable int userId) {
-        List<Booking> bookings = bookingService.getBookingsByUserId(userId);
+    public ResponseEntity<?> getUserBookings(@PathVariable int userId, @RequestParam(value = "future", required = false) Boolean future) {
+        future = (future != null) ? future : false;
+
+        List<Booking> bookings = bookingService.getBookingsByUserId(userId, future);
 
         if (bookings.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));

@@ -15,12 +15,12 @@ public class BookingServiceImpl implements BookingService {
         this.bookingRepository = bookingRepository;
     }
 
-    public List<Booking> getBookingsByCarId(int carId) {
-        return bookingRepository.findAllByCarId(carId);
+    public List<Booking> getBookingsByCarId(int carId, boolean future) {
+        return bookingRepository.findAllByCarId(carId, future);
     }
 
-    public List<Booking> getBookingsByUserId(int carId) {
-        return bookingRepository.findAllByUserId(carId);
+    public List<Booking> getBookingsByUserId(int carId, boolean future) {
+        return bookingRepository.findAllByUserId(carId, future);
     }
 
     public Optional<Booking> getBookingById(int bookingId) {
@@ -28,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public boolean deleteBookingById(int bookingId) {
-        // check if booking exists
+        // check if booking exists first
         Optional<Booking> booking = bookingRepository.findById(bookingId);
 
         if (booking.isEmpty()) {
