@@ -31,9 +31,7 @@ public class BookingController {
     }
 
     @GetMapping("/car/{carId}")
-    public ResponseEntity<?> getCarBookings(@PathVariable int carId, @RequestParam(value = "future", required = false) Boolean future) {
-        future = (future != null) ? future : false;
-
+    public ResponseEntity<?> getCarBookings(@PathVariable int carId, @RequestParam(value = "future", required = false, defaultValue = "false") Boolean future) {
         List<Booking> bookings = bookingService.getBookingsByCarId(carId, future);
 
         if (bookings.isEmpty()) {
@@ -44,9 +42,7 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserBookings(@PathVariable int userId, @RequestParam(value = "future", required = false) Boolean future) {
-        future = (future != null) ? future : false;
-
+    public ResponseEntity<?> getUserBookings(@PathVariable int userId, @RequestParam(value = "future", required = false, defaultValue = "false") Boolean future) {
         List<Booking> bookings = bookingService.getBookingsByUserId(userId, future);
 
         if (bookings.isEmpty()) {
