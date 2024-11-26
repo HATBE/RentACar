@@ -7,6 +7,7 @@ type BookingProps = {
 export default function BookingCalendar({ bookings }: BookingProps) {
   return (
     <div>
+      Gebucht an folgenden Tagen:
       {bookings.map((booking) => (
         <div key={booking.id}>
           {
