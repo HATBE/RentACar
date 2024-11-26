@@ -30,7 +30,7 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    @GetMapping("/cars/{carId}")
+    @GetMapping("/car/{carId}")
     public ResponseEntity<?> getCarBookings(@PathVariable int carId) {
         List<Booking> bookings = bookingService.getBookingsByCarId(carId);
 
@@ -41,7 +41,7 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserBookings(@PathVariable int userId) {
         List<Booking> bookings = bookingService.getBookingsByUserId(userId);
 

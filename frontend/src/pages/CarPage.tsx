@@ -3,31 +3,58 @@ import { useEffect, useState } from 'react';
 import { Car } from '../types/Car.ts';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
 import ErrorBanner from '../components/ErrorBanner.tsx';
+import { Booking } from '../types/Booking.ts';
+import BookingCalendar from '../components/booking/BookingCalendar.tsx';
 
 export default function CarPage() {
   const { carid } = useParams();
 
   const [car, setCar] = useState<Car | null>(null);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/api/v1/cars/${carid}`);
+  const fetchCar = async () => {
+    fetch(`http://localhost:8080/api/v1/cars/${carid}`)
+      .then((response) => {
         if (!response.ok) {
-          throw new Error(`No car with id ${carid}`);
+          throw new Error('Failed to fetch car');
         }
-        const data: Car = await response.json();
-        setCar(data);
+        return response.json();
+      })
+      .then((data) => {
+        const car: Car = data;
+        setCar(car);
         setLoading(false);
-      } catch (err) {
-        setError((err as Error).message);
+      })
+      .catch((error) => {
+        setError((error as Error).message);
         setLoading(false);
-      }
-    };
+      });
+  };
 
-    fetchCars();
+  const fetchBookings = async () => {
+    fetch(`http://localhost:8080/api/v1/bookings/car/${carid}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch bookings');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const bookings: Booking[] = data;
+        setBookings(bookings);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError((error as Error).message);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchCar();
+    fetchBookings();
   }, []);
 
   return (
@@ -60,7 +87,10 @@ export default function CarPage() {
               </div>
             </div>
 
-            <button className="btn btn-primary w-100 mt-3"><i className="bi bi-cart-fill"></i> Book this Car for <b>CHF { car.pricePerDay }</b> a day </button>
+            <button className="btn btn-primary w-100 mt-3">
+              <i className="bi bi-cart-fill"></i> Book this Car for <b>CHF {car.pricePerDay}</b> a
+              day
+            </button>
 
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
               <div className="card-body">
@@ -92,6 +122,13 @@ export default function CarPage() {
                 </div>
               </div>
             </div>
+            {bookings.length >= 0 && (
+              <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
+                <div className="card-body">
+                  <BookingCalendar bookings={bookings} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

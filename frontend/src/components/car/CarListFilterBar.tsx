@@ -34,7 +34,6 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
-
   // Error state for API call
   const [fetchError, setFetchError] = useState<string | null>(null);
 
@@ -55,7 +54,6 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         console.error('Error fetching car options:', error);
         setFetchError('Failed to load car options. Please try again later.');
       });
-
 
     fetch('http://localhost:8080/api/v1/carcategories')
       .then((response) => {
