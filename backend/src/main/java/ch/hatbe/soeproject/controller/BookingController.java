@@ -2,9 +2,11 @@ package ch.hatbe.soeproject.controller;
 
 import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.Booking;
+import ch.hatbe.soeproject.persistance.entities.requests.CreateBookingRequest;
 import ch.hatbe.soeproject.service.booking.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,10 +54,14 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    // TODO:
-    @PostMapping("/")
-    public ResponseEntity<String> postBooking() {
-        return ResponseEntity.ok("post booking");
+    @PostMapping(value = {"", "/"})
+    public ResponseEntity<?> postBooking(@RequestBody @Validated CreateBookingRequest bookingRequest) {
+        try {
+            Booking booking = bookingService.createBooking(bookingRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(booking);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), "INVALID_REQUEST"));
+        }
     }
 
     @DeleteMapping("/{bookingId}")

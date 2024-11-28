@@ -1,13 +1,13 @@
 package ch.hatbe.soeproject.persistance.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
+@Data
 @Table(name = "bookings")
 public class Booking {
     @Id

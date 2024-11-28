@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner.tsx';
 import { useLocation } from 'react-router-dom';
 import CarListFilterBar from './CarListFilterBar.tsx';
-import ErrorBanner from '../ErrorBanner.tsx';
+import ErrorBanner from '../banner/ErrorBanner.tsx';
 import { Car } from '../../types/Car.ts';
 import CarService from '../../services/CarsService.ts';
 

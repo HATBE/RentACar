@@ -2,11 +2,11 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Car } from '../types/Car.ts';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
-import ErrorBanner from '../components/ErrorBanner.tsx';
+import ErrorBanner from '../components/banner/ErrorBanner.tsx';
 import { Booking } from '../types/Booking.ts';
-import BookingCalendar from '../components/booking/BookingCalendar.tsx';
 import CarService from '../services/CarsService.ts';
 import BookingsService from '../services/BookingsService.ts';
+import CarBooking from '../components/booking/carBooking/CarBooking.tsx';
 
 export default function CarPage() {
   const { carid } = useParams();
@@ -50,6 +50,7 @@ export default function CarPage() {
               </button>
             </Link>
           </div>
+
           <div className="col-12 col-md-6">
             <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body p-0">
@@ -61,6 +62,7 @@ export default function CarPage() {
               </div>
             </div>
           </div>
+
           <div className="col-12 col-md-6">
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body">
@@ -70,11 +72,6 @@ export default function CarPage() {
                 </h2>
               </div>
             </div>
-
-            <button className="btn btn-primary w-100 mt-3">
-              <i className="bi bi-cart-fill"></i> Book this Car for <b>CHF {car.pricePerDay}</b> a
-              day
-            </button>
 
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
               <div className="card-body">
@@ -109,8 +106,7 @@ export default function CarPage() {
 
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
               <div className="card-body">
-                {bookings.length > 0 && <BookingCalendar bookings={bookings} />}
-                {bookings.length === 0 && <span>This car has no bookings yet</span>}
+                <CarBooking bookings={bookings} car={car} />
               </div>
             </div>
           </div>

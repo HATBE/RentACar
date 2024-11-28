@@ -1,0 +1,48 @@
+.booked-date, .react-datepicker__day--today.booked-date {
+    background-color: #ffcccc !important;
+    color: #ff0000 !important;
+}
+
+.react-datepicker__day {
+    border-radius: 0 !important;
+    margin: 2px 0 !important;
+}
+
+.react-datepicker__day--today {
+    background-color: inherit !important;
+    border: 1px solid black
+}
+
+.react-datepicker__day--range-start {
+    border-left: 3px black solid;
+}
+
+.react-datepicker__day--in-range {
+    background-color: var(--bs-primary) !important;
+    color: white !important;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.react-datepicker__day--range-end {
+    border-right: 3px black solid;
+}
+
+.react-datepicker {
+    width: 100%;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__month-container {
+    width: 100%;
+}
+
+.react-datepicker__current-month, .react-datepicker__day-name {
+    color: white !important;
+}
+
+.react-datepicker__header {
+    background-color: var(--bs-dark) !important;
+    border-radius: 0 !important;
+}

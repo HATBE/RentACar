@@ -14,4 +14,29 @@ export default class BookingsService {
     }
     return response.json();
   }
+
+  static async postBooking(
+    userId: number,
+    carId: number,
+    startDate: Date,
+    endDate: Date
+  ): Promise<Booking> {
+    const response = await fetch(`http://localhost:8080/api/v1/bookings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+        carId: carId,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('FAILED!');
+    }
+    return response.json(); // Parse JSON response
+  }
 }
