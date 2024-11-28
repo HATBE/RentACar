@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 type BookingProps = {
   bookings: Booking[];
-  selectDatesCallback: (startDate: Date, endDate: Date) => void;
+  selectDatesCallback: (startDate: Date, endDate: Date, daysSelected: number) => void; // Updated callback type
   onClearDates?: (clearFn: () => void) => void;
 };
 
@@ -41,8 +41,10 @@ export default function BookingCalendar({
     setDateRange(update);
 
     if (update[0] && update[1]) {
-      // here the daterange is selected and ok
-      selectDatesCallback(update[0], update[1]);
+      // Calculate the difference in days
+      const timeDiff = Math.abs(update[1].getTime() - update[0].getTime());
+      const daysSelected = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+      selectDatesCallback(update[0], update[1], daysSelected);
     }
   };
 

@@ -14,14 +14,16 @@ type CarBookingProps = {
 export default function CarBooking({ bookings, car }: CarBookingProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [daysSelected, setDaysSelected] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   const clearDatesFn = useRef<() => void>();
 
-  const selectDatesCallback = (startDate: Date, endDate: Date) => {
+  const selectDatesCallback = (startDate: Date, endDate: Date, days: number) => {
     setStartDate(startDate);
     setEndDate(endDate);
+    setDaysSelected(days);
   };
 
   const canBook = () => {
@@ -34,10 +36,21 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         clearDatesFn.current();
       }
 
-      console.log(`Booking car ${car.id} from ${startDate} to ${endDate}`);
-      
+      // Normalize to UTC midnight and end
+      const normalizedStartDate = new Date(
+        Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0)
+      );
+      const normalizedEndDate = new Date(
+        Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59)
+      );
+
       try {
-        const booking = await BookingsService.postBooking(1, car.id, startDate, endDate);
+        const booking = await BookingsService.postBooking(
+          1,
+          car.id,
+          normalizedStartDate,
+          normalizedEndDate
+        );
 
         bookings.push(booking);
         setError(null);
@@ -60,7 +73,9 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         selectDatesCallback={selectDatesCallback}
       />
       <button disabled={!canBook()} onClick={handleBooking} className="btn btn-primary w-100 mt-3">
-        <i className="bi bi-cart-fill"></i> Book this Car for <b>CHF {car.pricePerDay}</b> a day
+        <i className="bi bi-cart-fill"></i> Book this Car for{' '}
+        <b>CHF {car.pricePerDay * (daysSelected || 1)}</b> ({!daysSelected ? 1 : daysSelected} day
+        {daysSelected && daysSelected > 1 ? 's' : ''})
       </button>
     </>
   );

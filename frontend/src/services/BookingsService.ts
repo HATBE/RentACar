@@ -35,7 +35,9 @@ export default class BookingsService {
     });
 
     if (!response.ok) {
-      throw new Error('FAILED!');
+      const error =
+        ((await response.json()) as { message: string }).message || 'Failed to post booking';
+      throw new Error(error);
     }
     return response.json(); // Parse JSON response
   }
