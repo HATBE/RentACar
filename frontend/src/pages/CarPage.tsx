@@ -39,6 +39,9 @@ export default function CarPage() {
         if (!response.ok) {
           throw new Error('Failed to fetch bookings');
         }
+        if (response.status === 204) {
+          return [];
+        }
         return response.json();
       })
       .then((data) => {

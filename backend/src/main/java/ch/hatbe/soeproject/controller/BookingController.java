@@ -24,7 +24,7 @@ public class BookingController {
         Optional<Booking> booking = bookingService.getBookingById(bookingId);
 
         if (booking.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Booking found", "BOOKING_NOT_FOUND"));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ErrorResponse("No Booking found", "BOOKING_NOT_FOUND"));
         }
 
         return ResponseEntity.ok(booking);
@@ -35,7 +35,7 @@ public class BookingController {
         List<Booking> bookings = bookingService.getBookingsByCarId(carId, future);
 
         if (bookings.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
         }
 
         return ResponseEntity.ok(bookings);
@@ -46,7 +46,7 @@ public class BookingController {
         List<Booking> bookings = bookingService.getBookingsByUserId(userId, future);
 
         if (bookings.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
         }
 
         return ResponseEntity.ok(bookings);
@@ -59,7 +59,7 @@ public class BookingController {
     }
 
     @DeleteMapping("/{bookingId}")
-    public ResponseEntity<?> deleteUser(@PathVariable int bookingId) {
+    public ResponseEntity<?> deleteBooking(@PathVariable int bookingId) {
         if (!bookingService.deleteBookingById(bookingId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Booking not found", "BOOKING_NOT_FOUND"));
         }
