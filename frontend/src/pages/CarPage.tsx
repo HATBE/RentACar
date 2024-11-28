@@ -56,7 +56,7 @@ export default function CarPage() {
                 <img
                   src={`/assets/img/${car.category.image}`}
                   className="thumpnail"
-                  alt={`Image of a ${car.model}`}
+                  alt={`Image of a ${car.make} ${car.model} ${car.buildYear}`}
                 />
               </div>
             </div>
@@ -64,6 +64,7 @@ export default function CarPage() {
           <div className="col-12 col-md-6">
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body">
+                <div className="badge bg-secondary">{car.category.name}</div>
                 <h2>
                   <b>{car.make}</b> {car.model} <i>{car.buildYear}</i>
                 </h2>

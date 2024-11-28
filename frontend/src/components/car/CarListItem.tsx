@@ -14,7 +14,7 @@ export default function CarListItem({ car }: CarListItemProps) {
             <img
               className="user-select-none thumpnail h-100"
               src={`/assets/img/${car.category.image}`}
-              alt={`Image of a ${car.model}`}
+              alt={`Image of a ${car.make} ${car.model} ${car.buildYear}`}
             />
             <div className="p-3">
               <div
