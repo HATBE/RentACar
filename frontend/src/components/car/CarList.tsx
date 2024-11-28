@@ -5,46 +5,37 @@ import { useLocation } from 'react-router-dom';
 import CarListFilterBar from './CarListFilterBar.tsx';
 import ErrorBanner from '../ErrorBanner.tsx';
 import { Car } from '../../types/Car.ts';
+import CarService from '../../services/CarsService.ts';
 
 export default function CarList() {
   const [cars, setCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const location = useLocation();
 
-  const fetchCars = async () => {
+  const fetchData = async () => {
     try {
-      setLoading(true);
-      setError(null);
-
       const queryParams = new URLSearchParams(location.search);
-
-      const response = await fetch(`http://localhost:8080/api/v1/cars?${queryParams.toString()}`);
-
-      if (!response.ok) {
-        throw new Error('There are no cars matching yor search!');
-      }
-
-      const data: Car[] = await response.json();
-
-      setCars(data);
-      setLoading(false);
+      const cars = await CarService.getCars(queryParams);
+      setCars(cars);
     } catch (err) {
       setError((err as Error).message);
+    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCars();
+    fetchData();
+    // reload if location.search changes
   }, [location.search]);
 
   return (
     <div>
       <CarListFilterBar
         defaultValues={new URLSearchParams(location.search)}
-        onApplyFilters={fetchCars}
+        onApplyFilters={fetchData}
       />
 
       {error && <ErrorBanner message={error} />}

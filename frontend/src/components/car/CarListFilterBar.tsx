@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CarService from '../../services/CarsService.ts';
+import CarCarCategoriesService from '../../services/CarCategoriesService.ts';
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;
@@ -34,43 +36,23 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
-  // Error state for API call
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const fetchData = async () => {
+    try {
+      const [optionsData, carCategoriesDate] = await Promise.all([
+        CarService.getCarOptions(),
+        CarCarCategoriesService.getCarCategories(),
+      ]);
+
+      setGearTypes(optionsData.gearTypes);
+      setFuelTypes(optionsData.fuelTypes);
+      setCategories(carCategoriesDate);
+    } catch (err) {
+      console.error('Error fetching data:', (err as Error).message);
+    }
+  };
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/v1/cars/options')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch car options');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setGearTypes(data.gearTypes || []);
-        setFuelTypes(data.fuelTypes || []);
-        setFetchError(null);
-      })
-      .catch((error) => {
-        console.error('Error fetching car options:', error);
-        setFetchError('Failed to load car options. Please try again later.');
-      });
-
-    fetch('http://localhost:8080/api/v1/carcategories')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch categories');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const categoryNames = data.map((category: { name: string }) => category.name);
-        setCategories(categoryNames);
-        setFetchError(null);
-      })
-      .catch((error) => {
-        console.error('Error fetching categories:', error);
-        setFetchError('Failed to load car categories. Please try again later.');
-      });
+    fetchData();
   }, []);
 
   const updateQueryString = () => {
@@ -96,8 +78,6 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   return (
     <div className="row g-3 mb-3">
       <h4>Filter Cars</h4>
-
-      {fetchError && <div className="alert alert-danger">{fetchError}</div>}
 
       <div className="col-12 col-md-4 col-xl-2">
         <label>Build Year From: </label>

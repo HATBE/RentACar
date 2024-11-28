@@ -1,6 +1,6 @@
 import './App.css';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Layout from './components/Layout.tsx';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Layout from './components/layout/Layout.tsx';
 import LandingPage from './pages/LandingPage.tsx';
 import CarPage from './pages/CarPage.tsx';
 import NotFoundPage from './pages/errors/NotFoundPage.tsx';
@@ -12,7 +12,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export default function App() {
   return (
     <Router>
-      <Routes>:id
+      <Routes>
+        :id
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="/cars/:carid" element={<CarPage />} />

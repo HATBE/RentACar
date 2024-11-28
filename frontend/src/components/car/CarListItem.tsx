@@ -11,7 +11,11 @@ export default function CarListItem({ car }: CarListItemProps) {
       <Link className="car-item link-dark text-decoration-none" to={`/cars/${car.id}`}>
         <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
           <div className="card-body h-100 p-0">
-            <img className="user-select-none thumpnail h-100" src={`/assets/img/${car.category.image}`} alt="" />
+            <img
+              className="user-select-none thumpnail h-100"
+              src={`/assets/img/${car.category.image}`}
+              alt={`Image of a ${car.model}`}
+            />
             <div className="p-3">
               <div
                 style={{ height: '50px' }}

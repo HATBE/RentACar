@@ -5,6 +5,8 @@ import LoadingSpinner from '../components/LoadingSpinner.tsx';
 import ErrorBanner from '../components/ErrorBanner.tsx';
 import { Booking } from '../types/Booking.ts';
 import BookingCalendar from '../components/booking/BookingCalendar.tsx';
+import CarService from '../services/CarsService.ts';
+import BookingsService from '../services/BookingsService.ts';
 
 export default function CarPage() {
   const { carid } = useParams();
@@ -14,46 +16,25 @@ export default function CarPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchCar = async () => {
-    fetch(`http://localhost:8080/api/v1/cars/${carid}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch car');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const car: Car = data;
-        setCar(car);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError((error as Error).message);
-        setLoading(false);
-      });
-  };
-
-  const fetchBookings = async () => {
-    fetch(`http://localhost:8080/api/v1/bookings/car/${carid}?future=true`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch bookings');
-        }
-        if (response.status === 204) {
-          return [];
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const bookings: Booking[] = data;
-        setBookings(bookings);
-      });
+  const fetchData = async () => {
+    try {
+      const [carData, bookingsData] = await Promise.all([
+        CarService.getCarById(carid!),
+        BookingsService.getBookingsByCarId(carid!, true),
+      ]);
+      setCar(carData);
+      setBookings(bookingsData);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchCar();
-    fetchBookings();
-  }, []);
+    fetchData();
+    // reload if carid changes
+  }, [carid]);
 
   return (
     <div>
@@ -72,7 +53,11 @@ export default function CarPage() {
           <div className="col-12 col-md-6">
             <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body p-0">
-                <img src={`/assets/img/${car.category.image}`} className="thumpnail" />
+                <img
+                  src={`/assets/img/${car.category.image}`}
+                  className="thumpnail"
+                  alt={`Image of a ${car.model}`}
+                />
               </div>
             </div>
           </div>
