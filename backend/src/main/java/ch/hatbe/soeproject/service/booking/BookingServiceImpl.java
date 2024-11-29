@@ -7,6 +7,7 @@ import ch.hatbe.soeproject.persistance.entities.requests.CreateBookingRequest;
 import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
 import ch.hatbe.soeproject.persistance.repositories.UserRepository;
+import ch.hatbe.soeproject.utils.BookingUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,14 +40,6 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(bookingId);
     }
 
-    public boolean doBookingsOverlap(List<Booking> bookings, LocalDate startDate, LocalDate endDate) {
-        List<Booking> overlappingBookings = bookings.stream()
-                .filter(b -> !(b.getEndDate().isBefore(startDate) || b.getStartDate().isAfter(endDate)))
-                .toList();
-
-        return !overlappingBookings.isEmpty();
-    }
-
     public Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException {
         // Check if startDate or endDate is in the past
         if (request.getStartDate().isBefore(LocalDate.now())) {
@@ -66,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new IllegalArgumentException("Car not found"));
 
         // Check for overlapping bookings
-        if (this.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
+        if (BookingUtil.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
             throw new IllegalArgumentException("Car is already booked for the selected dates");
         }
 

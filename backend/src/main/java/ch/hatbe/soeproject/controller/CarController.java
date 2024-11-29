@@ -5,7 +5,7 @@ import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
 import ch.hatbe.soeproject.service.car.CarService;
-import ch.hatbe.soeproject.validation.Validate;
+import ch.hatbe.soeproject.utils.Validate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

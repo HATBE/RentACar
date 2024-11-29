@@ -16,7 +16,5 @@ public interface BookingService {
 
     boolean deleteBookingById(int bookingId);
 
-    boolean doBookingsOverlap(List<Booking> bookings, LocalDate startDate, LocalDate endDate);
-
     Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException;
 }

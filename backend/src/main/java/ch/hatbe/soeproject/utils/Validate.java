@@ -1,4 +1,4 @@
-package ch.hatbe.soeproject.validation;
+package ch.hatbe.soeproject.utils;
 
 public class Validate {
     public static String validateSortDirection(String sort) {
