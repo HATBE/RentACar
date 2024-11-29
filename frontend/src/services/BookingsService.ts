@@ -3,7 +3,7 @@ import { Booking } from '../types/Booking.ts';
 export default class BookingsService {
   static async getBookingsByCarId(carId: string, futureOnly: boolean = true): Promise<Booking[]> {
     const response = await fetch(
-      `http://localhost:8080/api/v1/bookings/car/${carId}?future=${futureOnly}`
+      `http://localhost:8081/api/v1/bookings/car/${carId}?future=${futureOnly}`
     );
     if (!response.ok) {
       throw new Error('Failed to fetch bookings');
@@ -21,7 +21,7 @@ export default class BookingsService {
     startDate: Date,
     endDate: Date
   ): Promise<Booking> {
-    const response = await fetch(`http://localhost:8080/api/v1/bookings`, {
+    const response = await fetch(`http://localhost:8081/api/v1/bookings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

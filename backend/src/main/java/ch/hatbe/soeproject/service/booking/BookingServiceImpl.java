@@ -39,6 +39,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(bookingId);
     }
 
+    private boolean doBookingsOverlap(List<Booking> bookings, LocalDate startDate, LocalDate endDate) {
+        List<Booking> overlappingBookings = bookings.stream()
+                .filter(b -> !(b.getEndDate().isBefore(startDate) || b.getStartDate().isAfter(endDate)))
+                .toList();
+
+        return !overlappingBookings.isEmpty();
+    }
+
     public Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException {
         // Check if startDate or endDate is in the past
         if (request.getStartDate().isBefore(LocalDate.now())) {
@@ -58,11 +66,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new IllegalArgumentException("Car not found"));
 
         // Check for overlapping bookings
-        List<Booking> overlappingBookings = bookingRepository.findAllByCarId(request.getCarId(), false).stream()
-                .filter(b -> b.getStartDate().isBefore(request.getEndDate()) && b.getEndDate().isAfter(request.getStartDate()))
-                .toList();
-
-        if (!overlappingBookings.isEmpty()) {
+        if (this.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
             throw new IllegalArgumentException("Car is already booked for the selected dates");
         }
 
