@@ -39,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(bookingId);
     }
 
-    private boolean doBookingsOverlap(List<Booking> bookings, LocalDate startDate, LocalDate endDate) {
+    public boolean doBookingsOverlap(List<Booking> bookings, LocalDate startDate, LocalDate endDate) {
         List<Booking> overlappingBookings = bookings.stream()
                 .filter(b -> !(b.getEndDate().isBefore(startDate) || b.getStartDate().isAfter(endDate)))
                 .toList();
