@@ -26,6 +26,12 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
     setDaysSelected(days);
   };
 
+  const clearDates = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setDaysSelected(null);
+  };
+
   const canBook = () => {
     return startDate && endDate;
   };
@@ -53,8 +59,10 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         );
 
         bookings.push(booking);
+
         setError(null);
         setSuccess('Booking successful');
+        clearDates();
       } catch (err) {
         setSuccess(null);
         setError((err as Error).message);
