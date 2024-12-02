@@ -44,7 +44,9 @@ export default function CarList() {
       {!error && !loading && (
         <div className="row g-3">
           {cars.map((car) => (
-            <CarListItem key={car.id} car={car} />
+            <div key={car.id} className="col-12 col-md-4 col-xl-3">
+              <CarListItem car={car} />
+            </div>
           ))}
         </div>
       )}

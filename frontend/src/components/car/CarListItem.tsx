@@ -7,7 +7,7 @@ type CarListItemProps = {
 
 export default function CarListItem({ car }: CarListItemProps) {
   return (
-    <div className="col-12 col-md-4 col-xl-3">
+    <>
       <Link className="car-item link-dark text-decoration-none" to={`/cars/${car.id}`}>
         <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
           <div className="card-body h-100 p-0">
@@ -56,6 +56,6 @@ export default function CarListItem({ car }: CarListItemProps) {
           </div>
         </div>
       </Link>
-    </div>
+    </>
   );
 }

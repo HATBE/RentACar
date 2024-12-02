@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import BookingsService from '../../../services/BookingsService.ts';
 import ErrorBanner from '../../banner/ErrorBanner.tsx';
 import SuccessBanner from '../../banner/SuccessBanner.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type CarBookingProps = {
   bookings: Booking[];
@@ -12,6 +13,8 @@ type CarBookingProps = {
 };
 
 export default function CarBooking({ bookings, car }: CarBookingProps) {
+  const navigate = useNavigate();
+
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [daysSelected, setDaysSelected] = useState<number | null>(null);
@@ -63,6 +66,8 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         setError(null);
         setSuccess('Booking successful');
         clearDates();
+
+        navigate(`/booked/${booking.id}`);
       } catch (err) {
         setSuccess(null);
         setError((err as Error).message);

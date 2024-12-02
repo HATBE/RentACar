@@ -15,6 +15,18 @@ export default class BookingsService {
     return response.json();
   }
 
+  static async getBookingById(bookingId: string): Promise<Booking | null> {
+    const response = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch bookings');
+    }
+    // if NO CONTENT then it must be empty
+    if (response.status === 204) {
+      return null;
+    }
+    return response.json();
+  }
+
   static async postBooking(
     userId: number,
     carId: number,
