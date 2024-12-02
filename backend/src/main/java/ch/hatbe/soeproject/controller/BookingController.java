@@ -26,7 +26,7 @@ public class BookingController {
         Optional<Booking> booking = bookingService.getBookingById(bookingId);
 
         if (booking.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ErrorResponse("No Booking found", "BOOKING_NOT_FOUND"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Booking found", "BOOKING_NOT_FOUND"));
         }
 
         return ResponseEntity.ok(booking);

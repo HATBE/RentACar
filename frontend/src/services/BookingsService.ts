@@ -20,10 +20,7 @@ export default class BookingsService {
     if (!response.ok) {
       throw new Error('Failed to fetch bookings');
     }
-    // if NO CONTENT then it must be empty
-    if (response.status === 204) {
-      return null;
-    }
+
     return response.json();
   }
 
