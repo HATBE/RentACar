@@ -41,6 +41,8 @@ export default function BookedCarPage() {
             <br />
             {new Date(booking.startDate).toLocaleDateString()} -{' '}
             {new Date(booking.endDate).toLocaleDateString()}
+            <br />
+            {booking.calculatedPrice} CHF.
           </div>
           <div className="col-12 col-md-6">
             <CarListItem car={booking.car} showPrice={false} />

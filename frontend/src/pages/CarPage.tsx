@@ -10,7 +10,7 @@ import CarBooking from '../components/booking/carBooking/CarBooking.tsx';
 import CarSpecsGrid from '../components/car/CarSpecsGrid.tsx';
 
 export default function CarPage() {
-  const { carid } = useParams();
+  const { carId } = useParams();
 
   const [car, setCar] = useState<Car | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -20,8 +20,8 @@ export default function CarPage() {
   const fetchData = async () => {
     try {
       const [carData, bookingsData] = await Promise.all([
-        CarService.getCarById(carid!),
-        BookingsService.getBookingsByCarId(carid!, true),
+        CarService.getCarById(carId!),
+        BookingsService.getBookingsByCarId(carId!, true),
       ]);
       setCar(carData);
       setBookings(bookingsData);
@@ -35,7 +35,7 @@ export default function CarPage() {
   useEffect(() => {
     fetchData();
     // reload if carid changes
-  }, [carid]);
+  }, [carId]);
 
   return (
     <div>

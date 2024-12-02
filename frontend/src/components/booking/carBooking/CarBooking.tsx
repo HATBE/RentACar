@@ -4,7 +4,6 @@ import { Car } from '../../../types/Car.ts';
 import { useRef, useState } from 'react';
 import BookingsService from '../../../services/BookingsService.ts';
 import ErrorBanner from '../../banner/ErrorBanner.tsx';
-import SuccessBanner from '../../banner/SuccessBanner.tsx';
 import { useNavigate } from 'react-router-dom';
 
 type CarBookingProps = {
@@ -19,7 +18,6 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [daysSelected, setDaysSelected] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const clearDatesFn = useRef<() => void>();
 
@@ -64,12 +62,9 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         bookings.push(booking);
 
         setError(null);
-        setSuccess('Booking successful');
         clearDates();
-
         navigate(`/booked/${booking.id}`);
       } catch (err) {
-        setSuccess(null);
         setError((err as Error).message);
       }
     }
@@ -78,7 +73,6 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
   return (
     <>
       {error && <ErrorBanner message={error} />}
-      {success && <SuccessBanner message={success} />}
 
       <BookingCalendar
         onClearDates={(clearFn) => (clearDatesFn.current = clearFn)}
