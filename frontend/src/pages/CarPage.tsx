@@ -7,6 +7,7 @@ import { Booking } from '../types/Booking.ts';
 import CarService from '../services/CarsService.ts';
 import BookingsService from '../services/BookingsService.ts';
 import CarBooking from '../components/booking/carBooking/CarBooking.tsx';
+import CarSpecsGrid from '../components/car/CarSpecsGrid.tsx';
 
 export default function CarPage() {
   const { carid } = useParams();
@@ -76,30 +77,7 @@ export default function CarPage() {
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
               <div className="card-body">
                 <div className="row g-2">
-                  <div className="col-6">
-                    <div className="bg-light rounded text-dark px-2 py-1">
-                      <i className="bi bi-speedometer me-2"></i>
-                      <span>{car.horsepower} HP</span>
-                    </div>
-                  </div>
-                  <div className="col-6 ">
-                    <div className="bg-light rounded text-dark px-2 py-1">
-                      <i className="bi bi-person-fill me-2"></i>
-                      <span>{car.seatsCount}</span>
-                    </div>
-                  </div>
-                  <div className="col-6 ">
-                    <div className="bg-light rounded text-dark px-2 py-1">
-                      <i className="bi bi-arrow-down-up me-2"></i>
-                      <span>{car.gearType}</span>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="bg-light rounded text-dark px-2 py-1">
-                      <i className="bi bi-fuel-pump me-2"></i>
-                      <span>{car.fuelType}</span>
-                    </div>
-                  </div>
+                  <CarSpecsGrid car={car} />
                 </div>
               </div>
             </div>

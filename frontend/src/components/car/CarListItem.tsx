@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Car } from '../../types/Car.ts';
+import CarSpecsGrid from './CarSpecsGrid.tsx';
 
 type CarListItemProps = {
   car: Car;
+  showPrice: boolean;
 };
 
-export default function CarListItem({ car }: CarListItemProps) {
+export default function CarListItem({ car, showPrice }: CarListItemProps) {
   return (
     <>
       <Link className="car-item link-dark text-decoration-none" to={`/cars/${car.id}`}>
@@ -23,35 +25,12 @@ export default function CarListItem({ car }: CarListItemProps) {
               >
                 {car.make} {car.model} {car.buildYear}
               </div>
-              <div className="row g-2 mt-2">
-                <div className="col-6">
-                  <div className="bg-light rounded text-dark px-2 py-1">
-                    <i className="bi bi-speedometer me-2"></i>
-                    <span>{car.horsepower} HP</span>
-                  </div>
+              <CarSpecsGrid car={car} />
+              {showPrice && (
+                <div className="mt-4 mb-2 h4 fw-bold cyan-text-gradient text-center">
+                  CHF {car.pricePerDay} / Day
                 </div>
-                <div className="col-6 ">
-                  <div className="bg-light rounded text-dark px-2 py-1">
-                    <i className="bi bi-person-fill me-2"></i>
-                    <span>{car.seatsCount}</span>
-                  </div>
-                </div>
-                <div className="col-6 ">
-                  <div className="bg-light rounded text-dark px-2 py-1">
-                    <i className="bi bi-arrow-down-up me-2"></i>
-                    <span>{car.gearType}</span>
-                  </div>
-                </div>
-                <div className="col-6">
-                  <div className="bg-light rounded text-dark px-2 py-1">
-                    <i className="bi bi-fuel-pump me-2"></i>
-                    <span>{car.fuelType}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 mb-2 h4 fw-bold cyan-text-gradient text-center">
-                CHF {car.pricePerDay} / Day
-              </div>
+              )}
             </div>
           </div>
         </div>

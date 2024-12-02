@@ -45,7 +45,7 @@ export default function CarList() {
         <div className="row g-3">
           {cars.map((car) => (
             <div key={car.id} className="col-12 col-md-4 col-xl-3">
-              <CarListItem car={car} />
+              <CarListItem car={car} showPrice={true} />
             </div>
           ))}
         </div>

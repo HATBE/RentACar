@@ -43,7 +43,7 @@ export default function BookedCarPage() {
             {new Date(booking.endDate).toLocaleDateString()}
           </div>
           <div className="col-12 col-md-6">
-            <CarListItem car={booking.car} />
+            <CarListItem car={booking.car} showPrice={false} />
           </div>
         </div>
       )}
