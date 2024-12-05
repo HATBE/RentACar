@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Booking } from '../types/Booking.ts';
 import BookingsService from '../services/BookingsService.ts';
@@ -51,7 +51,12 @@ export default function CarBookedPage() {
                     <tr>
                       <th>Car</th>
                       <td>
-                        {booking.car.make} {booking.car.model} {booking.car.buildYear}
+                        <Link
+                          className="link-light text-decoration-none"
+                          to={`/cars/${booking.car.id}`}
+                        >
+                          {booking.car.make} {booking.car.model} {booking.car.buildYear}
+                        </Link>
                       </td>
                     </tr>
                     <tr>
