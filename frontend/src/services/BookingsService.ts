@@ -8,7 +8,7 @@ export default class BookingsService {
   }
 
   static isDateBooked(date: Date, dates: DateRange[]): boolean {
-    const day = date.setHours(0, 0, 0, 0); // 00:00:00
+    const day = date.setHours(0, 0, 0, 0); // 00:00:00 // start of day
     return dates.some(({ start, end }) => day >= start && day <= end);
   }
 
@@ -17,5 +17,11 @@ export default class BookingsService {
       start: new Date(booking.startDate).setHours(0, 0, 0, 0), // 00:00:00 // start of day
       end: new Date(booking.endDate).setHours(23, 59, 59, 999), // 23:59:59:999 // end of day
     }));
+  }
+
+  static normalizeDate(date: Date, day: number, hour: number, minute: number): Date {
+    return new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), day, hour, minute)
+    );
   }
 }

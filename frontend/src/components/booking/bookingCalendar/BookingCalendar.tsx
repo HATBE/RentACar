@@ -7,7 +7,7 @@ import BookingsService from '../../../services/BookingsService.ts';
 
 type BookingProps = {
   bookings: Booking[];
-  selectDatesCallback: (startDate: Date, endDate: Date, daysSelected: number) => void; // Updated callback type
+  selectDatesCallback: (startDate: Date, endDate: Date, daysSelected: number) => void;
   onClearDates?: (clearFn: () => void) => void;
 };
 
@@ -49,6 +49,7 @@ export default function BookingCalendar({
 
   useEffect(() => {
     if (onClearDates) {
+      onClearDates(clearDates);
       onClearDates(clearDates);
     }
   }, [onClearDates]);

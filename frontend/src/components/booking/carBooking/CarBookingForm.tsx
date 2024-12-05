@@ -6,6 +6,7 @@ import BookingsApi from '../../../services/BookingsApi.ts';
 import ErrorBanner from '../../banner/ErrorBanner.tsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../LoadingSpinner.tsx';
+import BookingsService from '../../../services/BookingsService.ts';
 
 type CarBookingProps = {
   bookings: Booking[];
@@ -21,7 +22,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const clearDatesFn = useRef<() => void>();
+  const clearDatesCallback = useRef<() => void>();
 
   const selectDatesCallback = (startDate: Date, endDate: Date, days: number) => {
     setStartDate(startDate);
@@ -43,17 +44,12 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
     if (startDate && endDate) {
       setLoading(true);
 
-      if (clearDatesFn.current) {
-        clearDatesFn.current();
+      if (clearDatesCallback.current) {
+        clearDatesCallback.current();
       }
 
-      // Normalize to UTC midnight and end
-      const normalizedStartDate = new Date(
-        Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0)
-      );
-      const normalizedEndDate = new Date(
-        Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59)
-      );
+      const normalizedStartDate = BookingsService.normalizeDate(startDate, 0, 0, 0);
+      const normalizedEndDate = BookingsService.normalizeDate(endDate, 23, 59, 59);
 
       try {
         const booking = await BookingsApi.postBooking(
@@ -81,7 +77,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
       {error && <ErrorBanner message={error} />}
 
       <BookingCalendar
-        onClearDates={(clearFn) => (clearDatesFn.current = clearFn)}
+        onClearDates={(clearFn) => (clearDatesCallback.current = clearFn)}
         bookings={bookings}
         selectDatesCallback={selectDatesCallback}
       />
