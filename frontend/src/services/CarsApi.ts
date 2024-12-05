@@ -1,6 +1,6 @@
 import { Car } from '../types/Car.ts';
 
-export default class CarService {
+export default class CarsApi {
   static async getCarById(carId: string): Promise<Car> {
     const response = await fetch(`http://localhost:8081/api/v1/cars/${carId}`);
     if (!response.ok) {

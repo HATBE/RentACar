@@ -1,4 +1,4 @@
-export default class CarCarCategoriesService {
+export default class CarCarCategoriesApi {
   static async getCarCategories(): Promise<string[]> {
     const response = await fetch('http://localhost:8081/api/v1/carcategories');
     if (!response.ok) {

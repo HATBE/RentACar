@@ -1,7 +1,7 @@
 import { Booking } from '../types/Booking.ts';
 import { DateRange } from '../types/DateRage.ts';
 
-export default class BookingsService {
+export default class BookingsApi {
   static calculateDaysFromDateRange(startDate: Date, endDate: Date): number {
     const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
