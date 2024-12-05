@@ -45,3 +45,19 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.fade-in-text {
+    opacity: 0; /* Initial state: transparent */
+    animation: fadeIn 3s ease-in forwards; /* Animation applied on load */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1; /* Final state: fully visible */
+    }
+}
+
+.table tr:last-child tr td, .table tr:last-child tr th {
+    border-bottom: none !important;
+    border-bottom-width: 0 !important;
+}

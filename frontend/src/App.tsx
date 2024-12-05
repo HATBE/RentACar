@@ -8,7 +8,7 @@ import NotFoundPage from './pages/errors/NotFoundPage.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import BookedCarPage from './pages/BookedCarPage.tsx';
+import CarBookedPage from './pages/CarBookedPage.tsx';
 import AdminLandingPage from './pages/admin/AdminLandingPage.tsx';
 import CreateCarPage from './pages/admin/CreateCarPage.tsx';
 import EditCarPage from './pages/admin/EditCarPage.tsx';
@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="/cars/:carId" element={<CarPage />} />
-          <Route path="/cars/booked/:bookingId" element={<BookedCarPage />} />
+          <Route path="/cars/booked/:bookingId" element={<CarBookedPage />} />
           <Route path="/admin" element={<AdminLandingPage />} />
           <Route path="/cars/create" element={<CreateCarPage />} />
           <Route path="/cars/edit/:carId" element={<EditCarPage />} />
