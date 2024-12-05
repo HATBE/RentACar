@@ -8,7 +8,7 @@ import BookingsService from '../../../services/BookingsService.ts';
 type BookingProps = {
   bookings: Booking[];
   selectDatesCallback: (startDate: Date, endDate: Date, daysSelected: number) => void;
-  onClearDates?: (clearFn: () => void) => void;
+  onClearDates?: (clearCallback: () => void) => void;
 };
 
 export default function BookingCalendar({

@@ -72,12 +72,14 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
     }
   };
 
+  const priceForBookedDays = car.pricePerDay * (daysSelected || 1);
+
   return (
     <>
       {error && <ErrorBanner message={error} />}
 
       <BookingCalendar
-        onClearDates={(clearFn) => (clearDatesCallback.current = clearFn)}
+        onClearDates={(clearCallback) => (clearDatesCallback.current = clearCallback)}
         bookings={bookings}
         selectDatesCallback={selectDatesCallback}
       />
@@ -86,9 +88,8 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
 
         {!loading && (
           <>
-            <i className="bi bi-cart-fill"></i> Book this Car for{' '}
-            <b>CHF {car.pricePerDay * (daysSelected || 1)}</b> ({!daysSelected ? 1 : daysSelected}{' '}
-            day
+            <i className="bi bi-cart-fill"></i> Book this Car for <b>CHF {priceForBookedDays}</b> (
+            {!daysSelected ? 1 : daysSelected} day
             {daysSelected && daysSelected > 1 ? 's' : ''})
           </>
         )}
