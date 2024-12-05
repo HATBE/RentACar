@@ -38,7 +38,7 @@ export default function CarBookedPage() {
           <div className="col-12 col-md-6 col-xl-4 offset-md-3 offset-md-4">
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body">
-                <h3 className="text-center fw-bold mb-3">Booking Successful!</h3>
+                <h3 className="text-center fw-bold mb-3">Booking successful!</h3>
 
                 <img
                   className="rounded user-select-none thumpnail h-100"

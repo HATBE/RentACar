@@ -40,6 +40,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException {
+        // validate start end date TODO:
         if (request.getStartDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Start date cannot be in the past");
         }
@@ -63,6 +64,7 @@ public class BookingServiceImpl implements BookingService {
         LocalDate endDate = request.getEndDate();
         LocalDateTime nowTimestamp = LocalDateTime.now();
 
+        // TODO: constructor // factory?
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setCar(car);
