@@ -5,19 +5,21 @@ import { useRef, useState } from 'react';
 import BookingsService from '../../../services/BookingsService.ts';
 import ErrorBanner from '../../banner/ErrorBanner.tsx';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../LoadingSpinner.tsx';
 
 type CarBookingProps = {
   bookings: Booking[];
   car: Car;
 };
 
-export default function CarBooking({ bookings, car }: CarBookingProps) {
+export default function CarBookingForm({ bookings, car }: CarBookingProps) {
   const navigate = useNavigate();
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [daysSelected, setDaysSelected] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const clearDatesFn = useRef<() => void>();
 
@@ -39,6 +41,8 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
 
   const handleBooking = async () => {
     if (startDate && endDate) {
+      setLoading(true);
+
       if (clearDatesFn.current) {
         clearDatesFn.current();
       }
@@ -66,6 +70,8 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         navigate(`/cars/booked/${booking.id}`);
       } catch (err) {
         setError((err as Error).message);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -80,9 +86,16 @@ export default function CarBooking({ bookings, car }: CarBookingProps) {
         selectDatesCallback={selectDatesCallback}
       />
       <button disabled={!canBook()} onClick={handleBooking} className="btn btn-primary w-100 mt-3">
-        <i className="bi bi-cart-fill"></i> Book this Car for{' '}
-        <b>CHF {car.pricePerDay * (daysSelected || 1)}</b> ({!daysSelected ? 1 : daysSelected} day
-        {daysSelected && daysSelected > 1 ? 's' : ''})
+        {loading && <LoadingSpinner />}
+
+        {!loading && (
+          <>
+            <i className="bi bi-cart-fill"></i> Book this Car for{' '}
+            <b>CHF {car.pricePerDay * (daysSelected || 1)}</b> ({!daysSelected ? 1 : daysSelected}{' '}
+            day
+            {daysSelected && daysSelected > 1 ? 's' : ''})
+          </>
+        )}
       </button>
     </>
   );

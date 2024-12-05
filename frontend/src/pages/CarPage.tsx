@@ -6,7 +6,7 @@ import ErrorBanner from '../components/banner/ErrorBanner.tsx';
 import { Booking } from '../types/Booking.ts';
 import CarService from '../services/CarsService.ts';
 import BookingsService from '../services/BookingsService.ts';
-import CarBooking from '../components/booking/carBooking/CarBooking.tsx';
+import CarBookingForm from '../components/booking/carBooking/CarBookingForm.tsx';
 import CarSpecsGrid from '../components/car/CarSpecsGrid.tsx';
 
 export default function CarPage() {
@@ -84,7 +84,7 @@ export default function CarPage() {
 
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden mt-3">
               <div className="card-body">
-                <CarBooking bookings={bookings} car={car} />
+                <CarBookingForm bookings={bookings} car={car} />
               </div>
             </div>
           </div>

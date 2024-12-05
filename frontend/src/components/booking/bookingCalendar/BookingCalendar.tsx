@@ -17,6 +17,9 @@ export default function BookingCalendar({
 }: BookingProps) {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
+  const startDate = dateRange[0] || undefined;
+  const endDate = dateRange[1] || undefined;
+
   const dateRanges = bookings.map((booking) => ({
     start: new Date(booking.startDate).setHours(0, 0, 0, 0), // 00:00:00
     end: new Date(booking.endDate).setHours(23, 59, 59, 999), // 23:59:59
@@ -30,9 +33,6 @@ export default function BookingCalendar({
   const highlightWithRanges = (date: Date) => {
     return isDateBooked(date) ? 'booked-date' : undefined;
   };
-
-  const startDate = dateRange[0] || undefined;
-  const endDate = dateRange[1] || undefined;
 
   const handleDateChange = (update: Date | [Date | null, Date | null]) => {
     if (!Array.isArray(update)) {
