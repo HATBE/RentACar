@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Booking } from '../types/Booking.ts';
-import BookingsService from '../services/BookingsService.ts';
+import BookingsApi from '../services/BookingsApi.ts';
 import ErrorBanner from '../components/banner/ErrorBanner.tsx';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
 
@@ -14,7 +14,7 @@ export default function CarBookedPage() {
 
   const fetchData = async () => {
     try {
-      const booking = await BookingsService.getBookingById(bookingId!);
+      const booking = await BookingsApi.getBookingById(bookingId!);
       setBooking(booking);
     } catch (err) {
       setError((err as Error).message);

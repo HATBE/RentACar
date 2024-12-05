@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CarService from '../../services/CarsService.ts';
-import CarCarCategoriesService from '../../services/CarCategoriesService.ts';
+import CarService from '../../services/CarsApi.ts';
+import CarCarCategoriesService from '../../services/CarCategoriesApi.ts';
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;

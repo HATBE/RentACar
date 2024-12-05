@@ -4,8 +4,8 @@ import { Car } from '../types/Car.ts';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
 import ErrorBanner from '../components/banner/ErrorBanner.tsx';
 import { Booking } from '../types/Booking.ts';
-import CarService from '../services/CarsService.ts';
-import BookingsService from '../services/BookingsService.ts';
+import CarService from '../services/CarsApi.ts';
+import BookingsApi from '../services/BookingsApi.ts';
 import CarBookingForm from '../components/booking/carBooking/CarBookingForm.tsx';
 import CarSpecsGrid from '../components/car/CarSpecsGrid.tsx';
 
@@ -21,7 +21,7 @@ export default function CarPage() {
     try {
       const [carData, bookingsData] = await Promise.all([
         CarService.getCarById(carId!),
-        BookingsService.getBookingsByCarId(carId!, true),
+        BookingsApi.getBookingsByCarId(carId!, true),
       ]);
       setCar(carData);
       setBookings(bookingsData);

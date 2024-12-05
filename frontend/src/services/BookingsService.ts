@@ -1,53 +1,21 @@
 import { Booking } from '../types/Booking.ts';
+import { DateRange } from '../types/DateRage.ts';
 
 export default class BookingsService {
-  static async getBookingsByCarId(carId: string, futureOnly: boolean = true): Promise<Booking[]> {
-    const response = await fetch(
-      `http://localhost:8081/api/v1/bookings/car/${carId}?future=${futureOnly}`
-    );
-    if (!response.ok) {
-      throw new Error('Failed to fetch bookings');
-    }
-    // if NO CONTENT then it must be empty
-    if (response.status === 204) {
-      return [];
-    }
-    return response.json();
+  static calculateDaysFromDateRange(startDate: Date, endDate: Date): number {
+    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
   }
 
-  static async getBookingById(bookingId: string): Promise<Booking | null> {
-    const response = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch bookings');
-    }
-
-    return response.json();
+  static isDateBooked(date: Date, dates: DateRange[]): boolean {
+    const day = date.setHours(0, 0, 0, 0); // 00:00:00
+    return dates.some(({ start, end }) => day >= start && day <= end);
   }
 
-  static async postBooking(
-    userId: number,
-    carId: number,
-    startDate: Date,
-    endDate: Date
-  ): Promise<Booking> {
-    const response = await fetch(`http://localhost:8081/api/v1/bookings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: userId,
-        carId: carId,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-      }),
-    });
-
-    if (!response.ok) {
-      const error =
-        ((await response.json()) as { message: string }).message || 'Failed to post booking';
-      throw new Error(error);
-    }
-    return response.json(); // Parse JSON response
+  static getDateRangesFromBookings(bookings: Booking[]): DateRange[] {
+    return bookings.map((booking) => ({
+      start: new Date(booking.startDate).setHours(0, 0, 0, 0), // 00:00:00 // start of day
+      end: new Date(booking.endDate).setHours(23, 59, 59, 999), // 23:59:59:999 // end of day
+    }));
   }
 }

@@ -3,6 +3,7 @@ import { Booking } from '../../../types/Booking.ts';
 import DatePicker from 'react-datepicker';
 import './bookingCalendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import BookingsService from '../../../services/BookingsService.ts';
 
 type BookingProps = {
   bookings: Booking[];
@@ -17,34 +18,28 @@ export default function BookingCalendar({
 }: BookingProps) {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
-  const startDate = dateRange[0] || undefined;
-  const endDate = dateRange[1] || undefined;
-
-  const dateRanges = bookings.map((booking) => ({
-    start: new Date(booking.startDate).setHours(0, 0, 0, 0), // 00:00:00
-    end: new Date(booking.endDate).setHours(23, 59, 59, 999), // 23:59:59
-  }));
-
   const isDateBooked = (date: Date) => {
-    const day = date.setHours(0, 0, 0, 0); // 00:00:00
-    return dateRanges.some(({ start, end }) => day >= start && day <= end);
+    const dateRanges = BookingsService.getDateRangesFromBookings(bookings);
+    return BookingsService.isDateBooked(date, dateRanges);
   };
 
-  const highlightWithRanges = (date: Date) => {
+  const highlightRanges = (date: Date) => {
     return isDateBooked(date) ? 'booked-date' : undefined;
   };
 
-  const handleDateChange = (update: Date | [Date | null, Date | null]) => {
-    if (!Array.isArray(update)) {
+  const handleDateChange = (dates: Date | [Date | null, Date | null]) => {
+    if (!Array.isArray(dates)) {
       return;
     }
-    setDateRange(update);
 
-    if (update[0] && update[1]) {
-      // Calculate the difference in days
-      const timeDiff = Math.abs(update[1].getTime() - update[0].getTime());
-      const daysSelected = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
-      selectDatesCallback(update[0], update[1], daysSelected);
+    setDateRange(dates);
+
+    const startDate = dates[0];
+    const endDate = dates[1];
+
+    if (startDate && endDate) {
+      const daysSelected = BookingsService.calculateDaysFromDateRange(startDate, endDate);
+      selectDatesCallback(startDate, endDate, daysSelected);
     }
   };
 
@@ -58,6 +53,9 @@ export default function BookingCalendar({
     }
   }, [onClearDates]);
 
+  const startDate = dateRange[0] || undefined;
+  const endDate = dateRange[1] || undefined;
+
   return (
     <div>
       <DatePicker
@@ -66,7 +64,7 @@ export default function BookingCalendar({
         endDate={endDate}
         selectsRange
         inline
-        dayClassName={(date) => highlightWithRanges(date) || ''}
+        dayClassName={(date) => highlightRanges(date) || ''}
       />
     </div>
   );

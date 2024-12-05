@@ -2,7 +2,7 @@ import BookingCalendar from '../bookingCalendar/BookingCalendar.tsx';
 import { Booking } from '../../../types/Booking.ts';
 import { Car } from '../../../types/Car.ts';
 import { useRef, useState } from 'react';
-import BookingsService from '../../../services/BookingsService.ts';
+import BookingsApi from '../../../services/BookingsApi.ts';
 import ErrorBanner from '../../banner/ErrorBanner.tsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../LoadingSpinner.tsx';
@@ -56,7 +56,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
       );
 
       try {
-        const booking = await BookingsService.postBooking(
+        const booking = await BookingsApi.postBooking(
           1,
           car.id,
           normalizedStartDate,
