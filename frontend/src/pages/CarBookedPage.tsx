@@ -38,34 +38,27 @@ export default function CarBookedPage() {
           <div className="col-12 col-md-6 col-xl-4 offset-md-3 offset-md-4">
             <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden">
               <div className="card-body">
-                <h3 className="text-center fw-bold">Buchung erfolgreich!</h3>
-              </div>
-            </div>
+                <h3 className="text-center fw-bold mb-3">Booking Successful!</h3>
 
-            <div className="w-100 d-flex justify-content-center align-items-center">
-              <i
-                style={{ fontSize: '150px' }}
-                className="text-success fade-in-text bi bi-check-circle-fill"
-              ></i>
-            </div>
-
-            <div className="card bg-dark text-light border-0 shadow-lg overflow-hidden">
-              <div className="card-body">
+                <img
+                  className="rounded user-select-none thumpnail h-100"
+                  src={`/assets/img/${booking.car.category.image}`}
+                  alt={`Image of a ${booking.car.make} ${booking.car.model} ${booking.car.buildYear}`}
+                />
                 <table className="table table-dark">
                   <thead></thead>
                   <tbody>
+                    <tr>
+                      <th>Car</th>
+                      <td>
+                        {booking.car.make} {booking.car.model} {booking.car.buildYear}
+                      </td>
+                    </tr>
                     <tr>
                       <th>Date</th>
                       <td>
                         {new Date(booking.startDate).toLocaleDateString()} -{' '}
                         {new Date(booking.endDate).toLocaleDateString()}
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th>Car</th>
-                      <td>
-                        {booking.car.make} {booking.car.model} {booking.car.buildYear}
                       </td>
                     </tr>
                     <tr>
