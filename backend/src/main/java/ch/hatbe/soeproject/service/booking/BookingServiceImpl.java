@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException {
-        // Check if startDate or endDate is in the past
         if (request.getStartDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Start date cannot be in the past");
         }
@@ -50,35 +48,33 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException("End date cannot be in the past");
         }
 
-        // Validate user existence
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Validate car existence
         Car car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new IllegalArgumentException("Car not found"));
 
-        // Check for overlapping bookings
         if (BookingUtil.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
             throw new IllegalArgumentException("Car is already booked for the selected dates");
         }
 
-        // Create and save booking
+        float carPrice = car.getPricePerDay() * (request.getEndDate().toEpochDay() - request.getStartDate().toEpochDay() + 1);
+        LocalDate startDate = request.getStartDate();
+        LocalDate endDate = request.getEndDate();
+        LocalDateTime nowTimestamp = LocalDateTime.now();
+
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setCar(car);
-        booking.setStartDate(request.getStartDate());
-        booking.setEndDate(request.getEndDate());
-        booking.setCreationDate(LocalDateTime.now());
-        booking.setCalculatedPrice(
-                car.getPricePerDay() * (ChronoUnit.DAYS.between(request.getStartDate(), request.getEndDate()) + 1)
-        );
+        booking.setStartDate(startDate);
+        booking.setEndDate(endDate);
+        booking.setCreationDate(nowTimestamp);
+        booking.setCalculatedPrice(carPrice);
 
         return bookingRepository.save(booking);
     }
 
     public boolean deleteBookingById(int bookingId) {
-        // check if booking exists first
         Optional<Booking> booking = bookingRepository.findById(bookingId);
 
         if (booking.isEmpty()) {

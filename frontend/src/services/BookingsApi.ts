@@ -8,7 +8,6 @@ export default class BookingsApi {
     if (!response.ok) {
       throw new Error('Failed to fetch bookings');
     }
-    // if NO CONTENT then it must be empty
     if (response.status === 204) {
       return [];
     }
@@ -48,6 +47,6 @@ export default class BookingsApi {
         ((await response.json()) as { message: string }).message || 'Failed to post booking';
       throw new Error(error);
     }
-    return response.json(); // Parse JSON response
+    return response.json();
   }
 }
