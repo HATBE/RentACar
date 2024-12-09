@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Nov 2024 um 21:20
+-- Erstellungszeit: 09. Dez 2024 um 21:28
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -29,7 +29,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bookings` (
   `Bid` int(11) NOT NULL,
-  `Uid` int(11) NOT NULL,
   `Cid` int(11) NOT NULL,
   `BstartDate` date NOT NULL,
   `BendDate` date NOT NULL,
@@ -41,8 +40,8 @@ CREATE TABLE `bookings` (
 -- Daten für Tabelle `bookings`
 --
 
-INSERT INTO `bookings` (`Bid`, `Uid`, `Cid`, `BstartDate`, `BendDate`, `BcreationDate`, `BcalculatedPrice`) VALUES
-(3, 1, 1, '2024-11-26', '2024-11-27', '2024-11-25 20:19:39', 100);
+INSERT INTO `bookings` (`Bid`, `Cid`, `BstartDate`, `BendDate`, `BcreationDate`, `BcalculatedPrice`) VALUES
+(3, 1, '2024-11-26', '2024-11-27', '2024-11-25 20:19:39', 100);
 
 -- --------------------------------------------------------
 
@@ -136,28 +135,6 @@ INSERT INTO `cars` (`Cid`, `Cmake`, `Cmodel`, `CbuildYear`, `Chorsepower`, `Csea
 (40, 'Mercedes-Benz', 'GLE', 2021, 325, 5, 140, 'AUTOMATIC', 'DIESEL', 4),
 (41, 'Volkswagen', 'Passat', 2020, 174, 5, 65, 'MANUAL', 'DIESEL', 2);
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `users`
---
-
-CREATE TABLE `users` (
-  `Uid` int(11) NOT NULL,
-  `Ufirstname` varchar(255) NOT NULL,
-  `Ulastname` varchar(255) NOT NULL,
-  `Uemail` varchar(320) NOT NULL,
-  `Uphone` varchar(255) NOT NULL,
-  `UpasswordHash` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `users`
---
-
-INSERT INTO `users` (`Uid`, `Ufirstname`, `Ulastname`, `Uemail`, `Uphone`, `UpasswordHash`) VALUES
-(1, 'demo', 'demo', 'demo@demo.demo', '0', '1');
-
 --
 -- Indizes der exportierten Tabellen
 --
@@ -167,8 +144,7 @@ INSERT INTO `users` (`Uid`, `Ufirstname`, `Ulastname`, `Uemail`, `Uphone`, `Upas
 --
 ALTER TABLE `bookings`
   ADD PRIMARY KEY (`Bid`),
-  ADD KEY `bookings_cars` (`Cid`),
-  ADD KEY `bookings_users` (`Uid`);
+  ADD KEY `bookings_cars` (`Cid`);
 
 --
 -- Indizes für die Tabelle `carcategories`
@@ -182,12 +158,6 @@ ALTER TABLE `carcategories`
 ALTER TABLE `cars`
   ADD PRIMARY KEY (`Cid`),
   ADD KEY `cars_carcategories_fk` (`CCid`);
-
---
--- Indizes für die Tabelle `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`Uid`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -212,12 +182,6 @@ ALTER TABLE `cars`
   MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT für Tabelle `users`
---
-ALTER TABLE `users`
-  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- Constraints der exportierten Tabellen
 --
 
@@ -225,8 +189,7 @@ ALTER TABLE `users`
 -- Constraints der Tabelle `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_cars` FOREIGN KEY (`Cid`) REFERENCES `cars` (`Cid`),
-  ADD CONSTRAINT `bookings_users` FOREIGN KEY (`Uid`) REFERENCES `users` (`Uid`);
+  ADD CONSTRAINT `bookings_cars` FOREIGN KEY (`Cid`) REFERENCES `cars` (`Cid`);
 
 --
 -- Constraints der Tabelle `cars`
