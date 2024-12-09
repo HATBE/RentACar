@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class BookingUtilTest {
+class BookingValidatorTest {
 
     @Test
     void testDoBookingsOverlapNoOverlap() {
@@ -25,7 +26,7 @@ class BookingUtilTest {
         LocalDate startDate = LocalDate.of(2023, 11, 6);
         LocalDate endDate = LocalDate.of(2023, 11, 9);
 
-        boolean result = BookingUtil.doBookingsOverlap(bookings, startDate, endDate);
+        boolean result = BookingValidator.doBookingsOverlap(bookings, startDate, endDate);
 
         assertFalse(result, "Expected no overlap between the bookings and the date range.");
     }
@@ -45,7 +46,7 @@ class BookingUtilTest {
         LocalDate startDate = LocalDate.of(2023, 11, 3);
         LocalDate endDate = LocalDate.of(2023, 11, 7);
 
-        boolean result = BookingUtil.doBookingsOverlap(bookings, startDate, endDate);
+        boolean result = BookingValidator.doBookingsOverlap(bookings, startDate, endDate);
 
         assertTrue(result, "Expected an overlap between the bookings and the date range.");
     }
@@ -57,7 +58,7 @@ class BookingUtilTest {
         LocalDate startDate = LocalDate.of(2023, 11, 3);
         LocalDate endDate = LocalDate.of(2023, 11, 7);
 
-        boolean result = BookingUtil.doBookingsOverlap(bookings, startDate, endDate);
+        boolean result = BookingValidator.doBookingsOverlap(bookings, startDate, endDate);
 
         assertFalse(result, "Expected no overlap as the bookings list is empty.");
     }
@@ -73,7 +74,7 @@ class BookingUtilTest {
         LocalDate startDate = LocalDate.of(2023, 11, 1);
         LocalDate endDate = LocalDate.of(2023, 11, 5);
 
-        boolean result = BookingUtil.doBookingsOverlap(bookings, startDate, endDate);
+        boolean result = BookingValidator.doBookingsOverlap(bookings, startDate, endDate);
 
         assertTrue(result, "Expected an overlap as the date range exactly matches a booking.");
     }

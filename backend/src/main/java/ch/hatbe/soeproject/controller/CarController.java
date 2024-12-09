@@ -4,10 +4,12 @@ import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
+import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 import ch.hatbe.soeproject.service.car.CarService;
-import ch.hatbe.soeproject.utils.Validate;
+import ch.hatbe.soeproject.utils.RequestValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,9 +40,9 @@ public class CarController {
             @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
             @RequestParam(value = "buildYearSort", required = false) String buildYearSort
     ) {
-        priceSort = Validate.validateSortDirection(priceSort);
-        horsepowerSort = Validate.validateSortDirection(horsepowerSort);
-        buildYearSort = Validate.validateSortDirection(buildYearSort);
+        priceSort = RequestValidator.validateSortDirection(priceSort);
+        horsepowerSort = RequestValidator.validateSortDirection(horsepowerSort);
+        buildYearSort = RequestValidator.validateSortDirection(buildYearSort);
 
         List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to service
 
@@ -62,10 +64,14 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
-    // TODO:
-    @PostMapping("/")
-    public ResponseEntity<String> postCar() {
-        return ResponseEntity.ok("post car");
+    @PostMapping(value = {"", "/"})
+    public ResponseEntity<?> postCar(@RequestBody @Validated PostCarRequest request) {
+        try {
+            Car car = this.carService.createCar(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(car);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), "INVALID_REQUEST"));
+        }
     }
 
     // TODO:

@@ -3,13 +3,13 @@ package ch.hatbe.soeproject.service.booking;
 import ch.hatbe.soeproject.persistance.entities.Booking;
 import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.requests.PostBookingRequest;
+import ch.hatbe.soeproject.persistance.factories.BookingFactory;
 import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
-import ch.hatbe.soeproject.utils.BookingUtil;
+import ch.hatbe.soeproject.utils.BookingValidator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,22 +44,11 @@ public class BookingServiceImpl implements BookingService {
         Car car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new IllegalArgumentException("Car not found"));
 
-        if (BookingUtil.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
+        if (BookingValidator.doBookingsOverlap(this.getBookingsByCarId(car.getId(), false), request.getStartDate(), request.getEndDate())) {
             throw new IllegalArgumentException("Car is already booked for the selected dates");
         }
 
-        float carPrice = car.getPricePerDay() * (request.getEndDate().toEpochDay() - request.getStartDate().toEpochDay() + 1);
-        LocalDate startDate = request.getStartDate();
-        LocalDate endDate = request.getEndDate();
-        LocalDateTime nowTimestamp = LocalDateTime.now();
-
-        // TODO: constructor // factory?
-        Booking booking = new Booking();
-        booking.setCar(car);
-        booking.setStartDate(startDate);
-        booking.setEndDate(endDate);
-        booking.setCreationDate(nowTimestamp);
-        booking.setCalculatedPrice(carPrice);
+        Booking booking = BookingFactory.getInstance().createBooking(car, request.getStartDate(), request.getEndDate(), car.getPricePerDay());
 
         return bookingRepository.save(booking);
     }

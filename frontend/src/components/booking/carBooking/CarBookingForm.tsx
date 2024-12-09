@@ -29,7 +29,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
     setEndDate(endDate);
     setDaysSelected(days);
   };
-
+ 
   const clearDates = () => {
     setStartDate(null);
     setEndDate(null);

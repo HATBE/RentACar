@@ -44,9 +44,9 @@ public class BookingController {
     }
 
     @PostMapping(value = {"", "/"})
-    public ResponseEntity<?> postBooking(@RequestBody @Validated PostBookingRequest bookingRequest) {
+    public ResponseEntity<?> postBooking(@RequestBody @Validated PostBookingRequest request) {
         try {
-            Booking booking = bookingService.createBooking(bookingRequest);
+            Booking booking = bookingService.createBooking(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), "INVALID_REQUEST"));

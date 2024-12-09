@@ -1,18 +1,15 @@
 package ch.hatbe.soeproject.persistance.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-
-import java.util.List;
+import lombok.Data;
 
 @Entity
-@Getter
+@Data
 @Table(name = "cars")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "Cid")
+    @Column(name = "Cid")
     private int id;
 
     @Column(name = "Cmake", nullable = false)

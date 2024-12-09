@@ -1,9 +1,13 @@
 package ch.hatbe.soeproject.service.car;
 
 import ch.hatbe.soeproject.persistance.entities.Car;
+import ch.hatbe.soeproject.persistance.entities.CarCategory;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
+import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
+import ch.hatbe.soeproject.persistance.factories.CarFactory;
 import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
+import ch.hatbe.soeproject.persistance.repositories.CarCategoryRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,12 @@ import java.util.Optional;
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final BookingRepository bookingRepository;
+    private final CarCategoryRepository carCategoryRepository;
 
-    public CarServiceImpl(CarRepository carRepository, BookingRepository bookingRepository) {
+    public CarServiceImpl(CarRepository carRepository, BookingRepository bookingRepository, CarCategoryRepository carCategoryRepository) {
         this.carRepository = carRepository;
         this.bookingRepository = bookingRepository;
+        this.carCategoryRepository = carCategoryRepository;
     }
 
     @Override
@@ -44,6 +50,17 @@ public class CarServiceImpl implements CarService {
 
     public Optional<Car> getCarById(int carId) {
         return carRepository.findById(carId);
+    }
+
+    public Car createCar(PostCarRequest request) throws IllegalArgumentException {
+        // TODO: VALIDATE
+
+        CarCategory carCategory = carCategoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
+        Car car = CarFactory.getInstance().createCar(request);
+
+        return carRepository.save(car);
     }
 
     public Map<String, Object> getCarOptions() {
