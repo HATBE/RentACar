@@ -16,10 +16,6 @@ public class Booking {
     private int id;
 
     @ManyToOne()
-    @JoinColumn(name = "Uid", nullable = false)
-    private User user;
-
-    @ManyToOne()
     @JoinColumn(name = "Cid", nullable = false)
     private Car car;
 

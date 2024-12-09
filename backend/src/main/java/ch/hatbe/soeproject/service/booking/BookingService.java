@@ -1,20 +1,17 @@
 package ch.hatbe.soeproject.service.booking;
 
 import ch.hatbe.soeproject.persistance.entities.Booking;
-import ch.hatbe.soeproject.persistance.entities.requests.CreateBookingRequest;
+import ch.hatbe.soeproject.persistance.entities.requests.PostBookingRequest;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookingService {
     List<Booking> getBookingsByCarId(int carId, boolean future);
-
-    List<Booking> getBookingsByUserId(int userId, boolean future);
-
+    
     Optional<Booking> getBookingById(int bookingId);
 
     boolean deleteBookingById(int bookingId);
 
-    Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException;
+    Booking createBooking(PostBookingRequest request) throws IllegalArgumentException;
 }

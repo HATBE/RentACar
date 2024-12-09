@@ -53,7 +53,6 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
 
       try {
         const booking = await BookingsApi.postBooking(
-          1,
           car.id,
           normalizedStartDate,
           normalizedEndDate

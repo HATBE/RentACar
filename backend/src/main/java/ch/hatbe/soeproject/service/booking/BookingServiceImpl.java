@@ -2,11 +2,9 @@ package ch.hatbe.soeproject.service.booking;
 
 import ch.hatbe.soeproject.persistance.entities.Booking;
 import ch.hatbe.soeproject.persistance.entities.Car;
-import ch.hatbe.soeproject.persistance.entities.User;
-import ch.hatbe.soeproject.persistance.entities.requests.CreateBookingRequest;
+import ch.hatbe.soeproject.persistance.entities.requests.PostBookingRequest;
 import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
-import ch.hatbe.soeproject.persistance.repositories.UserRepository;
 import ch.hatbe.soeproject.utils.BookingUtil;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +16,10 @@ import java.util.Optional;
 @Service
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
-    private final UserRepository userRepository;
     private final CarRepository carRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, UserRepository userRepository, CarRepository carRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, CarRepository carRepository) {
         this.bookingRepository = bookingRepository;
-        this.userRepository = userRepository;
         this.carRepository = carRepository;
     }
 
@@ -31,15 +27,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAllByCarId(carId, future);
     }
 
-    public List<Booking> getBookingsByUserId(int carId, boolean future) {
-        return bookingRepository.findAllByUserId(carId, future);
-    }
-
     public Optional<Booking> getBookingById(int bookingId) {
         return bookingRepository.findById(bookingId);
     }
 
-    public Booking createBooking(CreateBookingRequest request) throws IllegalArgumentException {
+    public Booking createBooking(PostBookingRequest request) throws IllegalArgumentException {
         // validate start end date TODO:
         if (request.getStartDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Start date cannot be in the past");
@@ -48,9 +40,6 @@ public class BookingServiceImpl implements BookingService {
         if (request.getEndDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("End date cannot be in the past");
         }
-
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Car car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new IllegalArgumentException("Car not found"));
@@ -66,7 +55,6 @@ public class BookingServiceImpl implements BookingService {
 
         // TODO: constructor // factory?
         Booking booking = new Booking();
-        booking.setUser(user);
         booking.setCar(car);
         booking.setStartDate(startDate);
         booking.setEndDate(endDate);

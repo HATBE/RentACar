@@ -61,3 +61,7 @@ body {
     border-bottom: none !important;
     border-bottom-width: 0 !important;
 }
+
+table.table-center tr td {
+    vertical-align: center !important;
+}

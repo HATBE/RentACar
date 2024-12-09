@@ -13,9 +13,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query("SELECT b FROM Booking b WHERE b.car.id = :carId AND (:future = FALSE OR b.endDate >= CURRENT_DATE) ORDER BY b.startDate ASC")
     List<Booking> findAllByCarId(@Param("carId") Integer carId, @Param("future") Boolean future);
 
-    @Query("SELECT b FROM Booking b WHERE b.user.id = :userId AND (:future = FALSE OR b.endDate >= CURRENT_DATE) ORDER BY b.startDate ASC")
-    List<Booking> findAllByUserId(@Param("userId") Integer userId, @Param("future") Boolean future);
-
     @Modifying
     @Query("DELETE FROM Booking b WHERE b.car.id = :carId")
     void deleteByCarId(Integer carId);

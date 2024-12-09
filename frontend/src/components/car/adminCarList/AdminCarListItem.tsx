@@ -18,7 +18,7 @@ export default function AdminCarListItem({ car, onCarDeleted }: CarListItemProps
     try {
       await CarsApi.deleteCarById(car.id);
       alert(`Car #${car.id} deleted successfully.`);
-      onCarDeleted(car.id); // Notify parent about the deletion
+      onCarDeleted(car.id);
     } catch (error) {
       alert(`Failed to delete car: ${(error as Error).message}`);
     }
@@ -27,26 +27,30 @@ export default function AdminCarListItem({ car, onCarDeleted }: CarListItemProps
   return (
     <tr>
       <td>{car.id}</td>
-      <td style={{ minWidth: '150px' }}>
-        <Link to={`/cars/${car.id}/edit`}>
-          <button className="btn btn-primary">Edit</button>
+
+      <td>{car.category.name}</td>
+
+      <td className="text-nowrap w-100">
+        <Link className="link-light text-decoration-none" to={`/cars/admin/${car.id}`}>
+          {car.make} {car.model} {car.buildYear}
         </Link>
-        <button onClick={handleDelete} className="ms-2 btn btn-danger">
-          Delete
+      </td>
+
+      <td style={{ minWidth: '250px' }}>
+        <Link to={`/admin/cars/${car.id}`}>
+          <button className="btn btn-sm btn-success">
+            <i className="bi bi-eye-fill me-2"></i>View
+          </button>
+        </Link>
+        <Link to={`/admin/cars/${car.id}/edit`}>
+          <button className="ms-2 btn btn-sm btn-primary">
+            <i className="bi bi-pen-fill me-2"></i>Edit
+          </button>
+        </Link>
+        <button onClick={handleDelete} className="ms-2 btn-sm btn btn-danger">
+          <i className="bi bi-trash-fill me-2"></i> Delete
         </button>
       </td>
-      <td>
-        <img
-          style={{ maxWidth: '100px' }}
-          className="user-select-none thumbnail h-100"
-          src={`/assets/img/${car.category.image}`}
-          alt={`Image of a ${car.make} ${car.model} ${car.buildYear}`}
-        />
-      </td>
-      <td>
-        {car.make} {car.model} {car.buildYear}
-      </td>
-      <td className="w-100"></td>
     </tr>
   );
 }

@@ -26,7 +26,7 @@ export default function AdminCarList() {
   }, []);
 
   const handleCarDeleted = (carId: number) => {
-    setCars((prevCars) => prevCars.filter((car) => car.id !== carId)); // Remove the deleted car
+    setCars((prevCars) => prevCars.filter((car) => car.id !== carId));
   };
 
   return (
@@ -34,12 +34,12 @@ export default function AdminCarList() {
       {error && <ErrorBanner message={error} />}
       {loading && <LoadingSpinner />}
       {!error && !loading && (
-        <table className="table table-dark">
+        <table className="table table-center table-dark">
           <thead>
             <tr>
               <th>#</th>
-              <th></th>
-              <th></th>
+
+              <th>Category</th>
               <th>Name</th>
               <th></th>
             </tr>

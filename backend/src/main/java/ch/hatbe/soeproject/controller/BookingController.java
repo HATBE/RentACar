@@ -2,7 +2,7 @@ package ch.hatbe.soeproject.controller;
 
 import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.Booking;
-import ch.hatbe.soeproject.persistance.entities.requests.CreateBookingRequest;
+import ch.hatbe.soeproject.persistance.entities.requests.PostBookingRequest;
 import ch.hatbe.soeproject.service.booking.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,19 +43,8 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserBookings(@PathVariable int userId, @RequestParam(value = "future", required = false, defaultValue = "false") Boolean future) {
-        List<Booking> bookings = bookingService.getBookingsByUserId(userId, future);
-
-        if (bookings.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ErrorResponse("No Bookings found", "BOOKINGS_NOT_FOUND"));
-        }
-
-        return ResponseEntity.ok(bookings);
-    }
-
     @PostMapping(value = {"", "/"})
-    public ResponseEntity<?> postBooking(@RequestBody @Validated CreateBookingRequest bookingRequest) {
+    public ResponseEntity<?> postBooking(@RequestBody @Validated PostBookingRequest bookingRequest) {
         try {
             Booking booking = bookingService.createBooking(bookingRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
