@@ -53,9 +53,9 @@ public class CarController {
         return ResponseEntity.ok(cars);
     }
 
-    @GetMapping("/{carid}")
-    public ResponseEntity<?> getCar(@PathVariable int carid) {
-        Optional<Car> car = this.carService.getCarById(carid);
+    @GetMapping("/{carId}")
+    public ResponseEntity<?> getCar(@PathVariable int carId) {
+        Optional<Car> car = this.carService.getCarById(carId);
 
         if (car.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Car not found", "CAR_NOT_FOUND"));
@@ -75,14 +75,14 @@ public class CarController {
     }
 
     // TODO:
-    @PatchMapping("/{carid}")
-    public ResponseEntity<String> patchCar(@PathVariable int carid) {
-        return ResponseEntity.ok("patch car" + carid);
+    @PatchMapping("/{carId}")
+    public ResponseEntity<String> patchCar(@PathVariable int carId) {
+        return ResponseEntity.ok("patch car" + carId);
     }
 
-    @DeleteMapping("/{carid}")
-    public ResponseEntity<?> deleteCar(@PathVariable int carid) {
-        if (!this.carService.deleteCarById(carid)) {
+    @DeleteMapping("/{carId}")
+    public ResponseEntity<?> deleteCar(@PathVariable int carId) {
+        if (!this.carService.deleteCarById(carId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Car not found", "CAR_NOT_FOUND"));
         }
 

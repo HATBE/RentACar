@@ -58,7 +58,17 @@ public class CarServiceImpl implements CarService {
         CarCategory carCategory = carCategoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
 
-        Car car = CarFactory.getInstance().createCar(request);
+        Car car = CarFactory.getInstance().createCar(
+                request.getMake(),
+                request.getModel(),
+                request.getBuildYear(),
+                request.getHorsePower(),
+                request.getSeatsCount(),
+                request.getPricePerDay(),
+                request.getGearType(),
+                request.getFuelType(),
+                carCategory
+        );
 
         return carRepository.save(car);
     }
