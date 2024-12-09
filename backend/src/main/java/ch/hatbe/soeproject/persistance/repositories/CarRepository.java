@@ -28,7 +28,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             "CASE WHEN :horsepowerSort = 'ASC' THEN c.horsepower END ASC, " +
             "CASE WHEN :horsepowerSort = 'DESC' THEN c.horsepower END DESC, " +
             "CASE WHEN :buildYearSort = 'ASC' THEN c.buildYear END ASC, " +
-            "CASE WHEN :buildYearSort = 'DESC' THEN c.buildYear END DESC")
+            "CASE WHEN :buildYearSort = 'DESC' THEN c.buildYear END DESC, " +
+            "c.id ASC")
     List<Car> findAll(
             @Param("buildYearFrom") Integer buildYearFrom,
             @Param("buildYearTo") Integer buildYearTo,

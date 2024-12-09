@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Car } from '../../types/Car.ts';
-import CarSpecsGrid from './CarSpecsGrid.tsx';
+import { Car } from '../../../types/Car.ts';
+import CarSpecsGrid from '../CarSpecsGrid.tsx';
 
 type CarListItemProps = {
   car: Car;

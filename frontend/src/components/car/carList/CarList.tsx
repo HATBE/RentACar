@@ -1,11 +1,11 @@
 import CarListItem from './CarListItem.tsx';
 import { useEffect, useState } from 'react';
-import LoadingSpinner from '../LoadingSpinner.tsx';
+import LoadingSpinner from '../../LoadingSpinner.tsx';
 import { useLocation } from 'react-router-dom';
 import CarListFilterBar from './CarListFilterBar.tsx';
-import ErrorBanner from '../banner/ErrorBanner.tsx';
-import { Car } from '../../types/Car.ts';
-import CarService from '../../services/CarsApi.ts';
+import ErrorBanner from '../../banner/ErrorBanner.tsx';
+import { Car } from '../../../types/Car.ts';
+import CarService from '../../../services/CarsApi.ts';
 
 export default function CarList() {
   const [cars, setCars] = useState<Car[]>([]);
