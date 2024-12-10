@@ -63,12 +63,12 @@ export default function AdminCarDetailPage() {
         <div className="row g-3">
           <div className="col-12">
             <Link to={`/admin/cars/${car.id}/edit`}>
-              <button className="btn btn-primary">
+              <button className="btn btn-sm btn-primary">
                 <i className="bi bi-pencil"></i> Edit
               </button>
             </Link>
 
-            <button onClick={handleDelete} className="ms-2 btn btn-danger">
+            <button onClick={handleDelete} className="ms-2 btn-sm btn btn-danger">
               <i className="bi bi-trash"></i> Delete
             </button>
           </div>

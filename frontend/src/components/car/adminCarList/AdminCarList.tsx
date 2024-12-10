@@ -35,7 +35,6 @@ export default function AdminCarList() {
       {loading && <LoadingSpinner />}
       {!error && !loading && (
         <>
-          <h2>Car List</h2>
           <table className="table table-center table-dark">
             <thead>
               <tr>

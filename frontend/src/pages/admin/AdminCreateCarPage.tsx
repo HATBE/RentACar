@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import CarService from '../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../services/CarCategoriesApi.ts';
-import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
-import SuccessBanner from '../../components/banner/SuccessBanner.tsx';
 import LoadingSpinner from '../../components/LoadingSpinner.tsx';
 import { CarCategory } from '../../types/CarCategory.ts';
 import { useNavigate } from 'react-router-dom';
+import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
+import SuccessBanner from '../../components/banner/SuccessBanner.tsx';
 
 export default function AdminCreateCarPage() {
   const navigate = useNavigate();
@@ -120,102 +120,105 @@ export default function AdminCreateCarPage() {
   return (
     <div className="row">
       <div className="col-12 col-xl-4 offset-0 offset-xl-4">
-        {error && <ErrorBanner message={error} />}
-        {success && <SuccessBanner message={success} />}
-
-        <form onSubmit={handleSubmit}>
-          <h2>Create a Car</h2>
-          <div className="mb-3">
-            <label>Make</label>
-            <input type="text" className="form-control" name="make" onChange={handleChange} />
+        <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
+          <h4 className="card-header">Create a car</h4>
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              {error && <ErrorBanner message={error} />}
+              {success && <SuccessBanner message={success} />}
+              <div className="mb-3">
+                <label>Make</label>
+                <input type="text" className="form-control" name="make" onChange={handleChange} />
+              </div>
+              <div className="mb-3">
+                <label>Model</label>
+                <input type="text" className="form-control" name="model" onChange={handleChange} />
+              </div>
+              <div className="mb-3">
+                <label>Build Year</label>
+                <input
+                  type="number"
+                  min="1900"
+                  max="3000"
+                  step="1"
+                  className="form-control"
+                  name="buildYear"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Horse Power</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="horsePower"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Seat count</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="seatCount"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Price per day</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="pricePerDay"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Gear Type</label>
+                <select className="form-select" name="gearType" onChange={handleChange}>
+                  <option selected={true} disabled={true} value="">
+                    Select a gear type
+                  </option>
+                  {gearTypes.map((gearType) => (
+                    <option key={gearType} value={gearType}>
+                      {gearType}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label>Fuel Type</label>
+                <select className="form-select" name="fuelType" onChange={handleChange}>
+                  <option selected={true} disabled={true} value="">
+                    Select a fuel type
+                  </option>
+                  {fuelTypes.map((fuelType) => (
+                    <option key={fuelType} value={fuelType}>
+                      {fuelType}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label>Category</label>
+                <select className="form-select" name="category" onChange={handleChange}>
+                  <option selected={true} disabled={true} value="">
+                    Select a category
+                  </option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button disabled={!isFormValid()} className="btn btn-success" type="submit">
+                {loading && <LoadingSpinner />}
+                {!loading && 'Create'}
+              </button>
+            </form>
           </div>
-          <div className="mb-3">
-            <label>Model</label>
-            <input type="text" className="form-control" name="model" onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label>Build Year</label>
-            <input
-              type="number"
-              min="1900"
-              max="3000"
-              step="1"
-              className="form-control"
-              name="buildYear"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Horse Power</label>
-            <input
-              type="number"
-              className="form-control"
-              name="horsePower"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Seat count</label>
-            <input
-              type="number"
-              className="form-control"
-              name="seatCount"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Price per day</label>
-            <input
-              type="number"
-              className="form-control"
-              name="pricePerDay"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Gear Type</label>
-            <select className="form-select" name="gearType" onChange={handleChange}>
-              <option selected={true} disabled={true} value="">
-                Select a gear type
-              </option>
-              {gearTypes.map((gearType) => (
-                <option key={gearType} value={gearType}>
-                  {gearType}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-3">
-            <label>Fuel Type</label>
-            <select className="form-select" name="fuelType" onChange={handleChange}>
-              <option selected={true} disabled={true} value="">
-                Select a fuel type
-              </option>
-              {fuelTypes.map((fuelType) => (
-                <option key={fuelType} value={fuelType}>
-                  {fuelType}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-3">
-            <label>Category</label>
-            <select className="form-select" name="category" onChange={handleChange}>
-              <option selected={true} disabled={true} value="">
-                Select a category
-              </option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button disabled={!isFormValid()} className="btn btn-success" type="submit">
-            {loading && <LoadingSpinner />}
-            {!loading && 'Create Car'}
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );
