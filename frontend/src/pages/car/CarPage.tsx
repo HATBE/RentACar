@@ -1,13 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Car } from '../types/Car.ts';
-import LoadingSpinner from '../components/LoadingSpinner.tsx';
-import ErrorBanner from '../components/banner/ErrorBanner.tsx';
-import { Booking } from '../types/Booking.ts';
-import CarsApi from '../services/CarsApi.ts';
-import BookingsApi from '../services/BookingsApi.ts';
-import CarBookingForm from '../components/booking/carBooking/CarBookingForm.tsx';
-import CarSpecsGrid from '../components/car/CarSpecsGrid.tsx';
+import { Car } from '../../types/Car.ts';
+import LoadingSpinner from '../../components/LoadingSpinner.tsx';
+import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
+import { Booking } from '../../types/Booking.ts';
+import CarsApi from '../../services/CarsApi.ts';
+import BookingsApi from '../../services/BookingsApi.ts';
+import CarBookingForm from '../../components/booking/carBooking/CarBookingForm.tsx';
+import CarSpecsGrid from '../../components/car/CarSpecsGrid.tsx';
 
 export default function CarPage() {
   const { carId } = useParams();
@@ -38,14 +38,14 @@ export default function CarPage() {
   }, [carId]);
 
   return (
-    <div>
+    <>
       {error && <ErrorBanner message={error} />}
       {loading && <LoadingSpinner />}
 
       {car && !error && !loading && (
         <div className="row g-3">
           <div className="col-12">
-            <Link to="/">
+            <Link to="/public">
               <button className="btn btn-secondary">
                 <i className="bi bi-arrow-left"></i> Back
               </button>
@@ -90,6 +90,6 @@ export default function CarPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

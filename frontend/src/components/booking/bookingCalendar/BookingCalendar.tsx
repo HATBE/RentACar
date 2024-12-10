@@ -7,14 +7,16 @@ import BookingsService from '../../../services/BookingsService.ts';
 
 type BookingProps = {
   bookings: Booking[];
-  selectDatesCallback: (startDate: Date, endDate: Date, daysSelected: number) => void;
+  selectDatesCallback?: (startDate: Date, endDate: Date, daysSelected: number) => void;
   onClearDates?: (clearCallback: () => void) => void;
+  disableDates: boolean;
 };
 
 export default function BookingCalendar({
   bookings,
   selectDatesCallback,
   onClearDates,
+  disableDates,
 }: BookingProps) {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
@@ -39,7 +41,9 @@ export default function BookingCalendar({
 
     if (startDate && endDate) {
       const daysSelected = BookingsService.calculateDaysFromDateRange(startDate, endDate);
-      selectDatesCallback(startDate, endDate, daysSelected);
+      if (selectDatesCallback) {
+        selectDatesCallback(startDate, endDate, daysSelected);
+      }
     }
   };
 
@@ -65,6 +69,7 @@ export default function BookingCalendar({
         endDate={endDate}
         selectsRange
         inline
+        filterDate={() => !disableDates}
         dayClassName={(date) => highlightRanges(date) || ''}
       />
     </div>

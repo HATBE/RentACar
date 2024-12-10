@@ -31,7 +31,7 @@ export default function AdminCarListItem({ car, onCarDeleted }: CarListItemProps
       <td>{car.category.name}</td>
 
       <td className="text-nowrap w-100">
-        <Link className="link-light text-decoration-none" to={`/cars/admin/${car.id}`}>
+        <Link className="link-light text-decoration-none" to={`/admin/cars/${car.id}`}>
           {car.make} {car.model} {car.buildYear}
         </Link>
       </td>

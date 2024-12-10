@@ -72,6 +72,12 @@ export default function AdminCreateCarPage() {
     e.preventDefault();
     setLoading(true);
 
+    if (!isFormValid()) {
+      setError('Please fill out all fields');
+      setLoading(false);
+      return;
+    }
+
     try {
       const car = await CarService.postCar(
         formData.make,
@@ -96,6 +102,21 @@ export default function AdminCreateCarPage() {
     }
   };
 
+  const isFormValid = () => {
+    return !(
+      formData.category === -1 ||
+      !formData.category ||
+      !formData.gearType ||
+      !formData.fuelType ||
+      !formData.make ||
+      !formData.model ||
+      !formData.buildYear ||
+      !formData.horsePower ||
+      !formData.seatCount ||
+      !formData.pricePerDay
+    );
+  };
+
   return (
     <div className="row">
       <div className="col-12 col-xl-4 offset-0 offset-xl-4">
@@ -106,23 +127,11 @@ export default function AdminCreateCarPage() {
           <h2>Create a Car</h2>
           <div className="mb-3">
             <label>Make</label>
-            <input
-              type="text"
-              className="form-control"
-              name="make"
-              value={formData.make}
-              onChange={handleChange}
-            />
+            <input type="text" className="form-control" name="make" onChange={handleChange} />
           </div>
           <div className="mb-3">
             <label>Model</label>
-            <input
-              type="text"
-              className="form-control"
-              name="model"
-              value={formData.model}
-              onChange={handleChange}
-            />
+            <input type="text" className="form-control" name="model" onChange={handleChange} />
           </div>
           <div className="mb-3">
             <label>Build Year</label>
@@ -133,7 +142,6 @@ export default function AdminCreateCarPage() {
               step="1"
               className="form-control"
               name="buildYear"
-              value={formData.buildYear}
               onChange={handleChange}
             />
           </div>
@@ -143,7 +151,6 @@ export default function AdminCreateCarPage() {
               type="number"
               className="form-control"
               name="horsePower"
-              value={formData.horsePower}
               onChange={handleChange}
             />
           </div>
@@ -153,7 +160,6 @@ export default function AdminCreateCarPage() {
               type="number"
               className="form-control"
               name="seatCount"
-              value={formData.seatCount}
               onChange={handleChange}
             />
           </div>
@@ -163,19 +169,13 @@ export default function AdminCreateCarPage() {
               type="number"
               className="form-control"
               name="pricePerDay"
-              value={formData.pricePerDay}
               onChange={handleChange}
             />
           </div>
           <div className="mb-3">
             <label>Gear Type</label>
-            <select
-              className="form-select"
-              name="gearType"
-              value={formData.gearType}
-              onChange={handleChange}
-            >
-              <option disabled={true} value="">
+            <select className="form-select" name="gearType" onChange={handleChange}>
+              <option selected={true} disabled={true} value="">
                 Select a gear type
               </option>
               {gearTypes.map((gearType) => (
@@ -187,13 +187,8 @@ export default function AdminCreateCarPage() {
           </div>
           <div className="mb-3">
             <label>Fuel Type</label>
-            <select
-              className="form-select"
-              name="fuelType"
-              value={formData.fuelType}
-              onChange={handleChange}
-            >
-              <option disabled={true} value="">
+            <select className="form-select" name="fuelType" onChange={handleChange}>
+              <option selected={true} disabled={true} value="">
                 Select a fuel type
               </option>
               {fuelTypes.map((fuelType) => (
@@ -205,13 +200,8 @@ export default function AdminCreateCarPage() {
           </div>
           <div className="mb-3">
             <label>Category</label>
-            <select
-              className="form-select"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option disabled={true} value="">
+            <select className="form-select" name="category" onChange={handleChange}>
+              <option selected={true} disabled={true} value="">
                 Select a category
               </option>
               {categories.map((category) => (
@@ -221,9 +211,8 @@ export default function AdminCreateCarPage() {
               ))}
             </select>
           </div>
-          <button className="btn btn-success" type="submit">
+          <button disabled={!isFormValid()} className="btn btn-success" type="submit">
             {loading && <LoadingSpinner />}
-
             {!loading && 'Create Car'}
           </button>
         </form>

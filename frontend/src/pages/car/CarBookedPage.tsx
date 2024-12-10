@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Booking } from '../types/Booking.ts';
-import BookingsApi from '../services/BookingsApi.ts';
-import ErrorBanner from '../components/banner/ErrorBanner.tsx';
-import LoadingSpinner from '../components/LoadingSpinner.tsx';
+import { Booking } from '../../types/Booking.ts';
+import BookingsApi from '../../services/BookingsApi.ts';
+import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
+import LoadingSpinner from '../../components/LoadingSpinner.tsx';
 
 export default function CarBookedPage() {
   const { bookingId } = useParams();

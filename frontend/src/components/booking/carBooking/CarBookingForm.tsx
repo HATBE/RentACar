@@ -29,7 +29,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
     setEndDate(endDate);
     setDaysSelected(days);
   };
- 
+
   const clearDates = () => {
     setStartDate(null);
     setEndDate(null);
@@ -81,6 +81,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
         onClearDates={(clearCallback) => (clearDatesCallback.current = clearCallback)}
         bookings={bookings}
         selectDatesCallback={selectDatesCallback}
+        disableDates={false}
       />
       <button disabled={!canBook()} onClick={handleBooking} className="btn btn-primary w-100 mt-3">
         {loading && <LoadingSpinner />}
