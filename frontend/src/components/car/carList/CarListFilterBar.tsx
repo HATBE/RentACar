@@ -260,7 +260,23 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         </select>
       </div>
       <div className="col-12 col-md-4 col-xl-2">
-        <BookingCalendar disableDates={false} selectDatesCallback={selectDatesCallback} />
+        <div className="dropdown">
+          <button
+            style={{ marginTop: '23px' }}
+            className="btn w-100 btn-light dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="outside"
+          >
+            Date Range
+          </button>
+          <ul className="dropdown-menu p-0 overflow-hidden">
+            <li>
+              <BookingCalendar disableDates={false} selectDatesCallback={selectDatesCallback} />
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="col-12">
         <button
