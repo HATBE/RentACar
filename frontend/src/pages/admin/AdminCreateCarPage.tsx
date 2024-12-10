@@ -1,11 +1,34 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import CarService from '../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../services/CarCategoriesApi.ts';
+import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
+import SuccessBanner from '../../components/banner/SuccessBanner.tsx';
+import LoadingSpinner from '../../components/LoadingSpinner.tsx';
+import { CarCategory } from '../../types/CarCategory.ts';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminCreateCarPage() {
+  const navigate = useNavigate();
+
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<CarCategory[]>([]);
+
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [formData, setFormData] = useState({
+    make: '',
+    model: '',
+    buildYear: '',
+    horsePower: '',
+    seatCount: '',
+    pricePerDay: '',
+    gearType: '',
+    fuelType: '',
+    category: -1,
+  });
 
   const fetchData = async () => {
     try {
@@ -26,75 +49,185 @@ export default function AdminCreateCarPage() {
     fetchData();
   }, []);
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const clearForm = () => {
+    setFormData({
+      make: '',
+      model: '',
+      buildYear: '',
+      horsePower: '',
+      seatCount: '',
+      pricePerDay: '',
+      gearType: '',
+      fuelType: '',
+      category: -1,
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const car = await CarService.postCar(
+        formData.make,
+        formData.model,
+        +formData.buildYear,
+        +formData.horsePower,
+        +formData.seatCount,
+        +formData.pricePerDay,
+        formData.gearType,
+        formData.fuelType,
+        formData.category
+      );
+      setError(null);
+      setSuccess('Successfully created car');
+      clearForm();
+      navigate(`/cars/${car.id}`);
+    } catch (err) {
+      setSuccess(null);
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="row">
-      <form className="col-12 col-xl-4 offset-0 offset-xl-4">
-        <h2>Create a Car</h2>
-        <div className="mb-3">
-          <label>Make</label>
-          <input type="text" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Model</label>
-          <input type="text" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Build Year</label>
-          <input type="year" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Horse Power</label>
-          <input type="number" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Seat count</label>
-          <input type="number" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Price per day</label>
-          <input type="number" className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label>Gear Type</label>
-          <select className="form-select">
-            <option selected={true} disabled={true}>
-              Select a gear type
-            </option>
-            {gearTypes.map((gearType) => (
-              <option key={gearType} value={gearType}>
-                {gearType}
+      <div className="col-12 col-xl-4 offset-0 offset-xl-4">
+        {error && <ErrorBanner message={error} />}
+        {success && <SuccessBanner message={success} />}
+
+        <form onSubmit={handleSubmit}>
+          <h2>Create a Car</h2>
+          <div className="mb-3">
+            <label>Make</label>
+            <input
+              type="text"
+              className="form-control"
+              name="make"
+              value={formData.make}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Model</label>
+            <input
+              type="text"
+              className="form-control"
+              name="model"
+              value={formData.model}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Build Year</label>
+            <input
+              type="number"
+              min="1900"
+              max="3000"
+              step="1"
+              className="form-control"
+              name="buildYear"
+              value={formData.buildYear}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Horse Power</label>
+            <input
+              type="number"
+              className="form-control"
+              name="horsePower"
+              value={formData.horsePower}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Seat count</label>
+            <input
+              type="number"
+              className="form-control"
+              name="seatCount"
+              value={formData.seatCount}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Price per day</label>
+            <input
+              type="number"
+              className="form-control"
+              name="pricePerDay"
+              value={formData.pricePerDay}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Gear Type</label>
+            <select
+              className="form-select"
+              name="gearType"
+              value={formData.gearType}
+              onChange={handleChange}
+            >
+              <option disabled={true} value="">
+                Select a gear type
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label>Fuel Type</label>
-          <select className="form-select">
-            <option selected={true} disabled={true}>
-              Select a fuel type
-            </option>
-            {fuelTypes.map((fuelType) => (
-              <option key={fuelType} value={fuelType}>
-                {fuelType}
+              {gearTypes.map((gearType) => (
+                <option key={gearType} value={gearType}>
+                  {gearType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label>Fuel Type</label>
+            <select
+              className="form-select"
+              name="fuelType"
+              value={formData.fuelType}
+              onChange={handleChange}
+            >
+              <option disabled={true} value="">
+                Select a fuel type
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label>Category</label>
-          <select className="form-select">
-            <option disabled={true} selected={true}>
-              Select a category
-            </option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+              {fuelTypes.map((fuelType) => (
+                <option key={fuelType} value={fuelType}>
+                  {fuelType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label>Category</label>
+            <select
+              className="form-select"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option disabled={true} value="">
+                Select a category
               </option>
-            ))}
-          </select>
-        </div>
-        <button className="btn btn-success">Create</button>
-      </form>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button className="btn btn-success" type="submit">
+            {loading && <LoadingSpinner />}
+
+            {!loading && 'Create Car'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

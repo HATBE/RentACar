@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CarService from '../../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../../services/CarCategoriesApi.ts';
+import { CarCategory } from '../../../types/CarCategory.ts';
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;
@@ -33,7 +34,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
 
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<CarCategory[]>([]);
 
   const fetchData = async () => {
     try {
@@ -122,9 +123,9 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
           onChange={(e) => setCategory(e.target.value || null)}
         >
           <option value="">any</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
             </option>
           ))}
         </select>
