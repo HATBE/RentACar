@@ -6,7 +6,7 @@ export default function AdminLandingPage() {
     <>
       <h1>Admin </h1>
       <div className="my-3">
-        <Link to={'/cars/create'} className="btn btn-primary">
+        <Link to={'/admin/cars/create'} className="btn btn-primary">
           <i className="bi bi-plus-circle me-2"></i>Add Car
         </Link>
       </div>

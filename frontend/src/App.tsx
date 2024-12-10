@@ -22,8 +22,8 @@ export default function App() {
           <Route path="/cars/:carId" element={<CarPage />} />
           <Route path="/cars/booked/:bookingId" element={<CarBookedPage />} />
           <Route path="/admin" element={<AdminLandingPage />} />
-          <Route path="/admin/cars/:carId" element={<AdminCarDetailPage />} />
           <Route path="/admin/cars/create" element={<AdminCreateCarPage />} />
+          <Route path="/admin/cars/:carId" element={<AdminCarDetailPage />} />
           <Route path="/admin/cars/:carId/edit" element={<AdminEditCarPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
