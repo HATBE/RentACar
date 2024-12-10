@@ -82,20 +82,20 @@ export default function AdminCarDetailPage() {
                   <thead></thead>
                   <tbody>
                     <tr>
-                      <td>Category</td>
-                      <td>{car.category.name}</td>
+                      <th>Category</th>
+                      <td className="w-100">{car.category.name}</td>
                     </tr>
                     <tr>
-                      <td>Horsepower</td>
-                      <td>{car.horsepower}</td>
+                      <th>Horsepower</th>
+                      <td className="w-100">{car.horsepower}</td>
                     </tr>
                     <tr>
-                      <td>Gear Type</td>
-                      <td>{car.gearType}</td>
+                      <th>Gear Type</th>
+                      <td className="w-100">{car.gearType}</td>
                     </tr>
                     <tr>
-                      <td>Fuel Type</td>
-                      <td>{car.fuelType}</td>
+                      <th>Fuel Type</th>
+                      <td className="w-100">{car.fuelType}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -112,8 +112,8 @@ export default function AdminCarDetailPage() {
                   <table className="table table-dark">
                     <thead>
                       <tr>
-                        <td>Date</td>
-                        <td>Price</td>
+                        <th>Date</th>
+                        <th>Price</th>
                       </tr>
                     </thead>
                     <tbody>
