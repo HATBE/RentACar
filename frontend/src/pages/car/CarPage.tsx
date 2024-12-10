@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Car } from '../../types/Car.ts';
-import LoadingSpinner from '../../components/LoadingSpinner.tsx';
-import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
+import LoadingSpinner from '../../components/layout/LoadingSpinner.tsx';
+import ErrorBanner from '../../components/layout/banner/ErrorBanner.tsx';
 import { Booking } from '../../types/Booking.ts';
 import CarsApi from '../../services/CarsApi.ts';
 import BookingsApi from '../../services/BookingsApi.ts';

@@ -4,8 +4,8 @@ import { Car } from '../../types/Car.ts';
 import { Booking } from '../../types/Booking.ts';
 import CarsApi from '../../services/CarsApi.ts';
 import BookingsApi from '../../services/BookingsApi.ts';
-import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
-import LoadingSpinner from '../../components/LoadingSpinner.tsx';
+import ErrorBanner from '../../components/layout/banner/ErrorBanner.tsx';
+import LoadingSpinner from '../../components/layout/LoadingSpinner.tsx';
 import BookingCalendar from '../../components/booking/bookingCalendar/BookingCalendar.tsx';
 
 export default function AdminCarDetailPage() {

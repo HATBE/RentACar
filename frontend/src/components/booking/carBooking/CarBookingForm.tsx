@@ -3,9 +3,9 @@ import { Booking } from '../../../types/Booking.ts';
 import { Car } from '../../../types/Car.ts';
 import { useRef, useState } from 'react';
 import BookingsApi from '../../../services/BookingsApi.ts';
-import ErrorBanner from '../../banner/ErrorBanner.tsx';
+import ErrorBanner from '../../layout/banner/ErrorBanner.tsx';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../LoadingSpinner.tsx';
+import LoadingSpinner from '../../layout/LoadingSpinner.tsx';
 import BookingsService from '../../../services/BookingsService.ts';
 
 type CarBookingProps = {

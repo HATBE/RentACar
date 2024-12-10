@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Car } from '../../../types/Car.ts';
 import CarsApi from '../../../services/CarsApi.ts';
-import ErrorBanner from '../../banner/ErrorBanner.tsx';
-import LoadingSpinner from '../../LoadingSpinner.tsx';
+import ErrorBanner from '../../layout/banner/ErrorBanner.tsx';
+import LoadingSpinner from '../../layout/LoadingSpinner.tsx';
 import AdminCarListItem from './AdminCarListItem.tsx';
 
 export default function AdminCarList() {

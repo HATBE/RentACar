@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import CarService from '../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../services/CarCategoriesApi.ts';
-import LoadingSpinner from '../../components/LoadingSpinner.tsx';
+import LoadingSpinner from '../../components/layout/LoadingSpinner.tsx';
 import { CarCategory } from '../../types/CarCategory.ts';
 import { useNavigate } from 'react-router-dom';
-import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
-import SuccessBanner from '../../components/banner/SuccessBanner.tsx';
+import ErrorBanner from '../../components/layout/banner/ErrorBanner.tsx';
+import SuccessBanner from '../../components/layout/banner/SuccessBanner.tsx';
 
 export default function AdminCreateCarPage() {
   const navigate = useNavigate();

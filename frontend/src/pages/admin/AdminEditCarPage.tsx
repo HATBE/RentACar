@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import CarService from '../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../services/CarCategoriesApi.ts';
-import ErrorBanner from '../../components/banner/ErrorBanner.tsx';
-import SuccessBanner from '../../components/banner/SuccessBanner.tsx';
-import LoadingSpinner from '../../components/LoadingSpinner.tsx';
+import ErrorBanner from '../../components/layout/banner/ErrorBanner.tsx';
+import SuccessBanner from '../../components/layout/banner/SuccessBanner.tsx';
+import LoadingSpinner from '../../components/layout/LoadingSpinner.tsx';
 import { CarCategory } from '../../types/CarCategory.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 
