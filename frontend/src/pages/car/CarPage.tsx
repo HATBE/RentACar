@@ -45,7 +45,7 @@ export default function CarPage() {
       {car && !error && !loading && (
         <div className="row g-3">
           <div className="col-12">
-            <Link to="/public">
+            <Link to="/">
               <button className="btn btn-secondary">
                 <i className="bi bi-arrow-left"></i> Back
               </button>

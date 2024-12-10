@@ -202,39 +202,45 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
         </select>
       </div>
       <div className="col-12 col-md-4 col-xl-2">
-        <label>Price Sort: </label>
+        <label>Sort By: </label>
         <select
           className="form-select"
-          value={priceSort || ''}
-          onChange={(e) => setPriceSort(e.target.value || null)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setPriceSort(null);
+            setHorsepowerSort(null);
+            setBuildYearSort(null);
+            switch (value) {
+              case 'priceAsc':
+                setPriceSort('ASC');
+                break;
+              case 'priceDesc':
+                setPriceSort('DESC');
+                break;
+              case 'horsepowerAsc':
+                setHorsepowerSort('ASC');
+                break;
+              case 'horsepowerDesc':
+                setHorsepowerSort('DESC');
+                break;
+              case 'buildYearAsc':
+                setBuildYearSort('ASC');
+                break;
+              case 'buildYearDesc':
+                setBuildYearSort('DESC');
+                break;
+              default:
+                break;
+            }
+          }}
         >
           <option value="">None</option>
-          <option value="ASC">Price &#8593;</option>
-          <option value="DESC">Price &#8595;</option>
-        </select>
-      </div>
-      <div className="col-12 col-md-4 col-xl-2">
-        <label>Horsepower Sort: </label>
-        <select
-          className="form-select"
-          value={horsepowerSort || ''}
-          onChange={(e) => setHorsepowerSort(e.target.value || null)}
-        >
-          <option value="">None</option>
-          <option value="ASC">Horsepower &#8593;</option>
-          <option value="DESC">Horsepower &#8595;</option>
-        </select>
-      </div>
-      <div className="col-12 col-md-4 col-xl-2">
-        <label>Build Year Sort: </label>
-        <select
-          className="form-select"
-          value={buildYearSort || ''}
-          onChange={(e) => setBuildYearSort(e.target.value || null)}
-        >
-          <option value="">None</option>
-          <option value="ASC">Build Year &#8593;</option>
-          <option value="DESC">Build Year &#8595;</option>
+          <option value="priceAsc">Price &#8593;</option>
+          <option value="priceDesc">Price &#8595;</option>
+          <option value="horsepowerAsc">Horsepower &#8593;</option>
+          <option value="horsepowerDesc">Horsepower &#8595;</option>
+          <option value="buildYearAsc">Build Year &#8593;</option>
+          <option value="buildYearDesc">Build Year &#8595;</option>
         </select>
       </div>
       <div className="col-12">
