@@ -6,12 +6,28 @@ import ch.hatbe.soeproject.persistance.entities.GearType;
 import ch.hatbe.soeproject.persistance.entities.requests.PatchCarRequest;
 import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public interface CarService {
-    List<Car> getCars(Integer buildYearFrom, Integer buildYearTo, String make, String category, Float priceMin, Float priceMax, Integer seatsMin, Integer seatsMax, GearType gearType, FuelType fuelType, String priceSort, String horsepowerSort, String buildYearSort);
+    List<Car> getCars(Integer buildYearFrom,
+                      Integer buildYearTo,
+                      String make,
+                      String category,
+                      Float priceMin,
+                      Float priceMax,
+                      Integer seatsMin,
+                      Integer seatsMax,
+                      GearType gearType,
+                      FuelType fuelType,
+                      String priceSort,
+                      String horsepowerSort,
+                      String buildYearSort,
+                      LocalDate startDate,
+                      LocalDate endDate
+    );
 
     Optional<Car> getCarById(int carid);
 

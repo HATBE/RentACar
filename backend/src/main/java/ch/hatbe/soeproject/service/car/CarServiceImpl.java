@@ -13,6 +13,7 @@ import ch.hatbe.soeproject.persistance.repositories.CarRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ public class CarServiceImpl implements CarService {
         this.carCategoryRepository = carCategoryRepository;
     }
 
-    @Override
     public List<Car> getCars(
             Integer buildYearFrom,
             Integer buildYearTo,
@@ -44,9 +44,11 @@ public class CarServiceImpl implements CarService {
             FuelType fuelType,
             String priceSort,
             String horsepowerSort,
-            String buildYearSort) {
-
-        return carRepository.findAll(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to repository
+            String buildYearSort,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
+        return carRepository.findAll(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, startDate, endDate, priceSort, horsepowerSort, buildYearSort);
     }
 
     public Optional<Car> getCarById(int carId) {

@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import BookingsService from '../../../services/BookingsService.ts';
 
 type BookingProps = {
-  bookings: Booking[];
+  bookings?: Booking[];
   selectDatesCallback?: (startDate: Date, endDate: Date, daysSelected: number) => void;
   onClearDates?: (clearCallback: () => void) => void;
   disableDates: boolean;
@@ -21,6 +21,7 @@ export default function BookingCalendar({
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
   const isDateBooked = (date: Date) => {
+    if (!bookings) return false;
     const dateRanges = BookingsService.getDateRangesFromBookings(bookings);
     return BookingsService.isDateBooked(date, dateRanges);
   };

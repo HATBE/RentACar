@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import CarService from '../../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../../services/CarCategoriesApi.ts';
 import { CarCategory } from '../../../types/CarCategory.ts';
+import BookingCalendar from '../../booking/bookingCalendar/BookingCalendar.tsx';
+import BookingsService from '../../../services/BookingsService.ts';
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;
@@ -11,7 +13,6 @@ interface FilterBarProps {
 
 export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const navigate = useNavigate();
-
   const [buildYearFrom, setBuildYearFrom] = useState<string | null>(
     defaultValues.get('buildYearFrom')
   );
@@ -24,6 +25,8 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [seatsMax, setSeatsMax] = useState<string | null>(defaultValues.get('seatsMax'));
   const [gearType, setGearType] = useState<string | null>(defaultValues.get('gearType'));
   const [fuelType, setFuelType] = useState<string | null>(defaultValues.get('fuelType'));
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [priceSort, setPriceSort] = useState<string | null>(defaultValues.get('priceSort'));
   const [horsepowerSort, setHorsepowerSort] = useState<string | null>(
     defaultValues.get('horsepowerSort')
@@ -35,6 +38,11 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<CarCategory[]>([]);
+
+  const selectDatesCallback = (startDate: Date, endDate: Date) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
 
   const fetchData = async () => {
     try {
@@ -71,6 +79,14 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
     if (priceSort) params.set('priceSort', priceSort);
     if (horsepowerSort) params.set('horsepowerSort', horsepowerSort);
     if (buildYearSort) params.set('buildYearSort', buildYearSort);
+    if (startDate) {
+      const normalizedStartDate = BookingsService.normalizeDate(startDate, 0, 0, 0);
+      params.set('startDate', normalizedStartDate.toISOString().slice(0, 10));
+    }
+    if (endDate) {
+      const normalizedEndDate = BookingsService.normalizeDate(endDate, 23, 59, 59);
+      params.set('endDate', normalizedEndDate.toISOString().slice(0, 10));
+    }
 
     navigate(`?${params.toString()}`, { replace: true });
   };
@@ -242,6 +258,9 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
           <option value="buildYearAsc">Build Year &#8593;</option>
           <option value="buildYearDesc">Build Year &#8595;</option>
         </select>
+      </div>
+      <div className="col-12 col-md-4 col-xl-2">
+        <BookingCalendar disableDates={false} selectDatesCallback={selectDatesCallback} />
       </div>
       <div className="col-12">
         <button

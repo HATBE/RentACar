@@ -8,11 +8,13 @@ import ch.hatbe.soeproject.persistance.entities.requests.PatchCarRequest;
 import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 import ch.hatbe.soeproject.service.car.CarService;
 import ch.hatbe.soeproject.utils.RequestValidator;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,8 @@ public class CarController {
             @RequestParam(value = "seatsMax", required = false) Integer seatsMax,
             @RequestParam(value = "gearType", required = false) GearType gearType,
             @RequestParam(value = "fuelType", required = false) FuelType fuelType,
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(value = "priceSort", required = false) String priceSort,
             @RequestParam(value = "horsepowerSort", required = false) String horsepowerSort,
             @RequestParam(value = "buildYearSort", required = false) String buildYearSort
@@ -45,7 +49,7 @@ public class CarController {
         horsepowerSort = RequestValidator.validateSortDirection(horsepowerSort);
         buildYearSort = RequestValidator.validateSortDirection(buildYearSort);
 
-        List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort); // Updated call to service
+        List<Car> cars = carService.getCars(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, priceSort, horsepowerSort, buildYearSort, startDate, endDate);
 
         if (cars.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("No Cars available", "CARS_NOT_FOUND"));
