@@ -34,22 +34,25 @@ export default function AdminCarList() {
       {error && <ErrorBanner message={error} />}
       {loading && <LoadingSpinner />}
       {!error && !loading && (
-        <table className="table table-center table-dark">
-          <thead>
-            <tr>
-              <th>#</th>
+        <>
+          <h2>Car List</h2>
+          <table className="table table-center table-dark">
+            <thead>
+              <tr>
+                <th>#</th>
 
-              <th>Category</th>
-              <th>Name</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {cars.map((car) => (
-              <AdminCarListItem key={car.id} car={car} onCarDeleted={handleCarDeleted} />
-            ))}
-          </tbody>
-        </table>
+                <th>Category</th>
+                <th>Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {cars.map((car) => (
+                <AdminCarListItem key={car.id} car={car} onCarDeleted={handleCarDeleted} />
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );

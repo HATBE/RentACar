@@ -31,7 +31,6 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
     defaultValues.get('buildYearSort')
   );
 
-  // State to hold fetched options
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);

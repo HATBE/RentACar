@@ -7,6 +7,7 @@ public class CarPriceCalculator {
         if (startDate.isAfter(endDate)) {
             return 0.0f;
         }
+
         return carPricePerDay * (endDate.toEpochDay() - startDate.toEpochDay() + 1);
     }
 }
