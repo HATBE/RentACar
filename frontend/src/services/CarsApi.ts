@@ -41,6 +41,44 @@ export default class CarsApi {
     return response.json();
   }
 
+  static async updateCar(
+    carId: string,
+    make: string,
+    model: string,
+    buildYear: number,
+    horsePower: number,
+    seatCount: number,
+    pricePerDay: number,
+    gearType: string,
+    fuelType: string,
+    categoryId: number
+  ): Promise<Car> {
+    const response = await fetch(`http://localhost:8081/api/v1/cars/${carId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        make: make,
+        model: model,
+        buildYear: buildYear,
+        horsePower: horsePower,
+        seatsCount: seatCount,
+        pricePerDay: pricePerDay,
+        gearType: gearType,
+        fuelType: fuelType,
+        categoryId: categoryId,
+      }),
+    });
+
+    if (!response.ok) {
+      const error =
+        ((await response.json()) as { message: string }).message || 'Failed to update car';
+      throw new Error(error);
+    }
+    return response.json();
+  }
+
   static async postCar(
     make: string,
     model: string,

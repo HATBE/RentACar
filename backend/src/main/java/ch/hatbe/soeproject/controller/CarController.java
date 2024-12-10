@@ -4,6 +4,7 @@ import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
+import ch.hatbe.soeproject.persistance.entities.requests.PatchCarRequest;
 import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 import ch.hatbe.soeproject.service.car.CarService;
 import ch.hatbe.soeproject.utils.RequestValidator;
@@ -71,13 +72,21 @@ public class CarController {
             return ResponseEntity.status(HttpStatus.CREATED).body(car);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), "INVALID_REQUEST"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage(), "INTERNAL_ERROR"));
         }
     }
 
-    // TODO:
     @PatchMapping("/{carId}")
-    public ResponseEntity<String> patchCar(@PathVariable int carId) {
-        return ResponseEntity.ok("patch car" + carId);
+    public ResponseEntity<?> patchCar(@PathVariable int carId, @RequestBody @Validated PatchCarRequest request) {
+        try {
+            Car updatedCar = carService.updateCar(carId, request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(updatedCar);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), "INVALID_REQUEST"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage(), "INTERNAL_ERROR"));
+        }
     }
 
     @DeleteMapping("/{carId}")

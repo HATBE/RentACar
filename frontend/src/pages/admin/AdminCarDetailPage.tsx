@@ -77,7 +77,7 @@ export default function AdminCarDetailPage() {
               <h4 className="card-header">
                 {car.make} {car.model} {car.buildYear}
               </h4>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <table className="table table-dark">
                   <thead></thead>
                   <tbody>

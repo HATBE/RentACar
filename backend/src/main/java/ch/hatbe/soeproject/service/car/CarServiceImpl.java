@@ -4,6 +4,7 @@ import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.CarCategory;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
+import ch.hatbe.soeproject.persistance.entities.requests.PatchCarRequest;
 import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 import ch.hatbe.soeproject.persistance.factories.CarFactory;
 import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
@@ -73,10 +74,31 @@ public class CarServiceImpl implements CarService {
         return carRepository.save(car);
     }
 
+    //@Transactional
+    public Car updateCar(int carId, PatchCarRequest request) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new IllegalArgumentException("Car not found"));
+
+        if (request.getMake() != null) car.setMake(request.getMake());
+        if (request.getModel() != null) car.setModel(request.getModel());
+        if (request.getBuildYear() != null) car.setBuildYear(request.getBuildYear());
+        if (request.getHorsePower() != null) car.setHorsepower(request.getHorsePower());
+        if (request.getSeatsCount() != null) car.setSeatsCount(request.getSeatsCount());
+        if (request.getPricePerDay() != null) car.setPricePerDay(request.getPricePerDay());
+        if (request.getGearType() != null) car.setGearType(request.getGearType());
+        if (request.getFuelType() != null) car.setFuelType(request.getFuelType());
+        if (request.getCategoryId() != null) {
+            CarCategory category = carCategoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+            car.setCategory(category);
+        }
+
+        return carRepository.save(car);
+    }
+
     public Map<String, Object> getCarOptions() {
         GearType[] gearTypes = GearType.values();
         FuelType[] fuelTypes = FuelType.values();
-
 
         Map<String, Object> options = new HashMap<>();
         options.put("gearTypes", gearTypes);

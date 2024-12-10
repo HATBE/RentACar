@@ -3,6 +3,7 @@ package ch.hatbe.soeproject.service.car;
 import ch.hatbe.soeproject.persistance.entities.Car;
 import ch.hatbe.soeproject.persistance.entities.FuelType;
 import ch.hatbe.soeproject.persistance.entities.GearType;
+import ch.hatbe.soeproject.persistance.entities.requests.PatchCarRequest;
 import ch.hatbe.soeproject.persistance.entities.requests.PostCarRequest;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface CarService {
     boolean deleteCarById(int carId);
 
     Car createCar(PostCarRequest request) throws IllegalArgumentException;
+
+    Car updateCar(int carId, PatchCarRequest request) throws IllegalArgumentException;
 }
