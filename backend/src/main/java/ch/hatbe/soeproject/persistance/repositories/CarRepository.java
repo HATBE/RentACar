@@ -25,7 +25,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             "AND (:startDate IS NULL OR :endDate IS NULL OR NOT EXISTS (" +
             "    SELECT b FROM Booking b " +
             "    WHERE b.car.id = c.id " +
-            "    AND (b.startDate < :endDate AND b.endDate > :startDate)" +
+            "    AND (b.startDate <= :endDate AND b.endDate >= :startDate)" +
             ")) " +
             "ORDER BY " +
             "CASE WHEN :priceSort = 'ASC' THEN c.pricePerDay END ASC, " +
