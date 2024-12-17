@@ -11,6 +11,8 @@ import ch.hatbe.soeproject.persistance.repositories.BookingRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarCategoryRepository;
 import ch.hatbe.soeproject.persistance.repositories.CarRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,6 +23,9 @@ import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarServiceImpl.class);
+
     private final CarRepository carRepository;
     private final BookingRepository bookingRepository;
     private final CarCategoryRepository carCategoryRepository;
@@ -48,18 +53,25 @@ public class CarServiceImpl implements CarService {
             LocalDate startDate,
             LocalDate endDate
     ) {
+        logger.info("Fetching cars with filters: buildYearFrom={}, buildYearTo={}, make={}, category={}, priceMin={}, priceMax={}",
+                buildYearFrom, buildYearTo, make, category, priceMin, priceMax);
+
         return carRepository.findAll(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, startDate, endDate, priceSort, horsepowerSort, buildYearSort);
     }
 
     public Optional<Car> getCarById(int carId) {
+        logger.info("Fetching car by ID: {}", carId);
         return carRepository.findById(carId);
     }
 
     public Car createCar(PostCarRequest request) throws IllegalArgumentException {
-        // TODO: VALIDATE
+        logger.info("Creating car with make={}, model={}, buildYear={}", request.getMake(), request.getModel(), request.getBuildYear());
 
         CarCategory carCategory = carCategoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> {
+                    logger.error("Category with ID {} not found", request.getCategoryId());
+                    return new IllegalArgumentException("Category not found");
+                });
 
         Car car = CarFactory.getInstance().createCar(
                 request.getMake(),
@@ -73,13 +85,19 @@ public class CarServiceImpl implements CarService {
                 carCategory
         );
 
-        return carRepository.save(car);
+        Car savedCar = carRepository.save(car);
+        logger.info("Car created successfully with ID: {}", savedCar.getId());
+        return savedCar;
     }
 
-    //@Transactional
     public Car updateCar(int carId, PatchCarRequest request) {
+        logger.info("Updating car with ID: {}", carId);
+
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new IllegalArgumentException("Car not found"));
+                .orElseThrow(() -> {
+                    logger.error("Car with ID {} not found", carId);
+                    return new IllegalArgumentException("Car not found");
+                });
 
         if (request.getMake() != null) car.setMake(request.getMake());
         if (request.getModel() != null) car.setModel(request.getModel());
@@ -91,14 +109,20 @@ public class CarServiceImpl implements CarService {
         if (request.getFuelType() != null) car.setFuelType(request.getFuelType());
         if (request.getCategoryId() != null) {
             CarCategory category = carCategoryRepository.findById(request.getCategoryId())
-                    .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                    .orElseThrow(() -> {
+                        logger.error("Category with ID {} not found", request.getCategoryId());
+                        return new IllegalArgumentException("Category not found");
+                    });
             car.setCategory(category);
         }
 
-        return carRepository.save(car);
+        Car updatedCar = carRepository.save(car);
+        logger.info("Car with ID {} updated successfully", carId);
+        return updatedCar;
     }
 
     public Map<String, Object> getCarOptions() {
+        logger.info("Fetching car options (Gear Types and Fuel Types)");
         GearType[] gearTypes = GearType.values();
         FuelType[] fuelTypes = FuelType.values();
 
@@ -109,20 +133,19 @@ public class CarServiceImpl implements CarService {
         return options;
     }
 
-    @Transactional // make sure that the whole method is executed in a single transaction
+    @Transactional
     public boolean deleteCarById(int carId) {
-        // check if car exists
-        Optional<Car> car = carRepository.findById(carId);
+        logger.info("Deleting car with ID: {}", carId);
 
+        Optional<Car> car = carRepository.findById(carId);
         if (car.isEmpty()) {
+            logger.warn("Attempted to delete non-existent car with ID: {}", carId);
             return false;
         }
 
-        // delete all bookings for this car
         bookingRepository.deleteByCarId(carId);
-
         carRepository.deleteById(carId);
-
+        logger.info("Car with ID {} and its bookings deleted successfully", carId);
         return true;
     }
 }
