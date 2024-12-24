@@ -1,5 +1,6 @@
 package ch.hatbe.soeproject.controller;
 
+import ch.hatbe.soeproject.controller.response.ErrorResponse;
 import ch.hatbe.soeproject.persistance.entities.CarCategory;
 import ch.hatbe.soeproject.service.carCategory.CarCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,22 +33,27 @@ public class CarCategoryController {
             description = "Retrieve a list of all available car categories."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Car categories retrieved successfully",
-                    content = @Content(schema = @Schema(implementation = CarCategory.class))),
-            @ApiResponse(responseCode = "204", description = "No car categories found")
+            @ApiResponse(responseCode = "200", description = "Car categories retrieved successfully", content = @Content(schema = @Schema(implementation = CarCategory.class))),
+            @ApiResponse(responseCode = "204", description = "No car categories found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping(value = {"", "/"})
-    public ResponseEntity<List<CarCategory>> getAllCarCategories() {
+    public ResponseEntity<?> getAllCarCategories() {
         logger.info("Fetching all car categories");
-        List<CarCategory> categories = carCategoryService.getAllCarCategories();
 
-        if (categories.isEmpty()) {
-            logger.warn("No car categories found");
-            return ResponseEntity.noContent().build();
-        } else {
+        try {
+            List<CarCategory> categories = carCategoryService.getAllCarCategories();
+
+            if (categories.isEmpty()) {
+                logger.warn("No car categories found");
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+
             logger.debug("Fetched car categories: {}", categories);
+            return ResponseEntity.status(HttpStatus.OK).body(categories);
+        } catch (Exception e) {
+            logger.error("Error fetching car categories", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("An error occurred while fetching car categories", "INTERNAL_SERVER_ERROR"));
         }
-
-        return ResponseEntity.ok(categories);
     }
 }

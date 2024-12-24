@@ -122,7 +122,7 @@ public class CarServiceImpl implements CarService {
     }
 
     public Map<String, Object> getCarOptions() {
-        logger.info("Fetching car options (Gear Types and Fuel Types)");
+        logger.debug("Fetching car options (Gear Types and Fuel Types)");
         GearType[] gearTypes = GearType.values();
         FuelType[] fuelTypes = FuelType.values();
 

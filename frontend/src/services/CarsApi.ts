@@ -7,7 +7,7 @@ export default class CarsApi {
     if (!response.ok) {
       throw new Error('Failed to fetch car');
     }
-    return response.json();
+    return await response.json();
   }
 
   static async deleteCarById(carId: number): Promise<Booking> {
@@ -20,7 +20,7 @@ export default class CarsApi {
         ((await response.json()) as { message: string }).message || 'Failed to delete car';
       throw new Error(error);
     }
-    return response.json();
+    return await response.json();
   }
 
   static async getCars(queryParams?: URLSearchParams): Promise<Car[]> {
@@ -38,7 +38,7 @@ export default class CarsApi {
     if (!response.ok) {
       throw new Error('Failed to fetch car options');
     }
-    return response.json();
+    return await response.json();
   }
 
   static async updateCar(
@@ -72,11 +72,9 @@ export default class CarsApi {
     });
 
     if (!response.ok) {
-      const error =
-        ((await response.json()) as { message: string }).message || 'Failed to update car';
-      throw new Error(error);
+      throw new Error('Failed to update car');
     }
-    return response.json();
+    return await response.json();
   }
 
   static async postCar(
@@ -110,9 +108,10 @@ export default class CarsApi {
 
     if (!response.ok) {
       const error =
-        ((await response.json()) as { message: string }).message || 'Failed to post car';
+        ((await response.json()) as { errors: string[] }).errors.join(',\n ') ||
+        'Failed to post car';
       throw new Error(error);
     }
-    return response.json();
+    return await response.json();
   }
 }
