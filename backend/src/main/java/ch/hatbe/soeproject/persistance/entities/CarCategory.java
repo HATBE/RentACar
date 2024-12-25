@@ -1,15 +1,15 @@
 package ch.hatbe.soeproject.persistance.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 
 @Entity
-@Getter
+@Data
 @Table(name = "carcategories")
 public class CarCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "CCid")
+    @Column(name = "CCid")
     private int id;
 
     @Column(name = "CCname", nullable = false)
