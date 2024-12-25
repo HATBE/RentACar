@@ -103,13 +103,55 @@ Die Anwendung folgt einer klassischen Client-Server-Architektur:
 
 ![](./_docs/img/app.png)
 
-### REST API Schnittstellen
+### Backend - REST API Routes
 
 Siehe Swagger UI
 
 http://localhost:8081/swagger-ui/index.html
 
 ![](./_docs/img/swagger.png)
+
+### Frontend Routes
+
+#### `/` (Landing Page)
+
+Startseite. Hier werden alle Autos angezeigt, Hier kann man auch filtern
+![Landing Page Screenshot](_docs/img/landing.png)
+
+Filter im Einsatz
+![Landing Page Screenshot](_docs/img/filter.png)
+
+#### `/cars/:carId` (Car Details Page)
+
+Zeigt detailierte infos über das ausgewählte auto an
+Buchungen können hier gemacht werden.,
+![Landing Page Screenshot](_docs/img/cardetail.png)
+
+#### `/cars/booked/:bookingId` (Car Booked Confirmation Page)
+
+Bestätigung nach dem Buchen
+![Landing Page Screenshot](_docs/img/booked.png)
+
+#### `/admin` (Admin Dashboard)
+
+Admin Landing Page
+Hier werden alle autos aufgelistst
+![Landing Page Screenshot](_docs/img/admin.png)
+
+#### `/admin/cars/create` (Create Car Page)
+
+Hier kann ein auto erstellt werden
+![Landing Page Screenshot](_docs/img/create.png)
+
+#### `/admin/cars/:carId` (Admin Car Detail Page)
+
+Admin übersicht eines autos
+![Landing Page Screenshot](_docs/img/cardetailadmin.png)
+
+#### `/admin/cars/:carId/edit` (Edit Car Page)
+
+Hier kann ein Auto editiert werden
+![Landing Page Screenshot](_docs/img/editcar.PNG)
 
 ## Installation
 
