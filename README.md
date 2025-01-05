@@ -111,6 +111,8 @@ http://localhost:8081/swagger-ui/index.html
 
 ![](./_docs/img/swagger.png)
 
+**The GET and POST / is double because of "@GetMapping(value = {"", "/"})", it counts as two entries for some reason**
+
 ### Frontend Routes
 
 #### `/` (Landing Page)
