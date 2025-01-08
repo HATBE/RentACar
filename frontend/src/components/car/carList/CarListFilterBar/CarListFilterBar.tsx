@@ -30,6 +30,7 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [fuelType, setFuelType] = useState<string | null>(defaultValues.get('fuelType'));
   const [startDate, setStartDate] = useState<Date | null>(defaultValues.get('startDate') ? new Date(defaultValues.get('startDate')!) : null);
   const [endDate, setEndDate] = useState<Date | null>(defaultValues.get('endDate') ? new Date(defaultValues.get('endDate')!) : null);
+
   const [priceSort, setPriceSort] = useState<string | null>(defaultValues.get('priceSort'));
   const [horsepowerSort, setHorsepowerSort] = useState<string | null>(defaultValues.get('horsepowerSort'));
   const [buildYearSort, setBuildYearSort] = useState<string | null>(defaultValues.get('buildYearSort'));
@@ -73,10 +74,12 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
     if (priceSort) params.set('priceSort', priceSort);
     if (horsepowerSort) params.set('horsepowerSort', horsepowerSort);
     if (buildYearSort) params.set('buildYearSort', buildYearSort);
+
     if (startDate) {
       const normalizedStartDate = BookingsService.normalizeDate(startDate, 0, 0, 0);
       params.set('startDate', normalizedStartDate.toISOString().slice(0, 10));
     }
+
     if (endDate) {
       const normalizedEndDate = BookingsService.normalizeDate(endDate, 23, 59, 59);
       params.set('endDate', normalizedEndDate.toISOString().slice(0, 10));

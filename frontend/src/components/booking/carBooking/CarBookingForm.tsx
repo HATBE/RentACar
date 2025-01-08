@@ -62,6 +62,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
 
         setError(null);
         clearDates();
+
         navigate(`/cars/booked/${booking.id}`);
       } catch (err) {
         setError((err as Error).message);

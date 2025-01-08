@@ -28,7 +28,6 @@ export default function CarList() {
 
   useEffect(() => {
     fetchData();
-    // reload if location.search changes
   }, [location.search]);
 
   return (

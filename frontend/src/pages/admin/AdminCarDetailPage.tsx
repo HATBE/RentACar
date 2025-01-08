@@ -97,6 +97,10 @@ export default function AdminCarDetailPage() {
                       <th>Fuel Type</th>
                       <td className="w-100">{car.fuelType}</td>
                     </tr>
+                    <tr>
+                      <th className="text-nowrap">Price per day</th>
+                      <td className="w-100">{car.pricePerDay} CHF.</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -123,7 +127,7 @@ export default function AdminCarDetailPage() {
                             {new Date(booking.startDate).toLocaleDateString()} -{' '}
                             {new Date(booking.endDate).toLocaleDateString()}
                           </td>
-                          <td className="w-100">{booking.calculatedPrice} CHF</td>
+                          <td className="w-100">{booking.calculatedPrice} CHF.</td>
                         </tr>
                       ))}
                     </tbody>
