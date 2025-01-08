@@ -4,12 +4,12 @@ import CarService from '../../../../services/CarsApi.ts';
 import CarCarCategoriesService from '../../../../services/CarCategoriesApi.ts';
 import { CarCategory } from '../../../../types/CarCategory.ts';
 import BookingsService from '../../../../services/BookingsService.ts';
-import DateRangePickerFilterInput from "./filters/DateRangePickerFilterInput.tsx";
-import NumberFilterInput from "./filters/NumberFilterInput.tsx";
-import StringFilterInput from "./filters/StringFilterInput.tsx";
-import SelectFilterInput from "./filters/SelectFilterInput.tsx";
-import CategoryFilterInput from "./filters/CategoryFilterInput.tsx";
-import SortByFilterInput from "./filters/SortByFilterInput.tsx";
+import DateRangePickerFilterInput from "./filterInputs/DateRangePickerFilterInput.tsx";
+import NumberFilterInput from "./filterInputs/NumberFilterInput.tsx";
+import StringFilterInput from "./filterInputs/StringFilterInput.tsx";
+import SelectFilterInput from "./filterInputs/SelectFilterInput.tsx";
+import CategoryFilterInput from "./filterInputs/CategoryFilterInput.tsx";
+import SortByFilterInput from "./filterInputs/SortByFilterInput.tsx";
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;
@@ -28,8 +28,8 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [seatsMax, setSeatsMax] = useState<string | null>(defaultValues.get('seatsMax'));
   const [gearType, setGearType] = useState<string | null>(defaultValues.get('gearType'));
   const [fuelType, setFuelType] = useState<string | null>(defaultValues.get('fuelType'));
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(defaultValues.get('startDate') ? new Date(defaultValues.get('startDate')!) : null);
+  const [endDate, setEndDate] = useState<Date | null>(defaultValues.get('endDate') ? new Date(defaultValues.get('endDate')!) : null);
   const [priceSort, setPriceSort] = useState<string | null>(defaultValues.get('priceSort'));
   const [horsepowerSort, setHorsepowerSort] = useState<string | null>(defaultValues.get('horsepowerSort'));
   const [buildYearSort, setBuildYearSort] = useState<string | null>(defaultValues.get('buildYearSort'));
@@ -37,8 +37,6 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   const [gearTypes, setGearTypes] = useState<string[]>([]);
   const [fuelTypes, setFuelTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<CarCategory[]>([]);
-
-
 
   const fetchData = async () => {
     try {
@@ -103,25 +101,25 @@ export default function CarListFilterBar({ defaultValues }: FilterBarProps) {
   ];
 
   return (
-    <div className="row g-3 mb-3">
-      <h4>Filter Cars</h4>
+      <div className="row g-3 mb-3">
+        <h4>Filter Cars</h4>
 
-      {filters.map((filter, idx) => (
-          <div key={idx} className="col-12 col-md-4 col-xl-2">
-            {filter}
-          </div>
-      ))}
+        {filters.map((filter, idx) => (
+            <div key={idx} className="col-12 col-md-4 col-xl-2">
+              {filter}
+            </div>
+        ))}
 
-      <div className="col-12">
-        <button
-          className="btn btn-primary w-100 "
-          onClick={() => {
-            updateQueryString();
-          }}
-        >
-          Search
-        </button>
+        <div className="col-12">
+          <button
+              className="btn btn-primary w-100 "
+              onClick={() => {
+                updateQueryString();
+              }}
+          >
+            Search
+          </button>
+        </div>
       </div>
-    </div>
   );
 }
