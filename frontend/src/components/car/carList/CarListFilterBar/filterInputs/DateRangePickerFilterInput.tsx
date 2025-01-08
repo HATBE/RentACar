@@ -1,13 +1,16 @@
 import BookingCalendar from "../../../../booking/bookingCalendar/BookingCalendar.tsx";
+import {useRef} from "react";
 
 type DateRangePickerFilterProps = {
-    setStartDate: (startDate: Date) => void;
-    setEndDate: (endDate: Date) => void;
+    setStartDate: (startDate: Date | null) => void;
+    setEndDate: (endDate: Date | null) => void;
     startDate: Date | null;
     endDate: Date | null;
 }
 
 export default function DateRangePickerFilterInput({setStartDate, setEndDate, startDate, endDate}: DateRangePickerFilterProps) {
+    const clearDatesCallback = useRef<() => void>();
+
     const dateRangeText = () => {
         if(!startDate && !endDate) {
             return 'None';
@@ -19,6 +22,14 @@ export default function DateRangePickerFilterInput({setStartDate, setEndDate, st
         setStartDate(startDate);
         setEndDate(endDate);
     };
+
+    const onClearDates = () => {
+        setStartDate(null);
+        setEndDate(null);
+        if (clearDatesCallback.current) {
+            clearDatesCallback.current();
+        }
+    }
 
     return (
         <div className="dropdown">
@@ -34,7 +45,8 @@ export default function DateRangePickerFilterInput({setStartDate, setEndDate, st
             </button>
             <ul className="dropdown-menu p-0 overflow-hidden">
                 <li>
-                    <BookingCalendar disableDates={false} selectDatesCallback={selectDatesCallback}/>
+                    <BookingCalendar onClearDates={(clearCallback) => (clearDatesCallback.current = clearCallback)} disableDates={false} selectDatesCallback={selectDatesCallback}/>
+                    <button onClick={onClearDates} className="btn btn-primary w-100 rounded-0">Clear</button>
                 </li>
             </ul>
         </div>

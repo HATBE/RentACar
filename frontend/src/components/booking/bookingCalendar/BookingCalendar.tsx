@@ -6,10 +6,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import BookingsService from '../../../services/BookingsService.ts';
 
 type BookingProps = {
-  bookings?: Booking[];
+  disableDates: boolean;
   selectDatesCallback?: (startDate: Date, endDate: Date, daysSelected: number) => void;
   onClearDates?: (clearCallback: () => void) => void;
-  disableDates: boolean;
+  bookings?: Booking[];
 };
 
 export default function BookingCalendar({
@@ -54,7 +54,6 @@ export default function BookingCalendar({
 
   useEffect(() => {
     if (onClearDates) {
-      onClearDates(clearDates);
       onClearDates(clearDates);
     }
   }, [onClearDates]);
