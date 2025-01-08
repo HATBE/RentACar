@@ -2,7 +2,7 @@ import CarListItem from './CarListItem.tsx';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../../layout/LoadingSpinner.tsx';
 import { useLocation } from 'react-router-dom';
-import CarListFilterBar from './CarListFilterBar.tsx';
+import CarListFilterBar from './CarListFilterBar/CarListFilterBar.tsx';
 import ErrorBanner from '../../layout/banner/ErrorBanner.tsx';
 import { Car } from '../../../types/Car.ts';
 import CarService from '../../../services/CarsApi.ts';
