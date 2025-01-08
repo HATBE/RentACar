@@ -46,7 +46,7 @@ export default function DateRangePickerFilterInput({setStartDate, setEndDate, st
             <ul className="dropdown-menu p-0 overflow-hidden">
                 <li>
                     <BookingCalendar onClearDates={(clearCallback) => (clearDatesCallback.current = clearCallback)} disableDates={false} selectDatesCallback={selectDatesCallback}/>
-                    <button onClick={onClearDates} className="btn btn-primary w-100 rounded-0">Clear</button>
+                    <button onClick={onClearDates} className="btn btn-danger btn-sm w-100 rounded-0"><i className="bi bi-x-circle-fill"></i> Clear</button>
                 </li>
             </ul>
         </div>

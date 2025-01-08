@@ -79,6 +79,9 @@ export default function CarPage() {
                 <div className="row g-2">
                   <CarSpecsGrid car={car} />
                 </div>
+                <div className="mt-4 mb-2 h4 fw-bold cyan-text-gradient text-center">
+                  CHF {car.pricePerDay} / Day
+                </div>
               </div>
             </div>
 
