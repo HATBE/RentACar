@@ -13,7 +13,6 @@ import SortByFilterInput from "./filterInputs/SortByFilterInput.tsx";
 
 interface FilterBarProps {
   defaultValues: URLSearchParams;
-  onApplyFilters: () => void;
 }
 
 export default function CarListFilterBar({ defaultValues }: FilterBarProps) {

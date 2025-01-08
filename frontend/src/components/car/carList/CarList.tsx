@@ -15,10 +15,12 @@ export default function CarList() {
   const location = useLocation();
 
   const fetchData = async () => {
+
     try {
       const queryParams = new URLSearchParams(location.search);
       const cars = await CarService.getCars(queryParams);
       setCars(cars);
+      setError(null);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -34,7 +36,6 @@ export default function CarList() {
     <div>
       <CarListFilterBar
         defaultValues={new URLSearchParams(location.search)}
-        onApplyFilters={fetchData}
       />
 
       {error && <ErrorBanner message={error} />}

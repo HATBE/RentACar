@@ -71,6 +71,12 @@ export default function AdminCarDetailPage() {
             <button onClick={handleDelete} className="ms-2 btn-sm btn btn-danger">
               <i className="bi bi-trash"></i> Delete
             </button>
+
+            <Link to={`/cars/${car.id}`}>
+              <button className="ms-2 btn btn-sm btn-secondary">
+                <i className="bi bi-eye"></i> Customer View
+              </button>
+            </Link>
           </div>
           <div className="col-12 col-md-6">
             <div className="card bg-dark  text-light border-0 shadow-lg overflow-hidden">
