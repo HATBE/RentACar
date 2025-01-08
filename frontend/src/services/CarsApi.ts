@@ -10,7 +10,7 @@ export default class CarsApi {
     return await response.json();
   }
 
-  static async deleteCarById(carId: number): Promise<Booking> {
+  static async deleteCarById(carId: number) {
     const response = await fetch(`http://localhost:8081/api/v1/cars/${carId}`, {
       method: 'DELETE',
     });
@@ -20,7 +20,6 @@ export default class CarsApi {
         ((await response.json()) as { message: string }).message || 'Failed to delete car';
       throw new Error(error);
     }
-    return await response.json();
   }
 
   static async getCars(queryParams?: URLSearchParams): Promise<Car[]> {
