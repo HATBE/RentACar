@@ -70,6 +70,7 @@ Die folgende Tabelle beschreibt die in der Datenbank definierten Tabellen und ih
 |                   | - `BendDate` (date)                                              | Enddatum der Buchung.                                                     |
 |                   | - `BcreationDate` (timestamp, Default: `current_timestamp()`)    | Erstellungszeitpunkt der Buchung.                                         |
 |                   | - `BcalculatedPrice` (float)                                     | Berechneter Gesamtpreis der Buchung.                                      |
+|                   | - `BcustomerName` (varchar(255))                                 | Name des Kunden                                                           |
 | **carcategories** | - `CCid` (int, Primary Key, AUTO_INCREMENT)                      | Eindeutige ID der Fahrzeugkategorie.                                      |
 |                   | - `CCname` (varchar(255))                                        | Name der Fahrzeugkategorie (z. B. "SUV", "JDM").                          |
 |                   | - `CCimage` (varchar(255))                                       | Bilddateiname der Fahrzeugkategorie.                                      |
@@ -137,8 +138,10 @@ Bestätigung nach dem Buchen
 #### `/admin` (Admin Dashboard)
 
 Admin Landing Page
-Hier werden alle autos aufgelistst
+Hier werden alle autos aufgelistst + Alle offenen Buchungen
 ![Landing Page Screenshot](_docs/img/admin.png)
+
+![Landing Page Screenshot](_docs/img/bookedlist.png)
 
 #### `/admin/cars/create` (Create Car Page)
 
