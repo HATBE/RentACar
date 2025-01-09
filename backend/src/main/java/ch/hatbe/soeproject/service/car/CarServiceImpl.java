@@ -53,8 +53,7 @@ public class CarServiceImpl implements CarService {
             LocalDate startDate,
             LocalDate endDate
     ) {
-        logger.info("Fetching cars with filters: buildYearFrom={}, buildYearTo={}, make={}, category={}, priceMin={}, priceMax={}",
-                buildYearFrom, buildYearTo, make, category, priceMin, priceMax);
+        logger.info("Fetching cars with filters: buildYearFrom={}, buildYearTo={}, make={}, category={}, priceMin={}, priceMax={}", buildYearFrom, buildYearTo, make, category, priceMin, priceMax);
 
         return carRepository.findAll(buildYearFrom, buildYearTo, make, category, priceMin, priceMax, seatsMin, seatsMax, gearType, fuelType, startDate, endDate, priceSort, horsepowerSort, buildYearSort);
     }
