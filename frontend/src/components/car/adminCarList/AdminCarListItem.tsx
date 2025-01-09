@@ -36,7 +36,7 @@ export default function AdminCarListItem({ car, onCarDeleted }: CarListItemProps
         </Link>
       </td>
 
-      <td style={{ minWidth: '250px' }}>
+      <td style={{ minWidth: '255px' }}>
         <Link to={`/admin/cars/${car.id}`}>
           <button className="btn btn-sm btn-success">
             <i className="bi bi-eye-fill me-2"></i>View
