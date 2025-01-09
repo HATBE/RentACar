@@ -29,7 +29,8 @@ export default function AdminBookingList() {
     <div>
       {error && <ErrorBanner message={error} />}
       {loading && <LoadingSpinner />}
-      {!error && !loading && (
+      {!bookings && !error && !loading && <p>No bookings found</p>}
+      {bookings && !error && !loading && (
         <>
           <table className="table table-center table-dark">
             <thead>
