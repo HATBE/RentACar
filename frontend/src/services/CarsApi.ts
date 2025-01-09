@@ -71,7 +71,14 @@ export default class CarsApi {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to update car');
+      const errors = (await response.json()) as { errors: string[] };
+
+      if(!errors.errors) {
+        throw new Error('Failed to update car');
+      }
+
+      const error = errors.errors.join(',\n ') || 'Failed to update car';
+      throw new Error(error);
     }
     return await response.json();
   }
@@ -106,9 +113,13 @@ export default class CarsApi {
     });
 
     if (!response.ok) {
-      const error =
-        ((await response.json()) as { errors: string[] }).errors.join(',\n ') ||
-        'Failed to post car';
+        const errors = (await response.json()) as { errors: string[] };
+
+        if(!errors.errors) {
+          throw new Error('Failed to post car');
+        }
+
+      const error = errors.errors.join(',\n ') || 'Failed to post car';
       throw new Error(error);
     }
     return await response.json();
