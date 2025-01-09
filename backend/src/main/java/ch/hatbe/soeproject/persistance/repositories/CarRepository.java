@@ -15,7 +15,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             "WHERE (:buildYearFrom IS NULL OR c.buildYear >= :buildYearFrom) " +
             "AND (:buildYearTo IS NULL OR c.buildYear <= :buildYearTo) " +
             "AND (:make IS NULL OR c.make = :make) " +
-            "AND (:categoryName IS NULL OR c.category.id = :categoryId) " +
+            "AND (:categoryId IS NULL OR c.category.id = :categoryId) " +
             "AND (:priceMin IS NULL OR c.pricePerDay >= :priceMin) " +
             "AND (:priceMax IS NULL OR c.pricePerDay <= :priceMax) " +
             "AND (:seatsMin IS NULL OR c.seatsCount >= :seatsMin) " +
