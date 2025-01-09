@@ -73,6 +73,7 @@ export default function CarBookedPage() {
                   </tbody>
                 </table>
                 <p>
+                  Hello <b>{booking.customerName}</b>,<br />
                   You can pickup your car on{' '}
                   <i>{new Date(booking.startDate).toLocaleDateString()}</i> at the rental office.
                 </p>

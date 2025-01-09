@@ -39,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public Booking createBooking(PostBookingRequest request) throws IllegalArgumentException {
-        logger.info("Creating booking for carId: {} with startDate: {} and endDate: {}",
+        logger.debug("Creating booking for carId: {} with startDate: {} and endDate: {}",
                 request.getCarId(), request.getStartDate(), request.getEndDate());
 
         if (request.getStartDate().isBefore(LocalDate.now())) {
@@ -63,8 +63,7 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException("Car is already booked for the selected dates");
         }
 
-        Booking booking = BookingFactory.getInstance()
-                .createBooking(car, request.getStartDate(), request.getEndDate(), car.getPricePerDay());
+        Booking booking = BookingFactory.getInstance().createBooking(car, request.getStartDate(), request.getEndDate(), car.getPricePerDay(), request.getCustomerName());
         Booking savedBooking = bookingRepository.save(booking);
 
         logger.info("Booking created successfully with ID: {}", savedBooking.getId());
@@ -72,7 +71,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public boolean deleteBookingById(int bookingId) {
-        logger.info("Deleting booking with ID: {}", bookingId);
+        logger.debug("Deleting booking with ID: {}", bookingId);
         Optional<Booking> booking = bookingRepository.findById(bookingId);
 
         if (booking.isEmpty()) {

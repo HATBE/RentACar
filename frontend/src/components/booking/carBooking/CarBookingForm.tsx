@@ -1,7 +1,7 @@
 import BookingCalendar from '../bookingCalendar/BookingCalendar.tsx';
 import { Booking } from '../../../types/Booking.ts';
 import { Car } from '../../../types/Car.ts';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import BookingsApi from '../../../services/BookingsApi.ts';
 import ErrorBanner from '../../layout/banner/ErrorBanner.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +21,7 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
   const [daysSelected, setDaysSelected] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [customerName, setCustomerName] = useState<string>('');
 
   const clearDatesCallback = useRef<() => void>();
 
@@ -37,39 +38,47 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
   };
 
   const canBook = () => {
-    return startDate && endDate;
+    // Check if all required fields are filled, then "enable" book button
+    return startDate && endDate && customerName;
   };
 
   const handleBooking = async () => {
-    if (startDate && endDate) {
-      setLoading(true);
-
-      if (clearDatesCallback.current) {
-        clearDatesCallback.current();
-      }
-
-      const normalizedStartDate = BookingsService.normalizeDate(startDate, 0, 0, 0);
-      const normalizedEndDate = BookingsService.normalizeDate(endDate, 23, 59, 59);
-
-      try {
-        const booking = await BookingsApi.postBooking(
-          car.id,
-          normalizedStartDate,
-          normalizedEndDate
-        );
-
-        bookings.push(booking);
-
-        setError(null);
-        clearDates();
-
-        navigate(`/cars/booked/${booking.id}`);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
+    if (!canBook()) {
+      return;
     }
+
+    setLoading(true);
+
+    if (clearDatesCallback.current) {
+      clearDatesCallback.current();
+    }
+
+    const normalizedStartDate = BookingsService.normalizeDate(startDate!, 0, 0, 0);
+    const normalizedEndDate = BookingsService.normalizeDate(endDate!, 23, 59, 59);
+
+    try {
+      const booking = await BookingsApi.postBooking(
+        car.id,
+        normalizedStartDate,
+        normalizedEndDate,
+        customerName
+      );
+
+      bookings.push(booking);
+
+      setError(null);
+      clearDates();
+
+      navigate(`/cars/booked/${booking.id}`);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setCustomerName(e.target.value);
   };
 
   const priceForBookedDays = car.pricePerDay * (daysSelected || 1);
@@ -77,6 +86,11 @@ export default function CarBookingForm({ bookings, car }: CarBookingProps) {
   return (
     <>
       {error && <ErrorBanner message={error} />}
+
+      <div className="mb-3">
+        <label>Your name</label>
+        <input type="text" className="form-control" name="customerName" onChange={handleChange} />
+      </div>
 
       <BookingCalendar
         onClearDates={(clearCallback) => (clearDatesCallback.current = clearCallback)}

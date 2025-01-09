@@ -21,7 +21,7 @@ public class BookingFactory {
     }
 
 
-    public Booking createBooking(Car car, LocalDate startDate, LocalDate endDate, float pricePerDay) {
+    public Booking createBooking(Car car, LocalDate startDate, LocalDate endDate, float pricePerDay, String customerName) {
         LocalDateTime nowTimestamp = LocalDateTime.now();
 
         Booking booking = new Booking();
@@ -31,6 +31,7 @@ public class BookingFactory {
         booking.setEndDate(endDate);
         booking.setCreationDate(nowTimestamp);
         booking.setCalculatedPrice(CarPriceCalculator.calculateCarPricePerDay(pricePerDay, startDate, endDate));
+        booking.setCustomerName(customerName);
 
         return booking;
     }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 09. Dez 2024 um 21:28
--- Server-Version: 10.4.27-MariaDB
--- PHP-Version: 8.2.0
+-- Host: localhost
+-- Generation Time: Jan 09, 2025 at 02:13 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `soeproject`
+-- Database: `soeproject`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `bookings`
+-- Table structure for table `bookings`
 --
 
 CREATE TABLE `bookings` (
@@ -33,20 +33,14 @@ CREATE TABLE `bookings` (
   `BstartDate` date NOT NULL,
   `BendDate` date NOT NULL,
   `BcreationDate` timestamp NOT NULL DEFAULT current_timestamp(),
-  `BcalculatedPrice` float NOT NULL
+  `BcalculatedPrice` float NOT NULL,
+  `BcustomerName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `bookings`
---
-
-INSERT INTO `bookings` (`Bid`, `Cid`, `BstartDate`, `BendDate`, `BcreationDate`, `BcalculatedPrice`) VALUES
-(3, 1, '2024-11-26', '2024-11-27', '2024-11-25 20:19:39', 100);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `carcategories`
+-- Table structure for table `carcategories`
 --
 
 CREATE TABLE `carcategories` (
@@ -56,7 +50,7 @@ CREATE TABLE `carcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Daten für Tabelle `carcategories`
+-- Dumping data for table `carcategories`
 --
 
 INSERT INTO `carcategories` (`CCid`, `CCname`, `CCimage`) VALUES
@@ -72,7 +66,7 @@ INSERT INTO `carcategories` (`CCid`, `CCname`, `CCimage`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cars`
+-- Table structure for table `cars`
 --
 
 CREATE TABLE `cars` (
@@ -89,7 +83,7 @@ CREATE TABLE `cars` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Daten für Tabelle `cars`
+-- Dumping data for table `cars`
 --
 
 INSERT INTO `cars` (`Cid`, `Cmake`, `Cmodel`, `CbuildYear`, `Chorsepower`, `Cseatscount`, `CpricePerDay`, `CgearType`, `CfuelType`, `CCid`) VALUES
@@ -136,63 +130,63 @@ INSERT INTO `cars` (`Cid`, `Cmake`, `Cmodel`, `CbuildYear`, `Chorsepower`, `Csea
 (41, 'Volkswagen', 'Passat', 2020, 174, 5, 65, 'MANUAL', 'DIESEL', 2);
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `bookings`
+-- Indexes for table `bookings`
 --
 ALTER TABLE `bookings`
   ADD PRIMARY KEY (`Bid`),
   ADD KEY `bookings_cars` (`Cid`);
 
 --
--- Indizes für die Tabelle `carcategories`
+-- Indexes for table `carcategories`
 --
 ALTER TABLE `carcategories`
   ADD PRIMARY KEY (`CCid`);
 
 --
--- Indizes für die Tabelle `cars`
+-- Indexes for table `cars`
 --
 ALTER TABLE `cars`
   ADD PRIMARY KEY (`Cid`),
   ADD KEY `cars_carcategories_fk` (`CCid`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `bookings`
+-- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT für Tabelle `carcategories`
+-- AUTO_INCREMENT for table `carcategories`
 --
 ALTER TABLE `carcategories`
   MODIFY `CCid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT für Tabelle `cars`
+-- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- Constraints der exportierten Tabellen
+-- Constraints for dumped tables
 --
 
 --
--- Constraints der Tabelle `bookings`
+-- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_cars` FOREIGN KEY (`Cid`) REFERENCES `cars` (`Cid`);
 
 --
--- Constraints der Tabelle `cars`
+-- Constraints for table `cars`
 --
 ALTER TABLE `cars`
   ADD CONSTRAINT `cars_carcategories_fk` FOREIGN KEY (`CCid`) REFERENCES `carcategories` (`CCid`);

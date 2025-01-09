@@ -124,6 +124,7 @@ export default function AdminCarDetailPage() {
                       <tr>
                         <th>Date</th>
                         <th>Price</th>
+                        <th>Customer name</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -133,7 +134,8 @@ export default function AdminCarDetailPage() {
                             {new Date(booking.startDate).toLocaleDateString()} -{' '}
                             {new Date(booking.endDate).toLocaleDateString()}
                           </td>
-                          <td className="w-100">{booking.calculatedPrice} CHF.</td>
+                          <td className="text-nowrap">{booking.calculatedPrice} CHF.</td>
+                          <td className="w-100">{booking.customerName}</td>
                         </tr>
                       ))}
                     </tbody>

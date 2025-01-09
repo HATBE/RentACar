@@ -1,9 +1,6 @@
 package ch.hatbe.soeproject.persistance.entities.requests;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -20,4 +17,8 @@ public class PostBookingRequest {
     @NotNull(message = "End date cannot be null.")
     @Future(message = "End date must be in the future.")
     private LocalDate endDate;
+
+    @NotBlank(message = "Name of the customer")
+    @Size(max = 50, message = "Customer name must not exceed 50 characters.")
+    private String customerName;
 }

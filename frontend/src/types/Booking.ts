@@ -7,4 +7,5 @@ export type Booking = {
   endDate: Date;
   creationDate: Date;
   calculatedPrice: number;
+  customerName: string
 };

@@ -30,4 +30,7 @@ public class Booking {
 
     @Column(name = "BcalculatedPrice", nullable = false)
     private float calculatedPrice;
+
+    @Column(name = "BcustomerName", nullable = false)
+    private String customerName;
 }
