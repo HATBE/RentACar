@@ -177,7 +177,12 @@ Hier kann ein Auto editiert werden
    ```
 
 2. DB erstellen
-    ein Dump der DB liegt in ./_data/soeproject.sql
+    1. ein Dump der DB liegt in ./_data/soeproject.sql
+    2. In backend/src/main/resources/application.properties folgende properties ändern:
+  
+    - spring.datasource.url=jdbc:mysql://localhost:3306/db
+    - spring.datasource.username=root
+    - spring.datasource.password=pass
 
 2. **Dependencies Installieren && starten**:
    ```bash
