@@ -176,6 +176,9 @@ Hier kann ein Auto editiert werden
    cd RentACar
    ```
 
+2. DB erstellen
+    ein Dump der DB liegt in ./_data/soeproject.sql
+
 2. **Dependencies Installieren && starten**:
    ```bash
    cd frontend
@@ -188,6 +191,6 @@ Hier kann ein Auto editiert werden
    ```bash
    cd backend
    mvn install
-   mvn start
+   mvn spring-boot:run
    cd ..
    ```
