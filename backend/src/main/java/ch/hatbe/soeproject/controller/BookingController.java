@@ -24,7 +24,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/bookings")
 public class BookingController {
-
     private static final Logger logger = LoggerFactory.getLogger(BookingController.class);
     private final BookingService bookingService;
 
@@ -39,7 +38,7 @@ public class BookingController {
     })
     @GetMapping("/{bookingId}")
     public ResponseEntity<?> getBooking(@Parameter(description = "ID of the booking to retrieve", required = true) @PathVariable @Positive(message = "Booking ID must be a positive number.") int bookingId) {
-        logger.info("Fetching booking with ID: {}", bookingId);
+        logger.debug("Fetching booking with ID: {}", bookingId);
         Optional<Booking> booking = bookingService.getBookingById(bookingId);
 
         if (booking.isEmpty()) {
@@ -49,6 +48,25 @@ public class BookingController {
 
         logger.debug("Booking with ID: {} retrieved successfully.", bookingId);
         return ResponseEntity.status(HttpStatus.OK).body(booking);
+    }
+
+    @Operation(summary = "Get all bookings", description = "Fetch all bookings.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bookings retrieved successfully"),
+            @ApiResponse(responseCode = "204", description = "No bookings found")
+    })
+    @GetMapping(value = {"", "/"})
+    public ResponseEntity<?> getBookings() {
+        logger.debug("Fetching bookings");
+        List<Booking> bookings = bookingService.getBookings();
+
+        if (bookings.isEmpty()) {
+            logger.warn("No bookings found");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        logger.debug("Fetched bookings: {}", bookings);
+        return ResponseEntity.status(HttpStatus.OK).body(bookings);
     }
 
     @Operation(summary = "Get Bookings by Car ID", description = "Fetch all bookings for a given car. Optionally, filter for future bookings.")

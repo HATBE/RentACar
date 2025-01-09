@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
     // Future == true | displays only bookings that are in the future (including today)
-    @Query("SELECT b FROM Booking b WHERE b.car.id = :carId AND (:future = FALSE OR b.endDate >= CURRENT_DATE) ORDER BY b.startDate ASC")
+    @Query("SELECT b FROM Booking b WHERE b.car.id = :carId AND (:future = FALSE OR b.endDate >= CURRENT_DATE) ORDER BY b.startDate ASC, b.endDate ASC")
     List<Booking> findAllByCarId(@Param("carId") Integer carId, @Param("future") Boolean future);
+
+    @Query("SELECT b FROM Booking b WHERE b.endDate >= CURRENT_DATE ORDER BY b.startDate ASC, b.endDate ASC")
+    List<Booking> findAll();
 
     @Modifying
     @Query("DELETE FROM Booking b WHERE b.car.id = :carId")

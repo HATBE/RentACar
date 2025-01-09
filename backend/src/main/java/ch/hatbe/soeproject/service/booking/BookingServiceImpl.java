@@ -29,12 +29,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<Booking> getBookingsByCarId(int carId, boolean future) {
-        logger.info("Fetching bookings for carId: {} with future filter: {}", carId, future);
+        logger.debug("Fetching bookings for carId: {} with future filter: {}", carId, future);
         return bookingRepository.findAllByCarId(carId, future);
     }
 
+    public List<Booking> getBookings() {
+        logger.debug("Fetching bookings ");
+        return bookingRepository.findAll();
+    }
+
     public Optional<Booking> getBookingById(int bookingId) {
-        logger.info("Fetching booking by ID: {}", bookingId);
+        logger.debug("Fetching booking by ID: {}", bookingId);
         return bookingRepository.findById(bookingId);
     }
 

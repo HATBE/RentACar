@@ -14,6 +14,20 @@ export default class BookingsApi {
     return response.json();
   }
 
+  static async getBookings(): Promise<Booking[]> {
+    const response = await fetch(
+      `http://localhost:8081/api/v1/bookings`
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch bookings');
+    }
+    if (response.status === 204) {
+      return [];
+    }
+    return response.json();
+  }
+
+
   static async getBookingById(bookingId: string): Promise<Booking | null> {
     const response = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}`);
     if (!response.ok) {

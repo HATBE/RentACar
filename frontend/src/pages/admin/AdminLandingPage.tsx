@@ -1,5 +1,6 @@
 import AdminCarList from '../../components/car/adminCarList/AdminCarList.tsx';
 import { Link } from 'react-router-dom';
+import AdminBookingList from '../../components/booking/adminBookingList/AdminBookingList.tsx';
 
 export default function AdminLandingPage() {
   return (
@@ -13,6 +14,14 @@ export default function AdminLandingPage() {
             <i className="bi bi-plus-circle me-2"></i>Add Car
           </Link>
           <AdminCarList />
+
+        </div>
+      </div>
+
+      <div className="card bg-dark mt-3 text-light border-0 shadow-lg overflow-hidden">
+        <h4 className="card-header">Open bookings</h4>
+        <div className="card-body">
+          <AdminBookingList />
         </div>
       </div>
     </>

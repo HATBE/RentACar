@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Car } from '../../../types/Car.ts';
-import CarsApi from '../../../services/CarsApi.ts';
+import BookingsApi from '../../../services/BookingsApi.ts';
+import { Booking } from '../../../types/Booking.ts';
 import ErrorBanner from '../../layout/banner/ErrorBanner.tsx';
 import LoadingSpinner from '../../layout/LoadingSpinner.tsx';
-import AdminCarListItem from './AdminCarListItem.tsx';
+import AdminBookingListItem from './AdminBookingListItem.tsx';
 
-export default function AdminCarList() {
-  const [cars, setCars] = useState<Car[]>([]);
+export default function AdminBookingList() {
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
-      const cars = await CarsApi.getCars();
-      setCars(cars);
+      const bookings = await BookingsApi.getBookings();
+      setBookings(bookings);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -25,10 +25,6 @@ export default function AdminCarList() {
     fetchData();
   }, []);
 
-  const handleCarDeleted = (carId: number) => {
-    setCars((prevCars) => prevCars.filter((car) => car.id !== carId));
-  };
-
   return (
     <div>
       {error && <ErrorBanner message={error} />}
@@ -39,14 +35,14 @@ export default function AdminCarList() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Category</th>
-                <th>Name</th>
-                <th></th>
+                <th>Date</th>
+                <th>Car</th>
+                <th>Customer Name</th>
               </tr>
             </thead>
             <tbody>
-              {cars.map((car) => (
-                <AdminCarListItem key={car.id} car={car} onCarDeleted={handleCarDeleted} />
+              {bookings.map((booking) => (
+                <AdminBookingListItem key={booking.id} booking={booking} />
               ))}
             </tbody>
           </table>

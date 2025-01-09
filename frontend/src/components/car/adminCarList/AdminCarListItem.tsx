@@ -2,12 +2,12 @@ import { Car } from '../../../types/Car.ts';
 import CarsApi from '../../../services/CarsApi.ts';
 import { Link } from 'react-router-dom';
 
-type CarListItemProps = {
+type AdminCarListItemProps = {
   car: Car;
   onCarDeleted: (carId: number) => void; // New callback prop
 };
 
-export default function AdminCarListItem({ car, onCarDeleted }: CarListItemProps) {
+export default function AdminCarListItem({ car, onCarDeleted }: AdminCarListItemProps) {
   const handleDelete = async () => {
     const isConfirmed = confirm(
       `Do you really want to delete car #${car.id} / ${car.make} ${car.model} ${car.buildYear}`
